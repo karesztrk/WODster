@@ -1,0 +1,22 @@
+@(registerForm: Form[model.user.User])
+
+@import helper._
+@import play.i18n.Messages
+
+@implicitFieldConstructor = @{ FieldConstructor(component.bootstrapInput.render) } 
+
+@main("") { 
+
+	@form(routes.Application.register, 'class -> "centered_form") {
+	
+		<h2 class="form-signin-heading">Register</h2>
+	
+		@inputText(registerForm("email"), '_label -> null, 'type -> "email", 'placeholder -> "Email address", 'class -> "form-control")
+		@inputPassword(registerForm("password"), '_label -> null, 'placeholder -> "Password", 'class -> "form-control")
+		@inputPassword(registerForm("confirm"), '_label -> null, 'placeholder -> "Password again", 'class -> "form-control")
+		@inputText(registerForm("name"), '_label -> null, 'placeholder -> "Your name", 'class -> "form-control")
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+		
+	}
+
+}

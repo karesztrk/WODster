@@ -1,0 +1,85 @@
+@(currentPage: dao.AbstractDAO.Page[model.blog.Post], currentSortBy: String, currentOrder: String, currentFilter: String)
+
+@import helper._
+@import util.permission.Identity
+
+@main("wod") {
+    
+    <div class="row">
+    
+    	<div class="col-md-8">
+    		<h1>WODs</h1>
+    		
+    		@if(Identity.isAuthenticated()) {
+				<a href="/workouts/new" class="btn btn-primary">Add new <span class="glyphicon glyphicon-plus"></span></a>
+			}
+    	
+	    	@for(post <- currentPage.getList) {
+
+				<!-- Title -->
+				<h2>@post.title</h2>
+				
+				<!-- Author -->
+				<p class="lead">
+				    by <a href="#">@post.user.name</a>
+				</p>
+				
+				<hr>
+				
+				<!-- Date/Time -->
+				<p><span class="glyphicon glyphicon-time"></span> Posted on @post.date.format("yyyy.MM.dd 'at' HH:mm:ss") </p>
+				
+				<hr>
+				
+				<!-- Preview Image -->
+				@if(util.asset.AssetUtils.isFileExist(post.image)) {
+					<img alt="Post image" src="@routes.Assets.at(post.image)" class="img-responsive img-centered">
+				} else {
+					<img alt="Post image" src="http://placehold.it/900x300" class="img-responsive">
+				}
+				
+				<hr>
+				
+				<!-- Post Content -->
+				<div class="post_content">@Html(post.content)</div>
+				
+				<a href="/workouts/@post.id" class="btn btn-primary">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+				
+				<hr>
+		    }
+		    
+	    </div>
+
+	    <div class="col-md-4">
+		<!-- Blog Search Well -->
+			<div class="well">
+			    <h4>WOD Search</h4>
+			    @form(routes.BlogController.list(0, "", "", ""), 'method -> "GET") {
+				    <div class="input-group">
+				        <input type="search" name="f" class="form-control" placeholder="Filter by title..." value="@currentFilter">
+				        <span class="input-group-btn">
+				            <input type="submit" class="btn btn-default" value="Search">
+				                <span class="glyphicon glyphicon-search"></span>
+				        	</input>
+				        </span>
+				    </div>
+				}
+			</div>
+	    </div>
+	</div>
+	
+	<script type="text/javascript">
+		$("div.post_content").text(function(index, currentText) {
+			
+			var charLimit = 100;
+			if(currentText.length > charLimit) {
+				var content = currentText.substr(0, 100);
+			    return currentText.substr(0, 100) + '...';
+			}
+			
+			return currentText;
+		});
+	</script>
+}
+
+            

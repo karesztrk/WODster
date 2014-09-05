@@ -1,0 +1,27 @@
+@(loginForm: Form[controllers.entity.Login])
+
+@import helper._
+@import play.i18n.Messages
+
+@implicitFieldConstructor = @{ FieldConstructor(component.bootstrapInput.render) } 
+
+@main("") { 
+	@form(routes.Application.authenticate, 'class -> "centered_form") {
+		<h2 class="form-signin-heading" >Please login</h2>
+		@inputText(loginForm("email"), '_label -> null, 'type -> "email", 'placeholder -> "Email address", 'class -> "form-control", '_showHelp -> false)
+		@inputPassword(loginForm("password"), '_label -> null, 'placeholder -> "Password", 'class -> "form-control", '_showHelp -> false)
+		
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" value="remember-me">Remember me
+			</label>
+		</div>
+		
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+	}		
+	
+	<p class="text-center">
+		Not a member yet? <a href="@routes.Application.signUp()">Sign up now</a>
+	</p>
+
+}

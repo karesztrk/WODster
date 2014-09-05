@@ -1,0 +1,67 @@
+@(post: model.blog.Post)
+
+@import util.permission.Identity
+
+@main("wod") {
+    
+    <div class="row">
+    
+    	<div class="col-md-8">
+    		<h1>WODs</h1>
+    		
+    		@if(Identity.isAuthenticated()) {
+				<a href="/workouts/edit/@post.id" class="btn btn-primary">Edit <span class="glyphicon glyphicon-edit"></span></a>
+			}
+
+			<!-- Title -->
+			<h2>@post.title</h2>
+			
+			<!-- Author -->
+			<p class="lead">
+			    by <a href="#">@post.user.name</a>
+			</p>
+			
+			<hr>
+			
+			<!-- Date/Time -->
+			<p><span class="glyphicon glyphicon-time"></span> Posted on @post.date.format("yyyy.MM.dd 'at' HH:mm:ss") </p>
+			
+			<hr>
+			
+			<!-- Preview Image -->
+			@if(util.asset.AssetUtils.isFileExist(post.image)) {
+				<img alt="Post image" src="@routes.Assets.at(post.image)"  class="img-responsive">
+			} else {
+				<img alt="Post image" src="http://placehold.it/900x300" class="img-responsive">
+			}
+			
+			<hr>
+			
+			<!-- Post Content -->
+			<div class="post_content">@Html(post.content)</div>
+			
+			<hr>
+		    
+		    <a href="@routes.BlogController.list()" class="btn btn-default">Back</a> 
+	    </div>
+
+	    <div class="col-md-4">
+		<!-- Blog Search Well -->
+			<div class="well">
+			    <h4>WOD Search</h4>
+			    <div class="input-group">
+			        <input type="text" class="form-control" placeholder="Filter by title...">
+			        <span class="input-group-btn">
+			            <button type="button" class="btn btn-default">
+			                <span class="glyphicon glyphicon-search"></span>
+			        </button>
+			        </span>
+			    </div>
+
+			</div>
+	    </div>
+	</div>
+	
+}
+
+            

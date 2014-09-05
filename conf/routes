@@ -1,0 +1,43 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Application.index()
+
+# Login page
+GET     /login                  	controllers.Application.login()
+POST    /login                      controllers.Application.authenticate()
+GET     /logout                     controllers.Application.logout()
+
+# Registration page
+GET     /register                  	controllers.Application.signUp()
+POST    /register                  	controllers.Application.register()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+# Workouts list (look at the default values for pagination parameters)
+GET     /workouts                  controllers.BlogController.list(p:Int ?= 0, s ?= "date", o ?= "desc", f ?= "")
+
+# Add workout
+GET     /workouts/new              controllers.BlogController.create()
+POST    /workouts                  controllers.BlogController.save()
+
+# Edit existing workout
+GET     /workouts/edit/:id              controllers.BlogController.edit(id:Long)
+POST    /workouts/:id              controllers.BlogController.update(id:Long)
+
+# View existing workout
+GET     /workouts/:id              controllers.BlogController.view(id:Long)
+
+# Delete a workout
+#POST    /workouts/:id/delete       controllers.Application.delete(id:Long)
+
+# Database init
+GET		/init/users				   controllers.DataGenerator.saveUsers()
+GET		/init/boxes				   controllers.DataGenerator.saveBoxes()
+GET		/init/posts				   controllers.DataGenerator.savePosts()
+
+# Boxes list (look at the default values for pagination parameters)
+GET     /box                  	   controllers.BoxController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
