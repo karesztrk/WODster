@@ -2,6 +2,8 @@
 
 @import helper._
 @import util.permission.Identity
+@import controllers.BlogController
+@authenticated = @{Identity.isAuthenticated()}
 
 @main("wod") {
     
@@ -10,7 +12,7 @@
     	<div class="col-md-8">
     		<h1>WODs</h1>
     		
-    		@if(Identity.isAuthenticated()) {
+    		@if(authenticated) {
 				<a href="/workouts/new" class="btn btn-primary">Add new <span class="glyphicon glyphicon-plus"></span></a>
 			}
     	
@@ -43,6 +45,15 @@
 				<!-- Post Content -->
 				<div class="post_content">@Html(post.content)</div>
 				
+				@if(authenticated) {
+				
+					@if(BlogController.isAttendee(post)) {
+						<button disabled="disabled" type="button" data-button="@post.id" class="btn btn-success ajax">Done&nbsp;<i class="glyphicon glyphicon-ok"></i></button>
+					} else {
+						<button type="button" data-button="@post.id" class="btn btn-primary ajax">Done</button>
+					}
+				}
+				
 				<a href="/workouts/@post.id" class="btn btn-primary">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 				
 				<hr>
@@ -69,7 +80,7 @@
 	</div>
 	
 	<script type="text/javascript">
-		$("div.post_content").text(function(index, currentText) {
+		/*$("div.post_content").text(function(index, currentText) {
 			
 			var charLimit = 100;
 			if(currentText.length > charLimit) {
@@ -78,6 +89,38 @@
 			}
 			
 			return currentText;
+		});*/
+		
+		$(document).ready(function()
+		{
+			$(".btn.btn-primary.ajax").click(function()
+				{
+					var btn = $(this);
+				    //btn.button('loading');
+					var data = btn.attr('data-button');
+					var formData = {postId:data};
+					$.ajax(
+					{
+						url : "/workouts/attend",
+						type: "POST",
+						data : formData,
+						success: function(data, textStatus, jqXHR)
+						{
+							if(!btn.hasClass('btn-success')) {
+								btn.addClass('btn-success').attr('disabled', 'disabled')
+									.append('&nbsp;')
+								    .append($('<i></i>')
+							        .addClass('glyphicon glyphicon-ok')
+							    )
+							}
+						},
+						error: function(jqXHR, textStatus, errorThrown)
+						{
+							// TODO
+							alert('Error ' + textStatus + ' ' + errorThrown);
+						}
+					});
+				});
 		});
 	</script>
 }

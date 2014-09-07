@@ -11,7 +11,7 @@ import java.io.Serializable;
 //@Entity
 //@Table(name = "athlete")
 //@DiscriminatorValue("athlete")
-public class Athlete implements Serializable {
+public class AthleteDetails implements Serializable {
 
 	/** Serial version. */
 	private static final long serialVersionUID = 3950898570919998421L;

@@ -1,8 +1,11 @@
 package controllers;
 
 import java.util.Date;
+import java.util.Map;
 
 import model.blog.Post;
+import model.blog.Post.PostType;
+import model.result.Attendance;
 import model.user.User;
 import play.data.Form;
 import play.db.jpa.Transactional;
@@ -16,6 +19,7 @@ import views.html.blog.create;
 import views.html.blog.edit;
 import views.html.blog.list;
 import views.html.blog.view;
+import dao.AttendanceDAO;
 import dao.PostDAO;
 
 public class BlogController extends Controller {
@@ -46,6 +50,17 @@ public class BlogController extends Controller {
 	
 	@Transactional
 	public static Result save() {
+		
+		Result result = save(PostType.SIMPLE);
+		if(null != result) {
+			return result;
+		}
+		
+		flash("success", "Post has been created");
+		return redirect("/workouts");
+	}
+	
+	protected static <T extends Post> Result save(PostType type) {
 		Form<Post> form = Form.form(Post.class).bindFromRequest();
 		if (form.hasErrors()) {
 			return badRequest(create.render(form));
@@ -53,6 +68,7 @@ public class BlogController extends Controller {
 		
 		Post post = form.get();
 		post.date = new Date();
+		post.type = type;
 		
 		User user = Identity.getAuthenticatedUser();
 		
@@ -73,12 +89,24 @@ public class BlogController extends Controller {
 		}
 		
 		PostDAO.save(post);
-		flash("success", "Workout has been created");
-		return redirect("/workouts");
+		
+		// Yeah ... null means OK 
+		return null;
 	}
 	
 	@Transactional
 	public static Result update(Long id) {
+		
+		Result result = update(id, PostType.SIMPLE);
+		if(null != result) {
+			return result;
+		}
+		
+		flash("success", "Post has been updated");
+		return redirect("/workouts/" + id);
+	}
+	
+	protected static Result update(Long id, PostType type) {
 		Form<Post> form = Form.form(Post.class).bindFromRequest();
 		if (form.hasErrors()) {
 			return badRequest(edit.render(form));
@@ -87,8 +115,47 @@ public class BlogController extends Controller {
 		Post post = form.get();
 		post.id = id;
 		PostDAO.updateContent(post);
-		flash("success", "Workout has been updated");
-		return redirect("/workouts/" + id);
+
+		// Yeah ... null means OK 
+		return null;
+	}
+	
+	@Transactional
+	public static Result attend() {
+		
+		Map<String,String[]> values = request().body().asFormUrlEncoded();
+		
+		String[] data = values.get("postId");
+		
+		if(null == data || data.length == 0) {
+			return badRequest("No post data found");
+		}
+		
+		Long postId = Long.parseLong(data[0]);
+			
+		if(null == postId) {
+			return badRequest("No post data found");
+		}
+		
+		User user = Identity.getAuthenticatedUser();
+		
+		if(null == user) {
+			return badRequest("Please login");
+		}
+		
+		Post post = PostDAO.find(postId);
+		
+		Attendance attend = new Attendance();
+		attend.participant = user;
+		attend.subject = post;
+		
+		AttendanceDAO.save(attend);
+
+		return ok();
+	}
+	
+	public static boolean isAttendee(Post post) {
+		return AttendanceDAO.isAttendee(post, Identity.getAuthenticatedUser());
 	}
 
 }

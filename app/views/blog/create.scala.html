@@ -8,7 +8,7 @@
     
     <h1>Add a workout</h1>
     
-    @form(routes.BlogController.save, 'name -> "postForm", 'onsubmit -> "loadVal();", 'enctype -> "multipart/form-data") {
+    @form(routes.WODController.save, 'name -> "postForm", 'onsubmit -> "loadVal();", 'enctype -> "multipart/form-data") {
 	
 		@inputText(postForm("title"), '_label -> "Title", 'type -> "title", 'class -> "form-control")
 		

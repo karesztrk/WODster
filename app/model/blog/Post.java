@@ -17,8 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import play.data.validation.Constraints.Required;
 import model.user.User;
+import play.data.validation.Constraints.Required;
 
 @Entity
 @Table(name = "post")
@@ -47,6 +47,13 @@ public class Post implements Serializable {
 	
 	@OneToMany(mappedBy="post", cascade=CascadeType.ALL)
 	public List<Comment> comments;
+	
+	public enum PostType {
+		SIMPLE,
+		WOD
+	}
+	
+	public PostType type;
 	
 	public void addComment(String author, String content) {
 		

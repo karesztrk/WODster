@@ -9,7 +9,7 @@
    
     <h1>Edit a workout</h1>
     
-    @form(routes.BlogController.update(id), 'name -> "postForm", 'onsubmit -> "loadVal();") {
+    @form(routes.WODController.update(id), 'name -> "postForm", 'onsubmit -> "loadVal();") {
 	
 		@inputText(postForm("title"), '_label -> "Title", 'type -> "title", 'class -> "form-control")
 		
