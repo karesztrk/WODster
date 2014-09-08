@@ -13,6 +13,8 @@
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     </head>
 <body>
 	<script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
@@ -37,7 +39,7 @@
 				<ul class="nav navbar-nav">
 					<li @if(menu.equals("")) {class="active"}"><a href="#">Home</a></li>
 					<li @if(menu.equals("wod")) {class="active"}"><a href="/workouts">WODs</a></li>
-					<li @if(menu.equals("box")) {class="active"}"><a href="/box">Browse boxes</a></li>
+					<!-- <li @if(menu.equals("box")) {class="active"}"><a href="/box">Browse boxes</a></li>  -->
 					<li @if(menu.equals("about")) {class="active"}"><a href="#about">About</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">

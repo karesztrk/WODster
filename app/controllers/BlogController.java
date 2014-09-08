@@ -1,10 +1,12 @@
 package controllers;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Map;
 
 import model.blog.Post;
 import model.blog.Post.PostType;
+import model.blog.Comment;
 import model.result.Attendance;
 import model.user.User;
 import play.data.Form;
@@ -19,8 +21,10 @@ import views.html.blog.create;
 import views.html.blog.edit;
 import views.html.blog.list;
 import views.html.blog.view;
+import views.html.blog.comments;
 import dao.AttendanceDAO;
 import dao.PostDAO;
+import play.Logger;
 
 public class BlogController extends Controller {
 
@@ -158,4 +162,43 @@ public class BlogController extends Controller {
 		return AttendanceDAO.isAttendee(post, Identity.getAuthenticatedUser());
 	}
 
+	@Transactional
+	public static Result comment() throws UnsupportedEncodingException {	
+		Map<String,String[]> values = request().body().asFormUrlEncoded();
+		
+		String[] postData = values.get("postId");
+		String[] contentData = values.get("content");
+		
+		if(null == postData || postData.length == 0) {
+			return badRequest("No post data found");
+		}
+		
+		if(null == contentData || contentData.length == 0) {
+			return badRequest("No contentData data found");
+		}
+		
+		User user = Identity.getAuthenticatedUser();
+		
+		if(null == user) {
+			return badRequest("Please login");
+		}
+		
+		Long postId = Long.parseLong(postData[0]);
+		String content = new String(contentData[0].getBytes(), "UTF-8");
+			
+		if(null == postId) {
+			return badRequest("No post data found");
+		}
+		
+		Post post = PostDAO.find(postId);
+		post.addComment(user, content);
+		
+		PostDAO.save(post);
+		for(Comment c : post.comments) {
+			Logger.info(c.content);
+		}
+
+		return ok(comments.render(post));
+	}
+	
 }

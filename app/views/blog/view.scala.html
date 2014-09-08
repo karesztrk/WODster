@@ -31,18 +31,34 @@
 			
 			@if(util.asset.AssetUtils.isFileExist(post.image)) {
 				<img alt="Post image" src="@routes.Assets.at(post.image)"  class="img-responsive">
-			} else {
-				<img alt="Post image" src="http://placehold.it/900x300" class="img-responsive">
+				
+				<hr>
 			}
-			
-			<hr>
-			
+
 			<!-- Post Content -->
 			<div class="post_content">@Html(post.content)</div>
 			
 			<hr>
-		    
-		    <a href="@routes.BlogController.list()" class="btn btn-default">Back</a> 
+
+		    <div class="well">
+                <h4>Leave a Comment:</h4>
+                @form(routes.BlogController.comment(), 'id -> "commentForm") {
+                    <div class="form-group">
+                    	<input type="hidden" name="postId" value="@post.id">
+                        <textarea rows="3" name="content" class="form-control"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" type="submit">Submit</button>
+                }
+            </div>
+            
+            <hr/>
+            
+            <div id="comments">
+            	@comments(post)
+            </div>
+            
+            <a href="@routes.BlogController.list()" class="btn btn-default">Back</a> 
+            
 	    </div>
 
 	    <div class="col-md-4">
@@ -63,6 +79,48 @@
 	    </div>
 	</div>
 	
+		<script type="text/javascript">
+		/*$("div.post_content").text(function(index, currentText) {
+			
+			var charLimit = 100;
+			if(currentText.length > charLimit) {
+				var content = currentText.substr(0, 100);
+			    return currentText.substr(0, 100) + '...';
+			}
+			
+			return currentText;
+		});*/
+		
+		$(document).ready(function()
+		{
+			$("#commentForm").submit(function(e)
+				{
+					var form = $(this);
+				    //btn.button('loading');
+					var formData = form.serializeArray();
+					var formURL = form.attr("action");
+					$.ajax(
+					{
+						url : formURL,
+						type: "POST",
+						data : formData,
+						success: function(data, textStatus, jqXHR)
+						{
+							form.trigger("reset");
+							$("#comments").html(data);
+						},
+						error: function(jqXHR, textStatus, errorThrown)
+						{
+							// TODO
+							alert('Error ' + textStatus + ' ' + errorThrown);
+						}
+					});
+					
+					// stop the form from submitting the normal way and refreshing the page
+					e.preventDefault();
+				});
+		});
+	</script>
 }
 
             

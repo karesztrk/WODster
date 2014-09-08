@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -42,7 +41,7 @@ public class Post implements Serializable {
 	
 	public String image;
 	
-	@Lob
+	@org.hibernate.annotations.Type(type="org.hibernate.type.StringClobType")
     public String content;
 	
 	@OneToMany(mappedBy="post", cascade=CascadeType.ALL)
@@ -55,13 +54,17 @@ public class Post implements Serializable {
 	
 	public PostType type;
 	
-	public void addComment(String author, String content) {
+	public void addComment(User author, String content) {
 		
 		if(null == comments) {
 			comments = new ArrayList<Comment>();
 		}
 		
 	    Comment comment = new Comment();
+	    comment.author = author;
+	    comment.content = content;
+	    comment.date = new Date();
+	    comment.post = this;
 	    comments.add(comment);
 	}
 }

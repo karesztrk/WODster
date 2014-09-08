@@ -22,6 +22,7 @@ GET     /workouts                  controllers.BlogController.list(p:Int ?= 0, s
 
 # Blog action
 POST	/workouts/attend	   	   controllers.BlogController.attend()
+POST	/workouts/comment	   	   controllers.BlogController.comment()
 
 # Add workout
 GET     /workouts/new              controllers.BlogController.create()

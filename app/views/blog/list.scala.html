@@ -36,14 +36,14 @@
 				<!-- Preview Image -->
 				@if(util.asset.AssetUtils.isFileExist(post.image)) {
 					<img alt="Post image" src="@routes.Assets.at(post.image)" class="img-responsive img-centered">
-				} else {
-					<img alt="Post image" src="http://placehold.it/900x300" class="img-responsive">
-				}
-				
-				<hr>
+					
+					<hr>
+				} 
 				
 				<!-- Post Content -->
 				<div class="post_content">@Html(post.content)</div>
+				
+				<hr>
 				
 				@if(authenticated) {
 				
