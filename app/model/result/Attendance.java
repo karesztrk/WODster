@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import play.data.validation.Constraints.Required;
 import model.blog.Post;
 import model.user.User;
 
@@ -24,8 +25,13 @@ public class Attendance implements Serializable {
 	public Long id;
 
 	@ManyToOne
+	@Required
 	public User participant;
 	
+    @org.hibernate.annotations.Type(type="org.hibernate.type.StringClobType")
+    public String note;
+	
 	@ManyToOne
+	@Required
 	public Post subject;
 }

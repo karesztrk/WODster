@@ -130,13 +130,15 @@ public class BlogController extends Controller {
 		Map<String,String[]> values = request().body().asFormUrlEncoded();
 		
 		String[] data = values.get("postId");
+		String[] noteData = values.get("note");
 		
 		if(null == data || data.length == 0) {
 			return badRequest("No post data found");
 		}
 		
 		Long postId = Long.parseLong(data[0]);
-			
+		String note = noteData[0];	
+		
 		if(null == postId) {
 			return badRequest("No post data found");
 		}
@@ -152,6 +154,7 @@ public class BlogController extends Controller {
 		Attendance attend = new Attendance();
 		attend.participant = user;
 		attend.subject = post;
+		attend.note = note;
 		
 		AttendanceDAO.save(attend);
 
@@ -184,7 +187,7 @@ public class BlogController extends Controller {
 		}
 		
 		Long postId = Long.parseLong(postData[0]);
-		String content = new String(contentData[0].getBytes(), "UTF-8");
+		String content = contentData[0];
 			
 		if(null == postId) {
 			return badRequest("No post data found");
