@@ -1,30 +1,32 @@
 package controllers;
 
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
 
 import model.blog.Post;
 import model.blog.Post.PostType;
-import model.blog.Comment;
 import model.result.Attendance;
 import model.user.User;
 import play.data.Form;
 import play.db.jpa.Transactional;
+import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import util.asset.AssetUtils;
+import util.exception.EmptyParameterException;
 import util.permission.Identity;
+import views.html.blog.comments;
 import views.html.blog.create;
 import views.html.blog.edit;
 import views.html.blog.list;
 import views.html.blog.view;
-import views.html.blog.comments;
 import dao.AttendanceDAO;
 import dao.PostDAO;
-import play.Logger;
 
 public class BlogController extends Controller {
 
@@ -32,7 +34,7 @@ public class BlogController extends Controller {
 	public static Result list(int page, String sortBy, String order,
 			String filter) {
 		return ok(list.render(PostDAO.page(page, 10, sortBy, order, filter),
-				sortBy, order, filter));
+				sortBy, order, filter, Form.form(Attendance.class)));
 	}
 	
 	public static Result create() {
@@ -125,38 +127,44 @@ public class BlogController extends Controller {
 	}
 	
 	@Transactional
+	@BodyParser.Of(util.http.type.parser.SimpleFormParser.class)
 	public static Result attend() {
 		
-		Map<String,String[]> values = request().body().asFormUrlEncoded();
+		util.http.request.SimpleForm values = request().body().as(util.http.request.SimpleForm.class);
 		
-		String[] data = values.get("postId");
-		String[] noteData = values.get("note");
-		
-		if(null == data || data.length == 0) {
-			return badRequest("No post data found");
+		try {
+			String note = values.get("note");
+			String postId = values.getAsRequired("postId");
+			String date = values.getAsRequired("date");
+			
+			User user = Identity.getAuthenticatedUser();
+			
+			if(null == user) {
+				return badRequest("Please login");
+			}
+			
+			Post post = PostDAO.find(Long.parseLong(postId));
+			
+			DateFormat format = new SimpleDateFormat(util.Configuration.DATE_PATTERN);
+			
+			Attendance attend = new Attendance();
+			attend.participant = user;
+			attend.subject = post;
+			attend.note = note;
+
+			attend.date = format.parse(date);
+			
+			AttendanceDAO.save(attend);
+		} catch (EmptyParameterException e) {
+			e.printStackTrace();
+			return badRequest("Required paramter not found when executing 'attend' request: " + e.getParameterName());
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return badRequest("Required parameter contain invalid value");
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return badRequest("Required parameter contain invalid value");
 		}
-		
-		Long postId = Long.parseLong(data[0]);
-		String note = noteData[0];	
-		
-		if(null == postId) {
-			return badRequest("No post data found");
-		}
-		
-		User user = Identity.getAuthenticatedUser();
-		
-		if(null == user) {
-			return badRequest("Please login");
-		}
-		
-		Post post = PostDAO.find(postId);
-		
-		Attendance attend = new Attendance();
-		attend.participant = user;
-		attend.subject = post;
-		attend.note = note;
-		
-		AttendanceDAO.save(attend);
 
 		return ok();
 	}
@@ -166,42 +174,34 @@ public class BlogController extends Controller {
 	}
 
 	@Transactional
+	@BodyParser.Of(util.http.type.parser.SimpleFormParser.class)
 	public static Result comment() throws UnsupportedEncodingException {	
-		Map<String,String[]> values = request().body().asFormUrlEncoded();
+		util.http.request.SimpleForm values = request().body().as(util.http.request.SimpleForm.class);
 		
-		String[] postData = values.get("postId");
-		String[] contentData = values.get("content");
-		
-		if(null == postData || postData.length == 0) {
-			return badRequest("No post data found");
-		}
-		
-		if(null == contentData || contentData.length == 0) {
-			return badRequest("No contentData data found");
-		}
-		
-		User user = Identity.getAuthenticatedUser();
-		
-		if(null == user) {
-			return badRequest("Please login");
-		}
-		
-		Long postId = Long.parseLong(postData[0]);
-		String content = contentData[0];
+		try {
+			String postId = values.getAsRequired("postId");
+			String content = values.getAsRequired("content");
 			
-		if(null == postId) {
-			return badRequest("No post data found");
-		}
+			User user = Identity.getAuthenticatedUser();
+			
+			if(null == user) {
+				return badRequest("Please login");
+			}
+			
+			Post post = PostDAO.find(Long.parseLong(postId));
+			post.addComment(user, content);
+			
+			PostDAO.save(post);
 		
-		Post post = PostDAO.find(postId);
-		post.addComment(user, content);
-		
-		PostDAO.save(post);
-		for(Comment c : post.comments) {
-			Logger.info(c.content);
+			return ok(comments.render(post));
+		} catch (EmptyParameterException e) {
+			e.printStackTrace();
+			return badRequest("Required paramter not found when executing 'attend' request: " + e.getParameterName());
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return badRequest("Required parameter contain invalid value");
 		}
 
-		return ok(comments.render(post));
 	}
 	
 }

@@ -14,7 +14,7 @@ public class WODController extends BlogController {
 		if(null != result) {
 			return result;
 		}
-		
+
 		flash("success", "Workout has been created");
 		return redirect("/workouts");
 	}

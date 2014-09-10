@@ -1,8 +1,9 @@
-@(currentPage: dao.AbstractDAO.Page[model.blog.Post], currentSortBy: String, currentOrder: String, currentFilter: String)
+@(currentPage: dao.AbstractDAO.Page[model.blog.Post], currentSortBy: String, currentOrder: String, currentFilter: String, attendForm: Form[model.result.Attendance])
 
 @import helper._
 @import util.permission.Identity
 @import controllers.BlogController
+@implicitFieldConstructor = @{ FieldConstructor(component.bootstrapInput.render) }
 @authenticated = @{Identity.isAuthenticated()}
 
 @main("wod") {
@@ -89,7 +90,8 @@
 				@form(routes.BlogController.attend(), 'id -> "attendForm") {
 					<div class="modal-body">
 						<input type="hidden" name="postId" id="postId" value="" />
-						<textarea placeholder="Add a note..." rows="3" name="note" class="form-control"></textarea>
+						@textarea(attendForm("note"), '_label -> null, 'placeholder -> "Add a note...", 'class -> "form-control")
+						@inputDate(attendForm("date"), '_label -> null, 'class -> "form-control")
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

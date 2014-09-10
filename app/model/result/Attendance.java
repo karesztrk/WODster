@@ -1,6 +1,7 @@
 package model.result;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,8 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import play.data.format.Formats.DateTime;
 import play.data.validation.Constraints.Required;
+import util.Configuration;
 import model.blog.Post;
 import model.user.User;
 
@@ -28,8 +33,15 @@ public class Attendance implements Serializable {
 	@Required
 	public User participant;
 	
+	public String result;
+	
     @org.hibernate.annotations.Type(type="org.hibernate.type.StringClobType")
     public String note;
+    
+    @Required
+    @DateTime(pattern = Configuration.DATE_PATTERN)
+    @Temporal(TemporalType.DATE)
+    public Date date;
 	
 	@ManyToOne
 	@Required
