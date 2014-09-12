@@ -1,10 +1,12 @@
 package controllers.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.user.User;
 import play.data.validation.Constraints.Required;
-import play.mvc.Controller;
+import play.data.validation.ValidationError;
 import util.security.Security;
 
 public class Login implements Serializable {
@@ -20,18 +22,19 @@ public class Login implements Serializable {
 
 	public String userType;
 
-	// Somehow its invoked ... but cannot see how
-	public String validate() {
-
+	// https://www.playframework.com/documentation/2.2.x/JavaForms
+	public List<ValidationError> validate() {
+		List<ValidationError> errors = new ArrayList<ValidationError>();
+		errors.add(new ValidationError("email", ""));
+		errors.add(new ValidationError("password", "Invalid email or password"));
 		User user = User.findByEmail(email);
+
 		if (null == user) {
-			Controller.flash("error", "Unknown user");
-			return "";
+			return errors;
 		}
 
 		if (!Security.checkPassword(password, user.password)) {
-			Controller.flash("error", "Invalid password");
-			return ""; // means error?
+			return errors;
 		}
 
 		userType = user.getType();

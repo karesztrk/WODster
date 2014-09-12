@@ -1,4 +1,4 @@
-@(loginForm: Form[controllers.entity.Login])
+@(formObject: Form[controllers.entity.Login])
 
 @import helper._
 @import play.i18n.Messages
@@ -6,22 +6,31 @@
 @implicitFieldConstructor = @{ FieldConstructor(component.bootstrapInput.render) } 
 
 @main("") { 
-	@form(routes.Application.authenticate, 'class -> "centered_form") {
-		<h2 class="form-signin-heading" >Please login</h2>
-		@inputText(loginForm("email"), '_label -> null, 'type -> "email", 'placeholder -> "Email address", 'class -> "form-control", '_showHelp -> false)
-		@inputPassword(loginForm("password"), '_label -> null, 'placeholder -> "Password", 'class -> "form-control", '_showHelp -> false)
-		
-		<div class="checkbox">
-			<label>
-				<input type="checkbox" value="remember-me">Remember me
-			</label>
-		</div>
-		
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-	}		
+	@loginForm(formObject);
 	
 	<p class="text-center">
 		Not a member yet? <a href="@routes.Application.signUp()">Sign up now</a>
 	</p>
 
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			$("#loginForm").submit(function(e)
+			{
+				var form = $(this);
+				var formData = form.serializeArray();
+				jsRoutes.controllers.Application.authenticate().ajax({
+					data: formData,
+			        success: function(response) {
+			        	window.location.replace(jsRoutes.controllers.Application.index().url);
+			        },
+			        error: function(response) {
+			            form.html(response.responseText);
+			        }
+			    });
+				// stop the form from submitting the normal way and refreshing the page
+				e.preventDefault();
+			});
+		});
+	</script> 
 }

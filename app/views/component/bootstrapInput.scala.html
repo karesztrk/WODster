@@ -13,4 +13,8 @@
 	@if(!showHelp) {
     	<p class="help-block">@elements.infos.mkString(", ")</p>
     }
+    
+    @if(error) {
+    	<p class="help-block">@elements.errors.mkString(", ")</p>
+    }
 </div>

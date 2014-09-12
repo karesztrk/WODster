@@ -1,6 +1,7 @@
 package controllers;
 
 import model.user.User;
+import play.Routes;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
@@ -9,6 +10,7 @@ import util.security.Security;
 import views.html.index;
 import views.html.login;
 import views.html.register;
+import views.html.loginForm;
 import controllers.entity.Login;
 
 public class Application extends Controller {
@@ -26,14 +28,14 @@ public class Application extends Controller {
 
 	public static Result logout() {
 		session().clear();
-		return login();
+		return index();
 	}
 	
 	@Transactional
 	public static Result authenticate() {
 		Form<Login> form = Form.form(Login.class).bindFromRequest();
 		if (form.hasErrors()) {
-			return badRequest(login.render(form));
+			return badRequest(loginForm.render(form));
 		} else {
 			session().clear();
 			session("email", form.get().email);
@@ -135,4 +137,13 @@ public class Application extends Controller {
 		flash("success", "Workout has been deleted");
 		return ok(index.render());
 	}*/
+	
+	public static Result javascriptRoutes() {
+		response().setContentType("text/javascript"); 
+		return ok(Routes.javascriptRouter("jsRoutes", 
+				
+				routes.javascript.Application.index(),
+				routes.javascript.Application.authenticate()
+		));
+	}
 }

@@ -17,31 +17,34 @@ POST    /register                  	controllers.Application.register()
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
+# JavaScript Routing
+GET     /javascriptRoutes    		controllers.Application.javascriptRoutes()
+
 # Workouts list (look at the default values for pagination parameters)
-GET     /workouts                  controllers.BlogController.list(p:Int ?= 0, s ?= "date", o ?= "desc", f ?= "")
+GET     /workouts                  	controllers.BlogController.list(p:Int ?= 0, s ?= "date", o ?= "desc", f ?= "")
 
 # Blog action
-POST	/workouts/attend	   	   controllers.BlogController.attend()
-POST	/workouts/comment	   	   controllers.BlogController.comment()
+POST	/workouts/attend	   	   	controllers.BlogController.attend()
+POST	/workouts/comment	   	   	controllers.BlogController.comment()
 
 # Add workout
-GET     /workouts/new              controllers.BlogController.create()
-POST    /workouts                  controllers.WODController.save()
+GET     /workouts/new              	controllers.BlogController.create()
+POST    /workouts                  	controllers.WODController.save()
 
 # Edit existing workout
-GET     /workouts/edit/:id         controllers.BlogController.edit(id:Long)
-POST    /workouts/:id              controllers.WODController.update(id:Long)
+GET     /workouts/edit/:id        	controllers.BlogController.edit(id:Long)
+POST    /workouts/:id              	controllers.WODController.update(id:Long)
 
 # View existing workout
-GET     /workouts/:id              controllers.BlogController.view(id:Long)
+GET     /workouts/:id              	controllers.BlogController.view(id:Long)
 
 # Delete a workout
 #POST    /workouts/:id/delete       controllers.Application.delete(id:Long)
 
 # Database init
-GET		/init/users				   controllers.DataGenerator.saveUsers()
-GET		/init/boxes				   controllers.DataGenerator.saveBoxes()
-GET		/init/posts				   controllers.DataGenerator.savePosts()
+GET		/init/users				   	controllers.DataGenerator.saveUsers()
+GET		/init/boxes				  	controllers.DataGenerator.saveBoxes()
+GET		/init/posts				   	controllers.DataGenerator.savePosts()
 
 # Boxes list (look at the default values for pagination parameters)
-GET     /box                  	   controllers.BoxController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /box                  	   	controllers.BoxController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
