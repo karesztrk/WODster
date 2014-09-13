@@ -42,7 +42,7 @@
 
 		    <div class="well">
                 <h4>Leave a Comment:</h4>
-                @form(routes.BlogController.comment(), 'id -> "commentForm") {
+                @form(routes.WODController.comment(), 'id -> "commentForm") {
                     <div class="form-group">
                     	<input type="hidden" name="postId" value="@post.id">
                         <textarea rows="3" name="content" class="form-control"></textarea>
@@ -57,7 +57,7 @@
             	@comments(post)
             </div>
             
-            <a href="@routes.BlogController.list()" class="btn btn-default">Back</a> 
+            <a href="@routes.WODController.list()" class="btn btn-default">Back</a> 
             
 	    </div>
 
@@ -65,7 +65,7 @@
 		<!-- Blog Search Well -->
 			<div class="well">
 			    <h4>WOD Search</h4>
-			    @form(routes.BlogController.list(0, "", "", ""), 'method -> "GET") {
+			    @form(routes.WODController.list(0, "", "", ""), 'method -> "GET") {
 				    <div class="input-group">
 				        <input type="search" name="f" class="form-control" placeholder="Filter by title...">
 				        <span class="input-group-btn">

@@ -2,7 +2,7 @@
 
 @import helper._
 @import util.permission.Identity
-@import controllers.BlogController
+@import controllers.WODController
 @implicitFieldConstructor = @{ FieldConstructor(component.bootstrapInput.render) }
 @authenticated = @{Identity.isAuthenticated()}
 
@@ -48,7 +48,7 @@
 				
 				@if(authenticated) {
 				
-					@if(BlogController.isAttendee(post)) {
+					@if(WODController.isAttendee(post)) {
 						<button disabled="disabled" type="button" data-value="@post.id" class="btn btn-success btn-attended">Done&nbsp;<i class="glyphicon glyphicon-ok"></i></button>
 					} else {
 						<button type="button" data-value="@post.id" class="btn btn-primary btn-attend" data-toggle="modal" data-target="#attendModal">Done</button>
@@ -66,7 +66,7 @@
 		<!-- Blog Search Well -->
 			<div class="well">
 			    <h4>WOD Search</h4>
-			    @form(routes.BlogController.list(0, "", "", ""), 'method -> "GET") {
+			    @form(routes.WODController.list(0, "", "", ""), 'method -> "GET") {
 				    <div class="input-group">
 				        <input type="search" name="f" class="form-control" placeholder="Filter by title..." value="@currentFilter">
 				        <span class="input-group-btn">
@@ -87,7 +87,7 @@
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 					<h4 class="modal-title" id="myModalLabel">Attend</h4>
 				</div>
-				@form(routes.BlogController.attend(), 'id -> "attendForm") {
+				@form(routes.WODController.attend(), 'id -> "attendForm") {
 					<div class="modal-body">
 						<input type="hidden" name="postId" id="postId" value="" />
 						@textarea(attendForm("note"), '_label -> null, 'placeholder -> "Add a note...", 'class -> "form-control")

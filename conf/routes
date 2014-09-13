@@ -21,22 +21,22 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /javascriptRoutes    		controllers.Application.javascriptRoutes()
 
 # Workouts list (look at the default values for pagination parameters)
-GET     /workouts                  	controllers.BlogController.list(p:Int ?= 0, s ?= "date", o ?= "desc", f ?= "")
+GET     /workouts                  	controllers.WODController.list(p:Int ?= 0, s ?= "date", o ?= "desc", f ?= "")
 
 # Blog action
-POST	/workouts/attend	   	   	controllers.BlogController.attend()
-POST	/workouts/comment	   	   	controllers.BlogController.comment()
+POST	/workouts/attend	   	   	controllers.WODController.attend()
+POST	/workouts/comment	   	   	controllers.WODController.comment()
 
 # Add workout
-GET     /workouts/new              	controllers.BlogController.create()
+GET     /workouts/new              	controllers.WODController.create()
 POST    /workouts                  	controllers.WODController.save()
 
 # Edit existing workout
-GET     /workouts/edit/:id        	controllers.BlogController.edit(id:Long)
+GET     /workouts/edit/:id        	controllers.WODController.edit(id:Long)
 POST    /workouts/:id              	controllers.WODController.update(id:Long)
 
 # View existing workout
-GET     /workouts/:id              	controllers.BlogController.view(id:Long)
+GET     /workouts/:id              	controllers.WODController.view(id:Long)
 
 # Delete a workout
 #POST    /workouts/:id/delete       controllers.Application.delete(id:Long)
