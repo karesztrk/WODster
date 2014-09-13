@@ -45,6 +45,9 @@ GET     /workouts/:id              	controllers.WODController.view(id:Long)
 GET		/init/users				   	controllers.DataGenerator.saveUsers()
 GET		/init/boxes				  	controllers.DataGenerator.saveBoxes()
 GET		/init/posts				   	controllers.DataGenerator.savePosts()
+GET		/init/records				controllers.DataGenerator.saveRecords()
 
 # Boxes list (look at the default values for pagination parameters)
 GET     /box                  	   	controllers.BoxController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+
+GET		/journal/records			controllers.PersonalRecordController.list()

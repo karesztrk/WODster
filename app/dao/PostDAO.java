@@ -38,4 +38,12 @@ public class PostDAO extends AbstractDAO {
 	public static Post find(Long id) {
 		return findById(Post.class, id);
 	}
+	
+	public static Post find(String title) {
+		Post post = (Post) JPA.em()
+            .createQuery("from Post p where lower(p.title) like :title")
+            .setParameter("title", "%" + title.toLowerCase() + "%")
+            .getSingleResult();
+		return post;
+	}
 }

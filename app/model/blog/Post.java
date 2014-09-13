@@ -48,8 +48,9 @@ public class Post implements Serializable {
 	public List<Comment> comments;
 	
 	public enum PostType {
-		SIMPLE,
-		WOD
+		BLOG_POST,
+		WOD,
+		EXERCISE
 	}
 	
 	public PostType type;
