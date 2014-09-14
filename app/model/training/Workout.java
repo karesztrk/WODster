@@ -1,4 +1,4 @@
-package model.journal;
+package model.training;
 
 import java.io.Serializable;
 
@@ -9,8 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "exercise")
-public class Exercise implements Serializable {
+@Table(name = "workout")
+public class Workout implements Serializable {
 
 	/** Serial version. */
 	private static final long serialVersionUID = -4477614447315278372L;
@@ -20,10 +20,21 @@ public class Exercise implements Serializable {
 	public Long id;
 	
 	public String name;
+	
+	public String description;
+	
+	public Workout() {
+		super();
+	}
 
-	public Exercise(String name) {
+	public Workout(String name) {
 		super();
 		this.name = name;
 	}
 	
+	public Workout(String name, String description) {
+		super();
+		this.name = name;
+		this.description = description;
+	}
 }

@@ -50,4 +50,4 @@ GET		/init/records				controllers.DataGenerator.saveRecords()
 # Boxes list (look at the default values for pagination parameters)
 GET     /box                  	   	controllers.BoxController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
-GET		/journal/records			controllers.PersonalRecordController.list()
+GET		/journal/records			controllers.PersonalRecordController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")

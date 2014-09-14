@@ -2,7 +2,7 @@ package dao;
 
 import java.util.List;
 
-import model.Workout;
+import model.training.Workout;
 import play.db.jpa.JPA;
 
 public class WorkoutDAO extends AbstractDAO {
@@ -24,15 +24,6 @@ public class WorkoutDAO extends AbstractDAO {
 			.executeUpdate();
 	}
 
-    /**
-     * Return a page of computer
-     *
-     * @param page Page to display
-     * @param pageSize Number of computers per page
-     * @param sortBy Computer property used for sorting
-     * @param order Sort order (either or asc or desc)
-     * @param filter Filter applied on the name column
-     */
 	public static Page<Workout> page(int page, int pageSize, String sortBy, String order, String filter) {
         if(page < 1) page = 1;
         Long total = (Long)JPA.em()
@@ -49,4 +40,11 @@ public class WorkoutDAO extends AbstractDAO {
         return new Page<Workout>(data, total, page, pageSize);
     }
 	
+	public static Workout find(String name) {
+		Workout workout = (Workout) JPA.em()
+            .createQuery("from Workout w where lower(w.name) like :name")
+            .setParameter("name", "%" + name.toLowerCase() + "%")
+            .getSingleResult();
+		return workout;
+	}
 }

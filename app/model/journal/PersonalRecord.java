@@ -12,8 +12,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Formula;
+
 import play.data.validation.Constraints.Required;
 import model.blog.Post;
+import model.training.Workout;
 import model.user.User;
 
 @Entity
@@ -33,12 +36,20 @@ public class PersonalRecord implements Serializable {
 	
 	@Required
 	public Long result;
-
+	
 	@OneToOne
-	public Post post;
+	@Required
+	public Workout workout;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Required
 	public Date date;
+	
+	@Formula(" (select w.name from workout w where w.id = workout_id) ") 
+	public String name;
+	
+	/** Optional field to show the blog post when the record reached. */
+	@OneToOne
+	public Post post;
 	
 }

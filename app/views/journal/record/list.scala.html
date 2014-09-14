@@ -1,10 +1,90 @@
-@()
+@(currentPage: dao.AbstractDAO.Page[model.journal.PersonalRecord], currentSortBy: String, currentOrder: String, currentFilter: String)
 
 @import helper._
 
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@link(newPage:Int, newSortBy:String) = @{
+    
+    var sortBy = currentSortBy
+    var order = currentOrder
+    
+    if(newSortBy != null) {
+        sortBy = newSortBy
+        if(currentSortBy == newSortBy) {
+            if(currentOrder == "asc") {
+                order = "desc"
+            } else {
+                order = "asc"
+            }
+        } else {
+            order = "asc"
+        }
+    }
+    
+    // Generate the link
+    routes.PersonalRecordController.list(newPage, sortBy, order, currentFilter)
+    
+}
+
+@**********************************
+* Helper generating table headers *
+***********************************@
+@header(key:String, title:String) = {
+    <th class="@key.replace(".","_") header @if(currentSortBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}">
+        <a href="@link(0, key)">@title</a>
+    </th>
+}
+
 @main("journal") {
     
-    <p> Hello journal/records</p>
+    <h1>Personal Records</h1>
+    
+    <table class="table table-striped">
+	    <thead>
+	        <tr>
+	            @header("name", "Name")
+	            @header("date", "Date")
+	            @header("description", "Result")
+	        </tr>
+	    </thead>
+	    <tbody>
+	
+	        @for(record <- currentPage.getList) {
+	            <tr>
+	                <td><a href="#">@record.workout.name</a></td>
+	                <td>@record.date.format("dd MMM yyyy")</td>
+	                <td>@record.result</td>
+	            </tr>
+	        }
+	
+	    </tbody>
+	</table>
+	
+	<div id="pagination" class="pager">
+	    <ul>
+	        @if(currentPage.hasPrev) {
+	            <li>
+	                <a href="@link(currentPage.getPageIndex - 1, null)">Previous</a>
+	            </li>
+	        } else {
+	            <li class="disabled">
+	                <a>Previous</a>
+	            </li>
+	        }
+	       
+	        @if(currentPage.hasNext) {
+	            <li>
+	                <a href="@link(currentPage.getPageIndex + 1, null)">Next</a>
+	            </li>
+	        } else {
+	            <li>
+	                <a>Next</a>
+	            </li>
+	        }
+	    </ul>
+	</div>
 }
 
             
