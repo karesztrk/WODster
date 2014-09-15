@@ -50,4 +50,11 @@ GET		/init/records				controllers.DataGenerator.saveRecords()
 # Boxes list (look at the default values for pagination parameters)
 GET     /box                  	   	controllers.BoxController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
+# List the records
 GET		/journal/records			controllers.PersonalRecordController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+
+# Delete a record
+POST    /journal/records/:id/delete	controllers.PersonalRecordController.delete(id:Long)
+
+# Add record
+GET     /journal/records/new        controllers.PersonalRecordController.create()

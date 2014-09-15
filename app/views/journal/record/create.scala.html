@@ -1,0 +1,12 @@
+@(postForm: Form[model.journal.PersonalRecord])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(component.bootstrapInput.render) }
+
+@main("journal") { 
+    
+    <h1>Add a new record</h1>
+    
+    <a href="@routes.PersonalRecordController.list()" class="btn btn-default">Cancel</a> 
+}

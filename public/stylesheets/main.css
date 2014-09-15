@@ -97,3 +97,11 @@ img.img-centered {
 	display: block;
 	margin: 0 auto;
 }
+
+.table form {
+	padding: 0px;
+}
+
+.table form button {
+	padding: 0px;
+}

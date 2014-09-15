@@ -25,4 +25,10 @@ public class PersonalRecordDAO extends AbstractDAO {
             .getResultList();
         return new Page<PersonalRecord>(data, total, page, pageSize);
 	}
+	
+	public static void delete(Long id) {
+		JPA.em().createQuery("delete from PersonalRecord p where p.id = :id")
+			.setParameter("id", id)
+			.executeUpdate();
+	}
 }

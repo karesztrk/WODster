@@ -32,7 +32,7 @@ public abstract class AbstractDAO implements Serializable {
 	}
 	
 	public static <T extends Serializable, ID extends Serializable> T findById(Class<T> entityType, ID id) {
-		return JPA.em().find(entityType, id);
+		return JPA.em().find(entityType, id); 
 	}
 	
 	/**
