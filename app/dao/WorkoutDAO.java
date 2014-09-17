@@ -40,12 +40,13 @@ public class WorkoutDAO extends AbstractDAO {
         return new Page<Workout>(data, total, page, pageSize);
     }
 	
-	public static Workout find(String title) {
-		Workout workout = (Workout) JPA.em()
+	@SuppressWarnings("unchecked")
+	public static List<Workout> find(String title) {
+		List<Workout> workouts = (List<Workout>) JPA.em()
             .createQuery("from Workout w where lower(w.title) like :title")
             .setParameter("title", "%" + title.toLowerCase() + "%")
-            .getSingleResult();
-		return workout;
+            .getResultList();
+		return workouts;
 	}
 	
 	public static void updateContent(Workout workout) {

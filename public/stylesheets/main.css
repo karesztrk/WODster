@@ -1,43 +1,4 @@
-body {
-	padding-top: 50px;
-}
 
-p {
-    margin: 0 0 10px;
-}
-
-form {
-    padding: 15px;
-}
-
-input.form-control {
-	width: 300px;
-}
-
-.centered_form {
-    margin: 0 auto;
-    max-width: 330px;
-    padding: 15px;
-}
-
-.starter-template {
-	padding: 40px 15px;
-	text-align: center;
-}
-
-.alert {
-	margin-top: 20px;
-}
-
-.main-container {
-	margin-top: 20px;
-}
-
-.content{
-	width: 80%;
-	margin: 0 auto;
-	margin-top: 50px;
-}
 
 #editor {
 	max-height: 250px;

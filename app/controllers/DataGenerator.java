@@ -105,8 +105,8 @@ public class DataGenerator extends Controller {
 		
 		PersonalRecord mary = new PersonalRecord();
 		mary.date = new Date();
-		mary.post = PostDAO.find("Mary");
-		mary.workout = WorkoutDAO.find("Mary");
+		mary.post = PostDAO.find("Mary").get(0);
+		mary.workout = WorkoutDAO.find("Mary").get(0);
 		mary.result = 300L;
 		mary.user = UserDAO.find("torok.karoly.krisztian@gmail.com");
 

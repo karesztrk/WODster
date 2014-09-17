@@ -74,6 +74,10 @@ public abstract class AbstractDAO implements Serializable {
         }
         
         public String getDisplayXtoYofZ() {
+        	if(0 == totalRowCount) {
+        		return ""; 
+        	}
+        	
             int start = ((pageIndex - 1) * pageSize + 1);
             int end = start + Math.min(pageSize, list.size()) - 1;
             return start + " to " + end + " of " + totalRowCount;

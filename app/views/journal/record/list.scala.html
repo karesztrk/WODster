@@ -46,7 +46,7 @@
 		<a href="@routes.PersonalRecordController.create()"> <button class="btn btn-primary">New <span class="glyphicon glyphicon-plus"></span></button></a>
 	}
     
-    <table class="table table-hover">
+    <table class="table table-striped table-bordered dataTable">
 	    <thead>
 	        <tr>
 	            @header("name", "Name")
@@ -73,29 +73,27 @@
 	    </tbody>
 	</table>
 	
-	<div id="pagination" class="pager">
-	    <ul>
-	        @if(currentPage.hasPrev) {
-	            <li>
-	                <a href="@link(currentPage.getPageIndex - 1, null)">Previous</a>
-	            </li>
-	        } else {
-	            <li class="disabled">
-	                <a>Previous</a>
-	            </li>
-	        }
-	       
-	        @if(currentPage.hasNext) {
-	            <li>
-	                <a href="@link(currentPage.getPageIndex + 1, null)">Next</a>
-	            </li>
-	        } else {
-	            <li>
-	                <a>Next</a>
-	            </li>
-	        }
-	    </ul>
-	</div>
+	<div class="row dt-rb">
+		<div class="col-sm-6">
+			<div class="dataTables_info" id="table-1_info">
+				@currentPage.getDisplayXtoYofZ()
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="dataTables_paginate paging_bootstrap">
+				<ul class="pagination">
+		           <li class="@if(!currentPage.hasPrev) {disabled}">
+		               <a href="@link(currentPage.getPageIndex - 1, null)">Previous</a>
+		           </li>
+			        
+		            <li class="@if(!currentPage.hasNext) {disabled}">
+		               <a href="@link(currentPage.getPageIndex + 1, null)">Next</a>
+		            </li>
+			    </ul>
+		    </div>
+	    </div>
+    </div>
+	
 }
 
             
