@@ -1,14 +1,13 @@
 package controllers;
 
-import model.blog.Post;
+import model.journal.PersonalRecord;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.journal.record.list;
 import views.html.journal.record.create;
+import views.html.journal.record.list;
 import dao.PersonalRecordDAO;
-import model.journal.PersonalRecord;
 
 public class PersonalRecordController extends Controller {
 
@@ -27,5 +26,9 @@ public class PersonalRecordController extends Controller {
 	public static Result create() {
 		Form<PersonalRecord> form = Form.form(PersonalRecord.class);
 		return ok(create.render(form));
+	}
+	
+	public static Result save() {
+		return ok();
 	}
 }

@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -21,6 +23,7 @@ import play.data.validation.Constraints.Required;
 
 @Entity
 @Table(name = "post")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Post implements Serializable {
 
 	/** Serial version. */
@@ -46,15 +49,7 @@ public class Post implements Serializable {
 	
 	@OneToMany(mappedBy="post", cascade=CascadeType.ALL)
 	public List<Comment> comments;
-	
-	public enum PostType {
-		BLOG_POST,
-		WOD,
-		EXERCISE
-	}
-	
-	public PostType type;
-	
+
 	public void addComment(User author, String content) {
 		
 		if(null == comments) {

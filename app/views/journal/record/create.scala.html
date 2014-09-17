@@ -8,5 +8,15 @@
     
     <h1>Add a new record</h1>
     
-    <a href="@routes.PersonalRecordController.list()" class="btn btn-default">Cancel</a> 
+    @form(routes.PersonalRecordController.save()) {
+    	
+    	
+    	
+    	<div class="actions"> 
+			<input type="submit" value="Save" class="btn btn-primary">
+			<a href="@routes.PersonalRecordController.list()" class="btn btn-default">Cancel</a> 
+		</div>
+    }
+    
+    
 }

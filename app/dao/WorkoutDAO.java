@@ -27,12 +27,12 @@ public class WorkoutDAO extends AbstractDAO {
 	public static Page<Workout> page(int page, int pageSize, String sortBy, String order, String filter) {
         if(page < 1) page = 1;
         Long total = (Long)JPA.em()
-            .createQuery("select count(w) from Workout w where lower(w.name) like ?")
+            .createQuery("select count(w) from Workout w where lower(w.title) like ?")
             .setParameter(1, "%" + filter.toLowerCase() + "%")
             .getSingleResult();
         @SuppressWarnings("unchecked")
 				List<Workout> data = JPA.em()
-            .createQuery("from Workout w where lower(w.name) like ? order by w." + sortBy + " " + order)
+            .createQuery("from Workout w where lower(w.title) like ? order by w." + sortBy + " " + order)
             .setParameter(1, "%" + filter.toLowerCase() + "%")
             .setFirstResult((page - 1) * pageSize)
             .setMaxResults(pageSize)
@@ -40,11 +40,20 @@ public class WorkoutDAO extends AbstractDAO {
         return new Page<Workout>(data, total, page, pageSize);
     }
 	
-	public static Workout find(String name) {
+	public static Workout find(String title) {
 		Workout workout = (Workout) JPA.em()
-            .createQuery("from Workout w where lower(w.name) like :name")
-            .setParameter("name", "%" + name.toLowerCase() + "%")
+            .createQuery("from Workout w where lower(w.title) like :title")
+            .setParameter("title", "%" + title.toLowerCase() + "%")
             .getSingleResult();
 		return workout;
+	}
+	
+	public static void updateContent(Workout workout) {
+		JPA.em()
+			.createQuery("update Workout w set w.title = :title, w.content = :content where w.id = :id")
+			.setParameter("id", workout.id)
+			.setParameter("title", workout.title)
+			.setParameter("content", workout.content)
+			.executeUpdate();
 	}
 }

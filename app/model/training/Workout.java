@@ -1,40 +1,32 @@
 package model.training;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
+
+import model.blog.Post;
 
 @Entity
 @Table(name = "workout")
-public class Workout implements Serializable {
+public class Workout extends Post {
 
 	/** Serial version. */
 	private static final long serialVersionUID = -4477614447315278372L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
-	public Long id;
 	
-	public String name;
+	public boolean hero;
 	
-	public String description;
+	public boolean personal;
 	
 	public Workout() {
 		super();
 	}
 
 	public Workout(String name) {
-		super();
-		this.name = name;
+		super.title = name;
 	}
 	
 	public Workout(String name, String description) {
 		super();
-		this.name = name;
-		this.description = description;
+		super.title = name;
+		super.content = description;
 	}
 }

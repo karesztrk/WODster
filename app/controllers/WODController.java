@@ -6,87 +6,39 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import dao.AttendanceDAO;
-import dao.PostDAO;
-import model.blog.Post;
-import model.blog.Post.PostType;
+import model.training.Workout;
 import model.result.Attendance;
 import model.user.User;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.BodyParser;
-import play.mvc.Result;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
+import play.mvc.Result;
 import util.asset.AssetUtils;
 import util.exception.EmptyParameterException;
 import util.permission.Identity;
+import views.html.wod.comments;
 import views.html.wod.create;
 import views.html.wod.edit;
 import views.html.wod.list;
 import views.html.wod.view;
-import views.html.wod.comments;
+import dao.AttendanceDAO;
+import dao.WorkoutDAO;
 
 public class WODController extends BlogController {
 
 	@Transactional
 	public static Result save() {
 		
-		Result result = save(PostType.WOD);
-		
-		if(null != result) {
-			return result;
-		}
-
-		flash("success", "Workout has been created");
-		return redirect("/workouts");
-	}
-	
-	@Transactional
-	public static Result update(Long id) {
-		Result result = update(id, PostType.WOD);
-		if(null != result) {
-			return result;
-		}
-		
-		flash("success", "Workout has been updated");
-		return redirect("/workouts/" + id);
-	}
-	
-	@Transactional
-	public static Result list(int page, String sortBy, String order,
-			String filter) {
-		return ok(list.render(PostDAO.page(page, 10, sortBy, order, filter),
-				sortBy, order, filter, Form.form(Attendance.class)));
-	}
-	
-	public static Result create() {
-		Form<Post> form = Form.form(Post.class);
-		return ok(create.render(form));
-	}
-	
-	@Transactional
-	public static Result view(Long id) {
-		Post post = PostDAO.find(id);
-		return ok(view.render(post));
-	}
-	
-	@Transactional
-	public static Result edit(Long id) {
-		Form<Post> form = Form.form(Post.class).fill(PostDAO.find(id));
-		return ok(edit.render(form));
-	}
-	
-	protected static <T extends Post> Result save(PostType type) {
-		Form<Post> form = Form.form(Post.class).bindFromRequest();
+		Form<Workout> form = Form.form(Workout.class).bindFromRequest();
 		if (form.hasErrors()) {
 			return badRequest(create.render(form));
 		}
 		
-		Post post = form.get();
+		Workout post = form.get();
 		post.date = new Date();
-		post.type = type;
-		
+
 		User user = Identity.getAuthenticatedUser();
 		
 		if(null == user) {
@@ -105,24 +57,49 @@ public class WODController extends BlogController {
 			post.image = fileName;
 		}
 		
-		PostDAO.save(post);
-		
-		// Yeah ... null means OK 
-		return null;
+		WorkoutDAO.save(post);
+
+		flash("success", "Workout has been created");
+		return redirect("/workouts");
 	}
 	
-	protected static Result update(Long id, PostType type) {
-		Form<Post> form = Form.form(Post.class).bindFromRequest();
+	@Transactional
+	public static Result update(Long id) {
+		Form<Workout> form = Form.form(Workout.class).bindFromRequest();
 		if (form.hasErrors()) {
 			return badRequest(edit.render(form));
 		}
 		
-		Post post = form.get();
+		Workout post = form.get();
 		post.id = id;
-		PostDAO.updateContent(post);
-
-		// Yeah ... null means OK 
-		return null;
+		WorkoutDAO.updateContent(post);
+		
+		flash("success", "Workout has been updated");
+		return redirect("/workouts/" + id);
+	}
+	
+	@Transactional
+	public static Result list(int page, String sortBy, String order,
+			String filter) {
+		return ok(list.render(WorkoutDAO.page(page, 10, sortBy, order, filter),
+				sortBy, order, filter, Form.form(Attendance.class)));
+	}
+	
+	public static Result create() {
+		Form<Workout> form = Form.form(Workout.class);
+		return ok(create.render(form));
+	}
+	
+	@Transactional
+	public static Result view(Long id) {
+		Workout post = WorkoutDAO.find(id);
+		return ok(view.render(post));
+	}
+	
+	@Transactional
+	public static Result edit(Long id) {
+		Form<Workout> form = Form.form(Workout.class).fill(WorkoutDAO.find(id));
+		return ok(edit.render(form));
 	}
 	
 	@Transactional
@@ -142,7 +119,7 @@ public class WODController extends BlogController {
 				return badRequest("Please login");
 			}
 			
-			Post post = PostDAO.find(Long.parseLong(postId));
+			Workout post = WorkoutDAO.find(Long.parseLong(postId));
 			
 			DateFormat format = new SimpleDateFormat(util.Configuration.DATE_PATTERN);
 			
@@ -169,7 +146,7 @@ public class WODController extends BlogController {
 	}
 	
 	
-	public static boolean isAttendee(Post post) {
+	public static boolean isAttendee(Workout post) {
 		return AttendanceDAO.isAttendee(post, Identity.getAuthenticatedUser());
 	}
 	
@@ -188,10 +165,10 @@ public class WODController extends BlogController {
 				return badRequest("Please login");
 			}
 			
-			Post post = PostDAO.find(Long.parseLong(postId));
+			Workout post = WorkoutDAO.find(Long.parseLong(postId));
 			post.addComment(user, content);
 			
-			PostDAO.save(post);
+			WorkoutDAO.save(post);
 		
 			return ok(comments.render(post));
 		} catch (EmptyParameterException e) {

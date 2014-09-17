@@ -58,3 +58,4 @@ POST    /journal/records/:id/delete	controllers.PersonalRecordController.delete(
 
 # Add record
 GET     /journal/records/new        controllers.PersonalRecordController.create()
+POST    /journal/records            controllers.PersonalRecordController.save()

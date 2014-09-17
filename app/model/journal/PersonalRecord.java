@@ -45,7 +45,7 @@ public class PersonalRecord implements Serializable {
 	@Required
 	public Date date;
 	
-	@Formula(" (select w.name from workout w where w.id = workout_id) ") 
+	@Formula(" (select p.title from post p where p.id = post_id) ") 
 	public String name;
 	
 	/** Optional field to show the blog post when the record reached. */
