@@ -3,6 +3,8 @@ package model.training;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import common.IndexedEnum;
+import play.data.validation.Constraints.Required;
 import model.blog.Post;
 
 @Entity
@@ -15,6 +17,19 @@ public class Workout extends Post {
 	public boolean hero;
 	
 	public boolean personal;
+	
+	public enum ResultMeasurementType implements IndexedEnum {
+		UNKNOWN,
+		TIME,
+		REPETITION;
+
+		public String getValue() {
+			return name();
+		}
+	}
+	
+	@Required
+	public ResultMeasurementType resultType;
 	
 	public Workout() {
 		super();

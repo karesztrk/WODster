@@ -2,6 +2,7 @@
 
 @import play.i18n.Messages
 @import util.permission.Identity
+@authenticated = @{Identity.isAuthenticated()}
 
 <!DOCTYPE html>
 
@@ -30,6 +31,7 @@
 	<script src="@routes.Application.javascriptRoutes" type="text/javascript" ></script>
 	<script src="@routes.Assets.at("javascripts/mvpready-core.js")" type="text/javascript" ></script>
 	<script src="@routes.Assets.at("javascripts/mvpready-admin.js")" type="text/javascript" ></script>
+	<script src="@routes.Assets.at("javascripts/parsley.js")" type="text/javascript" ></script>
 	
 	<div class="wrapper">
 		<header class="navbar navbar-inverse" role="banner">
@@ -46,137 +48,140 @@
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
 						
-						<!-- Notifications -->
+						@if(authenticated) {
+							<!-- Notifications -->
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									<i class="fa fa-bell"></i>
+									<span class="navbar-visible-collapsed">&nbsp;Notifications&nbsp;</span>
+									<!-- <span class="badge badge-primary">3</span>  -->
+								</a>
+							
+								<ul class="dropdown-menu noticebar-menu noticebar-hoverable" role="menu">
+								<li class="nav-header">
+									<div class="pull-left">
+										Notifications
+									</div>
+								
+									<div class="pull-right">
+										<a href="javascript:;">Mark as Read</a>
+									</div>
+								</li>
+				
+							<!-- 
+				          <li>
+				            <a href="#" class="noticebar-item">
+				              <span class="noticebar-item-image">
+				                <i class="fa fa-cloud-upload text-success"></i>
+				              </span>
+				              <span class="noticebar-item-body">
+				                <strong class="noticebar-item-title">Templates Synced</strong>
+				                <span class="noticebar-item-text">20 Templates have been synced to the Mashon Demo instance.</span>
+				                <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 12 minutes ago</span>
+				              </span>
+				            </a>
+				          </li>
+				
+				          <li>
+				            <a href="./page-notifications.html" class="noticebar-item">
+				              <span class="noticebar-item-image">
+				                <i class="fa fa-ban text-danger"></i>
+				              </span>
+				              <span class="noticebar-item-body">
+				                <strong class="noticebar-item-title">Sync Error</strong>
+				                <span class="noticebar-item-text">5 Designs have been failed to be synced to the Mashon Demo instance.</span>
+				                <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 20 minutes ago</span>
+				              </span>
+				            </a>
+				          </li> 
+				          -->
+				
+								<li class="noticebar-menu-view-all">
+									<a href="./page-notifications.html">View All Notifications</a>
+								</li>
+				  			</ul>
+						</li>
+				
+						<!-- Messages -->
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<i class="fa fa-bell"></i>
-								<span class="navbar-visible-collapsed">&nbsp;Notifications&nbsp;</span>
-								<!-- <span class="badge badge-primary">3</span>  -->
+							<a href="./page-notifications.html" class="dropdown-toggle" data-toggle="dropdown">
+								<i class="fa fa-envelope"></i>
+								<span class="navbar-visible-collapsed">&nbsp;Messages&nbsp;</span>
 							</a>
 						
-							<ul class="dropdown-menu noticebar-menu noticebar-hoverable" role="menu">
-							<li class="nav-header">
-								<div class="pull-left">
-									Notifications
-								</div>
-							
-								<div class="pull-right">
-									<a href="javascript:;">Mark as Read</a>
-								</div>
-							</li>
-			
-						<!-- 
-			          <li>
-			            <a href="#" class="noticebar-item">
-			              <span class="noticebar-item-image">
-			                <i class="fa fa-cloud-upload text-success"></i>
-			              </span>
-			              <span class="noticebar-item-body">
-			                <strong class="noticebar-item-title">Templates Synced</strong>
-			                <span class="noticebar-item-text">20 Templates have been synced to the Mashon Demo instance.</span>
-			                <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 12 minutes ago</span>
-			              </span>
-			            </a>
-			          </li>
-			
-			          <li>
-			            <a href="./page-notifications.html" class="noticebar-item">
-			              <span class="noticebar-item-image">
-			                <i class="fa fa-ban text-danger"></i>
-			              </span>
-			              <span class="noticebar-item-body">
-			                <strong class="noticebar-item-title">Sync Error</strong>
-			                <span class="noticebar-item-text">5 Designs have been failed to be synced to the Mashon Demo instance.</span>
-			                <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 20 minutes ago</span>
-			              </span>
-			            </a>
-			          </li> 
-			          -->
-			
-							<li class="noticebar-menu-view-all">
-								<a href="./page-notifications.html">View All Notifications</a>
-							</li>
-			  			</ul>
-					</li>
-			
-					<!-- Messages -->
-					<li class="dropdown">
-						<a href="./page-notifications.html" class="dropdown-toggle" data-toggle="dropdown">
-							<i class="fa fa-envelope"></i>
-							<span class="navbar-visible-collapsed">&nbsp;Messages&nbsp;</span>
-						</a>
-					
-						<ul class="dropdown-menu noticebar-menu noticebar-hoverable" role="menu">                
-							<li class="nav-header">
-								<div class="pull-left">
-									Messages
-								</div>
-							
-								<div class="pull-right">
-									<a href="javascript:;">New Message</a>
-								</div>
-							</li>
-					
-					<!-- 
-					    <li>
-					      <a href="./page-notifications.html" class="noticebar-item">
-					        <span class="noticebar-item-image">
-					          <img src="./img/avatars/avatar-1-md.jpg" style="width: 50px" alt="">
-					      </span>
-					
-					      <span class="noticebar-item-body">
-					        <strong class="noticebar-item-title">New Message</strong>
-					        <span class="noticebar-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
-					        <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 20 minutes ago</span>
-					      </span>
-					    </a>
-					  </li>
-					
-					  <li>
-					    <a href="./page-notifications.html" class="noticebar-item">
-					      <span class="noticebar-item-image">
-					        <img src="./img/avatars/avatar-2-md.jpg" style="width: 50px" alt="">
-					        </span>
-					
-					        <span class="noticebar-item-body">
-					          <strong class="noticebar-item-title">New Message</strong>
-					          <span class="noticebar-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
-					          <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 5 hours ago</span>
-					        </span>
-					      </a>
-					    </li>
-					 -->
-							<li class="noticebar-menu-view-all">
-								<a href="./page-notifications.html">View All Messages</a>
-							</li>
-						</ul>
-					</li>
-			
-					<!-- Alerts -->
-					<li class="dropdown">
-						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-							<i class="fa fa-exclamation-triangle"></i>
-							<span class="navbar-visible-collapsed">&nbsp;Alerts&nbsp;</span>
-						</a>
-					
-						<ul class="dropdown-menu noticebar-menu noticebar-hoverable" role="menu">                
-							<li class="nav-header">
-								<div class="pull-left">
-									Alerts
-								</div>
-							</li>
+							<ul class="dropdown-menu noticebar-menu noticebar-hoverable" role="menu">                
+								<li class="nav-header">
+									<div class="pull-left">
+										Messages
+									</div>
+								
+									<div class="pull-right">
+										<a href="javascript:;">New Message</a>
+									</div>
+								</li>
 						
-							<li class="noticebar-empty">                  
-								<h4 class="noticebar-empty-title">No alerts here.</h4>
-								<p class="noticebar-empty-text">Check out what other makers are doing on Explore!</p>                
-							</li>
-						</ul>
-					</li>
-	
+						<!-- 
+						    <li>
+						      <a href="./page-notifications.html" class="noticebar-item">
+						        <span class="noticebar-item-image">
+						          <img src="./img/avatars/avatar-1-md.jpg" style="width: 50px" alt="">
+						      </span>
+						
+						      <span class="noticebar-item-body">
+						        <strong class="noticebar-item-title">New Message</strong>
+						        <span class="noticebar-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
+						        <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 20 minutes ago</span>
+						      </span>
+						    </a>
+						  </li>
+						
+						  <li>
+						    <a href="./page-notifications.html" class="noticebar-item">
+						      <span class="noticebar-item-image">
+						        <img src="./img/avatars/avatar-2-md.jpg" style="width: 50px" alt="">
+						        </span>
+						
+						        <span class="noticebar-item-body">
+						          <strong class="noticebar-item-title">New Message</strong>
+						          <span class="noticebar-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
+						          <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 5 hours ago</span>
+						        </span>
+						      </a>
+						    </li>
+						 -->
+								<li class="noticebar-menu-view-all">
+									<a href="./page-notifications.html">View All Messages</a>
+								</li>
+							</ul>
+						</li>
+				
+						<!-- Alerts -->
+						<li class="dropdown">
+							<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+								<i class="fa fa-exclamation-triangle"></i>
+								<span class="navbar-visible-collapsed">&nbsp;Alerts&nbsp;</span>
+							</a>
+						
+							<ul class="dropdown-menu noticebar-menu noticebar-hoverable" role="menu">                
+								<li class="nav-header">
+									<div class="pull-left">
+										Alerts
+									</div>
+								</li>
+							
+								<li class="noticebar-empty">                  
+									<h4 class="noticebar-empty-title">No alerts here.</h4>
+									<p class="noticebar-empty-text">Check out what other makers are doing on Explore!</p>                
+								</li>
+							</ul>
+						</li>
+						}
+					
 					</ul>
+					
 					<ul class="nav navbar-nav navbar-right">
 						<li @if(menu.equals("about")) {class="active"}"><a href="#about">About</a></li>
-					 	@if(Identity.isAuthenticated()) {
+					 	@if(authenticated) {
 					 		<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i>&nbsp;<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
@@ -198,121 +203,122 @@
 			</div>
 		</header>
 	
-		<div class="mainnav">
-			<div class="container">
-				<a data-target=".mainnav-collapse" data-toggle="collapse" class="mainnav-toggle">
-					<span class="sr-only">Toggle navigation</span>
-					<i class="fa fa-bars"></i>
-				</a>
-				
-				<nav role="navigation" class="collapse mainnav-collapse">
-					<form role="search" class="mainnav-form pull-right">
-						<input type="text" placeholder="Search" class="form-control input-md mainnav-search-query">
-						<button class="btn btn-sm mainnav-form-btn"><i class="fa fa-search"></i></button>
-					</form>
+		@if(authenticated) {
+			<div class="mainnav">
+				<div class="container">
+					<a data-target=".mainnav-collapse" data-toggle="collapse" class="mainnav-toggle">
+						<span class="sr-only">Toggle navigation</span>
+						<i class="fa fa-bars"></i>
+					</a>
 					
-					<!-- Dashboards -->
-					<ul class="mainnav-menu">
-						<li class="dropdown @if(menu.equals("")) {active}">
-							<a data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#">
-								Dashboards
-								<i class="mainnav-caret"></i>
-							</a>
-	
-							<ul role="menu" class="dropdown-menu">
-								<li>
-									<a href="./index.html">
-										<i class="fa fa-dashboard"></i> 
-										&nbsp;&nbsp;Performance Dashboard
-									</a>
-								</li>
-							
-							</ul>
-						</li>
-					</ul>
-					
-					<!-- WOD -->
-					<ul class="mainnav-menu">
-						<li class="dropdown @if(menu.equals("wod")) {active}">
-							<a data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#">
-								WOD
-								<i class="mainnav-caret"></i>
-							</a>
-							
-							<ul role="menu" class="dropdown-menu">
-								<li>
-									<a href="@routes.WODController.create()">
-										<i class="fa fa-dashboard"></i> 
-										&nbsp;&nbsp;Add a new WOD
-									</a>
-								</li>
-								<li>
-									<a href="@routes.WODController.list()">
-										<i class="fa fa-dashboard"></i> 
-										&nbsp;&nbsp;Show WODs
-									</a>
-								</li>
-							
-							</ul>
-						</li>
-					</ul>
-					
-					<!-- Training journal -->
-					<ul class="mainnav-menu">
-						<li class="dropdown @if(menu.equals("journal")) {active}">
-							<a data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#">
-								Training journal
-								<i class="mainnav-caret"></i>
-							</a>
-							
-							<ul role="menu" class="dropdown-menu">
-								<li>
-									<a href="@routes.PersonalRecordController.list()">
-										<i class="fa fa-dashboard"></i> 
-										&nbsp;&nbsp;Personal records
-									</a>
-								</li>
-							
-							</ul>
-						</li>
-					</ul>
-				</nav>
+					<nav role="navigation" class="collapse mainnav-collapse">
+						<form role="search" class="mainnav-form pull-right">
+							<input type="text" placeholder="Search" class="form-control input-md mainnav-search-query">
+							<button class="btn btn-sm mainnav-form-btn"><i class="fa fa-search"></i></button>
+						</form>
+						
+						<!-- Dashboards -->
+						<ul class="mainnav-menu">
+							<li class="dropdown @if(menu.equals("")) {active}">
+								<a data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#">
+									Dashboards
+									<i class="mainnav-caret"></i>
+								</a>
+		
+								<ul role="menu" class="dropdown-menu">
+									<li>
+										<a href="./index.html">
+											<i class="fa fa-dashboard"></i> 
+											&nbsp;&nbsp;Performance Dashboard
+										</a>
+									</li>
+								
+								</ul>
+							</li>
+						</ul>
+						
+						<!-- WOD -->
+						<ul class="mainnav-menu">
+							<li class="dropdown @if(menu.equals("wod")) {active}">
+								<a data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#">
+									WOD
+									<i class="mainnav-caret"></i>
+								</a>
+								
+								<ul role="menu" class="dropdown-menu">
+									<li>
+										<a href="@routes.WODController.create()">
+											<i class="fa fa-dashboard"></i> 
+											&nbsp;&nbsp;Add a new WOD
+										</a>
+									</li>
+									<li>
+										<a href="@routes.WODController.list()">
+											<i class="fa fa-dashboard"></i> 
+											&nbsp;&nbsp;Show WODs
+										</a>
+									</li>
+								
+								</ul>
+							</li>
+						</ul>
+						
+						<!-- Training journal -->
+						<ul class="mainnav-menu">
+							<li class="dropdown @if(menu.equals("journal")) {active}">
+								<a data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#">
+									Training journal
+									<i class="mainnav-caret"></i>
+								</a>
+								
+								<ul role="menu" class="dropdown-menu">
+									<li>
+										<a href="@routes.PersonalRecordController.list()">
+											<i class="fa fa-dashboard"></i> 
+											&nbsp;&nbsp;Personal records
+										</a>
+									</li>
+								
+								</ul>
+							</li>
+						</ul>
+					</nav>
+				</div>
 			</div>
-		</div>
+		} 
 		
 		<div class="content">
-		
-			@if(flash.containsKey("success")) {
-			   <div class="alert alert-success" role="alert">
-			       @flash.get("success")
-			   </div>
-			}
-			
-			@if(flash.containsKey("info")) {
-			   <div class="alert alert-info" role="alert">
-			       @flash.get("info")
-			   </div>
-			}
-		
-			@if(flash.containsKey("warning")) {
-			   <div class="alert alert-warning" role="alert">
-			       @flash.get("info")
-			   </div>
-			}
-			
-			@if(flash.containsKey("error")) {
-		    	<div class="alert alert-danger" role="alert">
-		       		@flash.get("error")
-		       	</div>
-			}
-			
-			@if(flash.containsKey("welcome")) {
-			   <div class="alert alert-info">
-			       <strong>@Messages.get("flash.welcome." + session.get("userType").toLowerCase())</strong> @Messages.get("flash.welcome.general")
-			   </div>
-			}  
-			
 			<div class="container">
+				@if(flash.containsKey("success")) {
+				   <div class="alert alert-success" role="alert">
+				       @flash.get("success")
+				   </div>
+				}
+				
+				@if(flash.containsKey("info")) {
+				   <div class="alert alert-info" role="alert">
+				       @flash.get("info")
+				   </div>
+				}
+			
+				@if(flash.containsKey("warning")) {
+				   <div class="alert alert-warning" role="alert">
+				       @flash.get("info")
+				   </div>
+				}
+				
+				@if(flash.containsKey("error")) {
+			    	<div class="alert alert-danger" role="alert">
+			       		@flash.get("error")
+			       	</div>
+				}
+				
+				@if(flash.containsKey("welcome")) {
+				   <div class="alert alert-info">
+				       <strong>@Messages.get("flash.welcome." + session.get("userType").toLowerCase())</strong> @Messages.get("flash.welcome.general")
+				   </div>
+				}  
+			
 				@content
 			</div>
 		</div>

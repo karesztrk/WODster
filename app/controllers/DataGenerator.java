@@ -70,7 +70,7 @@ public class DataGenerator extends Controller {
 		
 		PostDAO.save(post);
 		
-		post = new Post();
+		post = new Workout();
 		post.date = new Date();
 		post.content = "AMRAP in 20 minutes<br><br><ul><li>5 HSPU</li><li>10 Pistols (5 each leg alternating</li><li>15 Pull ups</li></ul>";
 		post.image = "";

@@ -6,11 +6,19 @@
 @implicitFieldConstructor = @{ FieldConstructor(component.bootstrapInput.render) } 
 
 @main("") { 
-	@loginForm(formObject);
+	<div class="account-wrapper">
+
+		<div class="account-body">
+			@loginForm(formObject)
+		</div>
+		
+		<div class="account-footer">
+			<p class="text-center">
+				Not a member yet? <a href="@routes.Application.signUp()">Sign up now</a>
+			</p>
+		</div>
 	
-	<p class="text-center">
-		Not a member yet? <a href="@routes.Application.signUp()">Sign up now</a>
-	</p>
+	</div>
 
 	<script type="text/javascript">
 		$(document).ready(function()

@@ -14,7 +14,7 @@
     		<h1>WODs</h1>
     		
     		@if(authenticated) {
-				<a href="/workouts/new" class="btn btn-primary">Add new <span class="glyphicon glyphicon-plus"></span></a>
+				<a href="@routes.WODController.create()" class="btn btn-primary">Add new <span class="glyphicon glyphicon-plus"></span></a>
 			}
     	
 	    	@for(post <- currentPage.getList) {
@@ -55,7 +55,7 @@
 					}
 				}
 				
-				<a href="/workouts/@post.id" class="btn btn-primary">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+				<a href="/workouts/@post.id" class="btn btn-secondary">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 				
 				<hr>
 		    }
@@ -88,11 +88,11 @@
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 					<h4 class="modal-title" id="myModalLabel">Attend</h4>
 				</div>
-				@form(routes.WODController.attend(), 'id -> "attendForm") {
+				@form(routes.WODController.attend(), 'id -> "attendForm", 'class -> "form parsley-form", Symbol("data-validate") -> "parsley") {
 					<div class="modal-body">
 						<input type="hidden" name="postId" id="postId" value="" />
 						@textarea(attendForm("note"), '_label -> null, 'placeholder -> "Add a note...", 'class -> "form-control")
-						@inputDate(attendForm("date"), '_label -> null, 'class -> "form-control")
+						@inputDate(attendForm("date"), '_label -> null, 'class -> "form-control parsley-validated", 'placeholder -> "Pick a date...", Symbol("data-required") -> "true", '_showHelp -> false)
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -129,33 +129,35 @@
 					var form = $(this);
 					var formData = form.serializeArray();
 					var formURL = form.attr("action");
-					$.ajax(
-					{
-						url : formURL,
-						type: "POST",
-						data : formData,
-						success: function(data, textStatus, jqXHR)
-						{
-							var btn = $("button[data-value=" + formData[0].value + "]");
-							if(!btn.hasClass('btn-success')) {
-								btn.addClass('btn-success').attr('disabled', 'disabled')
-									.append('&nbsp;')
-								    .append($('<i></i>')
-							        .addClass('glyphicon glyphicon-ok')
-							    )
-							}
-							$('#attendModal').modal('hide');
-							form.trigger("reset");
-						},
-						error: function(jqXHR, textStatus, errorThrown)
-						{
-							// TODO
-							alert('Error ' + textStatus + ' ' + errorThrown);
-						}
-					});
 					
 					// stop the form from submitting the normal way and refreshing the page
 					e.preventDefault();
+					if (form.parsley().isValid()) {
+						$.ajax(
+						{
+							url : formURL,
+							type: "POST",
+							data : formData,
+							success: function(data, textStatus, jqXHR)
+							{
+								var btn = $("button[data-value=" + formData[0].value + "]");
+								if(!btn.hasClass('btn-success')) {
+									btn.addClass('btn-success').attr('disabled', 'disabled')
+										.append('&nbsp;')
+									    .append($('<i></i>')
+								        .addClass('glyphicon glyphicon-ok')
+								    )
+								}
+								$('#attendModal').modal('hide');
+								form.trigger("reset");
+							},
+							error: function(jqXHR, textStatus, errorThrown)
+							{
+								// TODO
+								alert('Error ' + textStatus + ' ' + errorThrown);
+							}
+						});
+					}
 				});
 		});
 	</script>
