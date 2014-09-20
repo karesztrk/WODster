@@ -1,0 +1,44 @@
+@(field: play.api.data.Field, args: (Symbol,Any)*)(implicit handler: views.html.helper.FieldConstructor, lang: play.api.i18n.Lang)
+
+@views.html.helper.input(field, args:_*) { (id, name, value, htmlArgs) =>
+	<div id="@id">
+		<input type="text" name="@name" value="@value" @toHtmlArgs(htmlArgs)/>
+		
+		<!-- Icon (required outer div)
+	<span class="input-group-addon">
+		<span class="glyphicon-calendar glyphicon">
+		</span>
+	</span>
+	 -->
+	</div>
+
+    <script type="text/javascript">
+	    $(function () {
+	        $('#@id').datetimepicker({
+	        	format: 'HH:mm:ss',
+	        	pickDate: false,
+	        	useSeconds: true,
+	        	use24hours: true,
+	        	defaultDate: new Date(1979, 0, 1, 0, 0, 0, 0),
+	        });
+	    });
+	 
+	 //  http://eonasdan.github.io/bootstrap-datetimepicker/   
+	    
+	 // Since confModal is essentially a nested modal it's enforceFocus method
+	 // must be no-op'd or the following error results 
+	 // "Uncaught RangeError: Maximum call stack size exceeded"
+	 // But then when the nested modal is hidden we reset modal.enforceFocus
+	 //var enforceModalFocusFn = $.fn.modal.Constructor.prototype.enforceFocus;
+
+	 //$.fn.modal.Constructor.prototype.enforceFocus = function() {};
+
+	 //$confModal.on('hidden', function() {
+	 //    $.fn.modal.Constructor.prototype.enforceFocus = enforceModalFocusFn;
+	 //});
+
+	 //$confModal.modal({ backdrop : false });
+	</script>
+}
+
+

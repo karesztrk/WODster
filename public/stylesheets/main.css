@@ -66,3 +66,7 @@ img.img-centered {
 .table form button {
 	padding: 0px;
 }
+
+.bootstrap-datetimepicker-widget {
+	z-index:10000 !important;
+}

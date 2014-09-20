@@ -3,9 +3,9 @@ package model.training;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import common.IndexedEnum;
-import play.data.validation.Constraints.Required;
 import model.blog.Post;
+
+import common.IndexedEnum;
 
 @Entity
 @Table(name = "workout")
@@ -28,7 +28,6 @@ public class Workout extends Post {
 		}
 	}
 	
-	@Required
 	public ResultMeasurementType resultType;
 	
 	public Workout() {

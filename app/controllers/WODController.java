@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import model.training.Workout;
-import model.result.Attendance;
+import model.training.result.Attendance;
 import model.user.User;
 import play.data.Form;
 import play.db.jpa.Transactional;
@@ -25,6 +25,7 @@ import views.html.wod.list;
 import views.html.wod.view;
 import dao.AttendanceDAO;
 import dao.WorkoutDAO;
+import play.Logger;
 
 public class WODController extends BlogController {
 
@@ -67,7 +68,7 @@ public class WODController extends BlogController {
 	public static Result update(Long id) {
 		Form<Workout> form = Form.form(Workout.class).bindFromRequest();
 		if (form.hasErrors()) {
-			return badRequest(edit.render(form));
+			return badRequest(edit.render(id, form));
 		}
 		
 		Workout post = form.get();
@@ -99,7 +100,8 @@ public class WODController extends BlogController {
 	@Transactional
 	public static Result edit(Long id) {
 		Form<Workout> form = Form.form(Workout.class).fill(WorkoutDAO.find(id));
-		return ok(edit.render(form));
+		Logger.info(form.toString());
+		return ok(edit.render(id, form));
 	}
 	
 	@Transactional

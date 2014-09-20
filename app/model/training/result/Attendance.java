@@ -1,4 +1,4 @@
-package model.result;
+package model.training.result;
 
 import java.io.Serializable;
 import java.util.Date;

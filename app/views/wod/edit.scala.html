@@ -1,10 +1,9 @@
-@(postForm: Form[model.training.Workout])
+@(id: Long, postForm: Form[model.training.Workout])
 
 @import helper._
 
 @implicitFieldConstructor = @{ FieldConstructor(component.bootstrapInput.render) }
 
-@id = @{postForm("id").value.toLong}
 @main("wod") {    
    
     <h1>Edit a workout</h1>
@@ -18,8 +17,8 @@
 		@textarea(postForm("content"), '_label -> null, 'id -> "content", 'type -> "content", 'placeholder -> "Compose your WOD...", 'style -> "display:none;")
 		
 		<div class="actions"> 
-			<input type="submit" value="Update" class="btn btn-primary">
-			<a href="@routes.WODController.list()" class="btn btn-default">Cancel</a> 
+			<button type="submit" class="btn btn-primary">Update</button>
+			<a href="@routes.WODController.list()"> <button class="btn btn-default">Cancel</button></a> 
 		</div>
 	}
 	
