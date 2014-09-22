@@ -3,23 +3,14 @@
 @views.html.helper.input(field, args:_*) { (id, name, value, htmlArgs) =>
 	<div id="@id">
 		<input type="text" name="@name" value="@value" @toHtmlArgs(htmlArgs)/>
-		
-		<!-- Icon (required outer div)
-	<span class="input-group-addon">
-		<span class="glyphicon-calendar glyphicon">
-		</span>
-	</span>
-	 -->
 	</div>
 
     <script type="text/javascript">
 	    $(function () {
 	        $('#@id').datetimepicker({
-	        	format: 'HH:mm:ss',
-	        	pickDate: false,
-	        	useSeconds: true,
+	        	format: 'YYYY-MM-DD',
 	        	use24hours: true,
-	        	defaultDate: new Date(1979, 0, 1, 0, 0, 0, 0),
+	        	defaultDate: new Date()
 	        });
 	    });
 	 

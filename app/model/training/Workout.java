@@ -21,7 +21,8 @@ public class Workout extends Post {
 	public enum ResultMeasurementType implements IndexedEnum {
 		UNKNOWN,
 		TIME,
-		REPETITION;
+		REPETITION,
+		WEIGHT;
 
 		public String getValue() {
 			return name();

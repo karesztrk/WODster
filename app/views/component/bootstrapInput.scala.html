@@ -3,12 +3,14 @@
 @showLabel = @{null != elements.label}
 @error = @{elements.hasErrors}
 @showHelp = @{elements.args.get('_showHelp)}
+@style = @{elements.args.get('style)}
+@shouldHide = @{style.toString().contains("display: none")}
 <div class="form-group @if(error) {has-error has-feedback}">
 	@if(showLabel) { 
-		<label class="control-label" for="@elements.id">@elements.label</label>
+		<label class="control-label" for="@elements.id" @if(shouldHide) {style="display: none;"}>@elements.label</label>
 	}
 
-	@elements.input
+	@elements.input 
 	
 	@if(!showHelp) {
     	<p class="help-block">@elements.infos.mkString(", ")</p>

@@ -112,7 +112,7 @@ public class WODController extends BlogController {
 		
 		try {
 			String note = values.get("note");
-			String postId = values.getAsRequired("postId");
+			String postId = values.getAsRequired("wodId");
 			String date = values.getAsRequired("date");
 			
 			User user = Identity.getAuthenticatedUser();

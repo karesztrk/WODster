@@ -6,6 +6,7 @@ import model.blog.Post;
 import model.box.Box;
 import model.journal.PersonalRecord;
 import model.training.Workout;
+import model.training.Workout.ResultMeasurementType;
 import model.user.User;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
@@ -70,14 +71,25 @@ public class DataGenerator extends Controller {
 		
 		PostDAO.save(post);
 		
-		post = new Workout();
-		post.date = new Date();
-		post.content = "AMRAP in 20 minutes<br><br><ul><li>5 HSPU</li><li>10 Pistols (5 each leg alternating</li><li>15 Pull ups</li></ul>";
-		post.image = "";
-		post.title = "Mary";
-		post.user = UserDAO.find("torok.karoly.krisztian@gmail.com");
+		Workout w = new Workout();
+		w.date = new Date();
+		w.content = "AMRAP in 20 minutes<br><br><ul><li>5 HSPU</li><li>10 Pistols (5 each leg alternating</li><li>15 Pull ups</li></ul>";
+		w.image = "";
+		w.title = "Mary";
+		w.user = UserDAO.find("torok.karoly.krisztian@gmail.com");
+		w.resultType = ResultMeasurementType.REPETITION;
 		
-		PostDAO.save(post);
+		PostDAO.save(w);
+		
+		w = new Workout();
+		w.date = new Date();
+		w.image = "";
+		w.title = "Fran";
+		w.content = "21-15-9 reps, for time <br/> Thruster 95 lbs Pull-ups";
+		w.user = UserDAO.find("torok.karoly.krisztian@gmail.com");
+		w.resultType = ResultMeasurementType.TIME;
+		
+		PostDAO.save(w);
 		
 		return redirect(routes.Application.index());
 	}

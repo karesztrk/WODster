@@ -25,7 +25,7 @@ public class Attendance implements Serializable {
 	/** Serial version. */
 	private static final long serialVersionUID = -2348654980412221407L;
 	
-	@Id
+	@Id 
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	public Long id;
 

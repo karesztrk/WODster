@@ -5,6 +5,7 @@
 @import controllers.WODController
 @implicitFieldConstructor = @{ FieldConstructor(component.bootstrapInput.render) }
 @authenticated = @{Identity.isAuthenticated()}
+@import model.training.Workout.ResultMeasurementType
 
 @main("wod") {
     
@@ -14,15 +15,23 @@
     	<div class="col-sm-7 col-md-8 layout-main">
     		
     		@for(post <- currentPage.getList) {
-				<div class="portlet">
-					<!-- Title -->
-					<h4 class="portlet-title"><u>@post.title</u></h4>
+				<div class="post-entry">
 					
-					<div class="portlet-body">
-						<!-- Date/Time -->
-						<p><span class="glyphicon glyphicon-time"></span> Posted on @post.date.format("yyyy.MM.dd 'at' HH:mm:ss") </p>
-						
-						<hr>
+					<div title="" class="post-attended ui-tooltip" data-original-title="This workout is done!">
+	                	<i class="fa fa-check"></i>
+	                </div>
+					
+					<div class="post-header">
+                    	<h4 class="post-title"><u>@post.title</u></h4>
+            		</div>
+                
+	                <div class="post-date">
+	                  <!-- Date/Time -->
+							<span class="glyphicon glyphicon-time"></span> Posted on @post.date.format("yyyy.MM.dd 'at' HH:mm:ss")
+	                </div>
+					
+					
+					<div class="post-content">
 						
 						<!-- Preview Image -->
 						@if(util.asset.AssetUtils.isFileExist(post.image)) {
@@ -32,7 +41,7 @@
 						} 
 						
 						<!-- Post Content -->
-						<div class="post_content">@Html(post.content)</div>
+						<div >@Html(post.content)</div>
 						
 						<hr>
 						
@@ -41,13 +50,12 @@
 							@if(WODController.isAttendee(post)) {
 								<button disabled="disabled" type="button" data-value="@post.id" class="btn btn-success btn-attended">Done&nbsp;<i class="glyphicon glyphicon-ok"></i></button>
 							} else {
-								<button type="button" data-value="@post.id" class="btn btn-primary btn-attend" data-toggle="modal" data-target="#attendModal">Done</button>
+								<button type="button" data-wod-id="@post.id" data-wod-type="@post.resultType" class="btn btn-primary btn-attend" data-toggle="modal" data-target="#attendModal">Done</button>
 							}
 						}
 						
 						<a href="/workouts/@post.id" class="btn btn-secondary">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-						
-						<hr>
+
 					</div>
 				</div>
 		    }
@@ -102,9 +110,12 @@
 				</div>
 				@form(routes.WODController.attend(), 'id -> "attendForm", 'class -> "form parsley-form", Symbol("data-validate") -> "parsley") {
 					<div class="modal-body">
-						<input type="hidden" name="postId" id="postId" value="" />
+						<input type="hidden" name="wodId" id="wodId" value="" />
+						
+						@component.datePicker(attendForm("date"), '_label -> "Workout date:", 'class -> "form-control", '_showHelp -> false)
+						@component.timePicker(attendForm("timeResult"), '_label -> "Your result:", 'class -> "form-control", 'placeholder -> "Pick your result time...", '_showHelp -> false, 'style -> "display: none;")
+						@inputText(attendForm("result"), '_label -> "Your result:", 'class -> "form-control", 'placeholder -> "Add your result...", '_showHelp -> false, 'style -> "display: none;") 
 						@textarea(attendForm("note"), '_label -> null, 'placeholder -> "Add a note...", 'class -> "form-control")
-						@component.dateTimePicker(attendForm("date"), '_label -> null, 'class -> "form-control parsley-validated", 'placeholder -> "Pick a date...", Symbol("data-required") -> "true", '_showHelp -> false)
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -132,8 +143,23 @@
 			$(".btn.btn-primary.btn-attend").click(function()
 				{
 					var btn = $(this);
-					var data = btn.attr('data-value');
-					$("#postId").val(data);
+					var id = btn.attr('data-wod-id');
+					var type = btn.attr('data-wod-type');
+					$("#wodId").val(id);
+					
+					if('TIME' == type) {
+						$("#result").hide();
+						$("label[for='result']").hide();
+						
+						$("#timeResult").show();
+						$("label[for='timeResult']").show();
+					} else {
+						$("#result").show();
+						$("label[for='result']").show();
+						
+						$("#timeResult").hide();
+						$("label[for='timeResult']").hide();
+					}
 				});
 			
 			$("#attendForm").submit(function(e)
@@ -152,7 +178,7 @@
 							data : formData,
 							success: function(data, textStatus, jqXHR)
 							{
-								var btn = $("button[data-value=" + formData[0].value + "]");
+								var btn = $("button[data-wod-id=" + formData[0].value + "]");
 								if(!btn.hasClass('btn-success')) {
 									btn.addClass('btn-success').attr('disabled', 'disabled')
 										.append('&nbsp;')
