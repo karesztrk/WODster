@@ -78,6 +78,7 @@ public class DataGenerator extends Controller {
 		w.title = "Mary";
 		w.user = UserDAO.find("torok.karoly.krisztian@gmail.com");
 		w.resultType = ResultMeasurementType.REPETITION;
+		w.girl = true;
 		
 		PostDAO.save(w);
 		
@@ -88,6 +89,18 @@ public class DataGenerator extends Controller {
 		w.content = "21-15-9 reps, for time <br/> Thruster 95 lbs Pull-ups";
 		w.user = UserDAO.find("torok.karoly.krisztian@gmail.com");
 		w.resultType = ResultMeasurementType.TIME;
+		w.girl = true;
+		
+		PostDAO.save(w);
+		
+		w = new Workout();
+		w.date = new Date();
+		w.image = "";
+		w.title = "Angie";
+		w.content = "Perform for time: 100 Pull-ups 100 Push-ups 100 Sit-ups 100 Squats ";
+		w.user = UserDAO.find("torok.karoly.krisztian@gmail.com");
+		w.resultType = ResultMeasurementType.TIME;
+		w.girl = true;
 		
 		PostDAO.save(w);
 		
@@ -117,7 +130,6 @@ public class DataGenerator extends Controller {
 		
 		PersonalRecord mary = new PersonalRecord();
 		mary.date = new Date();
-		mary.post = PostDAO.find("Mary").get(0);
 		mary.workout = WorkoutDAO.find("Mary").get(0);
 		mary.result = 300L;
 		mary.user = UserDAO.find("torok.karoly.krisztian@gmail.com");

@@ -4,11 +4,19 @@ import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
+import model.journal.PersonalRecord;
 import model.training.Workout;
+import model.training.Workout.ResultMeasurementType;
 import model.training.result.Attendance;
 import model.user.User;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
+
+import play.Logger;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.BodyParser;
@@ -24,8 +32,8 @@ import views.html.wod.edit;
 import views.html.wod.list;
 import views.html.wod.view;
 import dao.AttendanceDAO;
+import dao.PersonalRecordDAO;
 import dao.WorkoutDAO;
-import play.Logger;
 
 public class WODController extends BlogController {
 
@@ -114,25 +122,56 @@ public class WODController extends BlogController {
 			String note = values.get("note");
 			String postId = values.getAsRequired("wodId");
 			String date = values.getAsRequired("date");
-			
+			String result = values.get("result");
+			String timeResult = values.get("timeResult");
+
 			User user = Identity.getAuthenticatedUser();
 			
 			if(null == user) {
 				return badRequest("Please login");
 			}
 			
-			Workout post = WorkoutDAO.find(Long.parseLong(postId));
+			if(!StringUtils.isEmpty(result) && StringUtils.isEmpty(timeResult)) {
+				return badRequest("Didn't receive any result");
+			}
 			
-			DateFormat format = new SimpleDateFormat(util.Configuration.DATE_PATTERN);
-			
-			Attendance attend = new Attendance();
-			attend.participant = user;
-			attend.subject = post;
-			attend.note = note;
+			Workout workout = WorkoutDAO.find(Long.parseLong(postId));
 
-			attend.date = format.parse(date);
+			Attendance attend = new Attendance();
+			attend.user = user;
+			attend.workout = workout;
+			attend.note = note;
+			
+			if(ResultMeasurementType.TIME == workout.resultType) {
+				DateFormat timeFormat = new SimpleDateFormat(util.Configuration.TIME_PATTERN);
+				Date time = timeFormat.parse(timeResult);
+				
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(time);
+				attend.result = DateUtils.getFragmentInSeconds(cal, Calendar.DATE);
+			} else {
+				attend.result = Long.valueOf(result);
+			}
+
+			DateFormat dateFormat = new SimpleDateFormat(util.Configuration.DATE_PATTERN);
+			attend.date = dateFormat.parse(date);
 			
 			AttendanceDAO.save(attend);
+			
+			// Yet automatically add as a new record if can
+			if(workout.hero || workout.girl) {
+				PersonalRecord record = PersonalRecordDAO.findRecord(attend);
+
+				if(null == record) {
+					play.Logger.info("Saving new record...");
+					PersonalRecordDAO.save(attend.toPersonalRecord());
+				} else {
+					play.Logger.info("Updating new record...");
+					record.result = attend.result;
+					PersonalRecordDAO.update(record);
+				}
+				
+			}
 		} catch (EmptyParameterException e) {
 			e.printStackTrace();
 			return badRequest("Required paramter not found when executing 'attend' request: " + e.getParameterName());

@@ -18,6 +18,8 @@ public class Workout extends Post {
 	
 	public boolean personal;
 	
+	public boolean girl;
+	
 	public enum ResultMeasurementType implements IndexedEnum {
 		UNKNOWN,
 		TIME,

@@ -45,7 +45,7 @@ public class WorkoutDAO extends AbstractDAO {
 		List<Workout> workouts = (List<Workout>) JPA.em()
             .createQuery("from Workout w where lower(w.title) like :title")
             .setParameter("title", "%" + title.toLowerCase() + "%")
-            .getResultList();
+            .getResultList(); 
 		return workouts;
 	}
 	

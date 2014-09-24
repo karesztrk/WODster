@@ -2,6 +2,8 @@
 
 @import helper._
 @authenticated = @{util.permission.Identity.isAuthenticated()}
+@import model.training.Workout.ResultMeasurementType
+@import util.format.DateTimeFormatter
 
 @****************************************
 * Helper generating navigation links    *
@@ -59,9 +61,15 @@
 	
 	        @for(record <- currentPage.getList) {
 	            <tr>
-	                <td><a href="#">@record.workout.title</a></td>
-	                <td>@record.date.format("dd MMM yyyy")</td>
-	                <td>@record.result</td>
+	                <td><a href="#">@record.name</a></td>
+	                <td>@record.date.format("yyyy MMM dd")</td>
+	                
+	                @if(ResultMeasurementType.TIME == record.workout.resultType) {
+	                	<td>@DateTimeFormatter.formatTime(record.result)</td>
+	                } else {
+	                	<td>@record.result</td>
+	                }
+	                
 	                <td class="text-right">
 	                	@form(routes.PersonalRecordController.delete(record.id)) {
 	                		<button class="btn btn-link btn-sm" type="submit"><i class="glyphicon glyphicon-remove"></i></button>

@@ -1,10 +1,10 @@
 package controllers;
 
-import dao.BoxDAO;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.box.list;
+import dao.BoxDAO;
 
 public class BoxController extends Controller {
 
@@ -14,4 +14,5 @@ public class BoxController extends Controller {
 		return ok(list.render(BoxDAO.page(page, 10, sortBy, order, filter),
 				sortBy, order, filter));
 	}
+
 }
