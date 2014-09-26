@@ -20,6 +20,9 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 # JavaScript Routing
 GET     /javascriptRoutes    		controllers.Application.javascriptRoutes()
 
+# Profile
+GET		/profile					controllers.UserController.profile()
+
 # Workouts list (look at the default values for pagination parameters)
 GET     /workouts                  	controllers.WODController.list(p:Int ?= 0, s ?= "date", o ?= "desc", f ?= "")
 
