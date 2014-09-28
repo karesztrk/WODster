@@ -28,7 +28,7 @@ public class DataGenerator extends Controller {
 		user.password = Security.getSecurePassword("12345");
 		user.name = "Karoly Torok";
 		
-		user.save();
+		UserDAO.save(user);
 		
 		return redirect(routes.Application.index());
 	}

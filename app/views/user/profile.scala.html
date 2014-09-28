@@ -1,9 +1,20 @@
-@(user: model.user.User)
+@(user: model.user.User, activities : List[model.blog.Activity])
 
 @import helper._
 @import play.i18n.Messages
+@import model.user.social.SocialNetwork
 
 @implicitFieldConstructor = @{ FieldConstructor(component.bootstrapInput.render) } 
+@profileExists = @{null != user.profile}
+
+@wodsterStat = @{null}
+@facebookStat = @{null}
+@twitterStat = @{null}
+@if(profileExists) {
+	wodsterStat = user.profile.socialProfiles.get(SocialNetwork.WODSTER)
+	facebookStat = user.profile.socialProfiles.get(SocialNetwork.FACEBOOK)
+	twitterStat = user.profile.socialProfiles.get(SocialNetwork.TWITTER)
+}
 
 @main("") { 
 
@@ -54,12 +65,10 @@
         </div> <!-- /.col -->
 
 
-
+		<!-- Profile -->
         <div class="col-md-6 col-sm-7">
 
           <h3>@user.name</h3>
-
-          <h5 class="text-muted">Visual, UI, UX Designer</h5>
 
           <hr>
 
@@ -72,14 +81,14 @@
           <hr>
           
           <ul class="icons-list">
-            <li><i class="icon-li fa fa-envelope"></i> support[at]jumpstartthemes.com</li>
-            <li><i class="icon-li fa fa-globe"></i> jumstartthemes.com</li>
-            <li><i class="icon-li fa fa-map-marker"></i> Las Vegas, NV</li>
+            <li><i class="icon-li fa fa-envelope"></i> @user.email</li>
+            <li><i class="icon-li fa fa-globe"></i> @if(profileExists) {user.profile.website}</li>
+            <li><i class="icon-li fa fa-map-marker"></i> @if(profileExists) {user.profile.city user.profile.country}</li>
           </ul>    
 
           <br>
 
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec.</p>
+          <p>@if(profileExists) {user.profile.about}</p>
 
           <hr>
 
@@ -110,159 +119,32 @@
 
             <br><br>
 
-            <div class="feed-item feed-item-idea">
+            @for(activity <- activities) {
+				 <div class="feed-item feed-item-idea">
 
-              <div class="feed-icon">
-                <i class="fa fa-lightbulb-o"></i>
-              </div> <!-- /.feed-icon -->
-
-              <div class="feed-subject">
-                <p><a href="javascript:;">Nikita Williams</a> shared an idea: <a href="javascript:;">Create an Awesome Idea</a></p>
-              </div> <!-- /.feed-subject -->
-
-              <div class="feed-content">
-                <ul class="icons-list">
-                  <li>
-                    <i class="icon-li fa fa-quote-left"></i>
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.
-                  </li>
-                </ul>
-              </div> <!-- /.feed-content -->
-
-              <div class="feed-actions">
-                <a class="pull-left" href="javascript:;"><i class="fa fa-thumbs-up"></i> 123</a> 
-                <a class="pull-left" href="javascript:;"><i class="fa fa-comment-o"></i> 29</a>
-
-                <a class="pull-right" href="javascript:;"><i class="fa fa-clock-o"></i> 2 days ago</a>
-              </div> <!-- /.feed-actions -->
-
-            </div> <!-- /.feed-item -->
-
-
-
-            <div class="feed-item feed-item-image">
-
-              <div class="feed-icon">
-                <i class="fa fa-picture-o"></i>
-              </div> <!-- /.feed-icon -->
-
-              <div class="feed-subject">
-                <p><a href="javascript:;">Nikita Williams</a> posted the <strong>4 files</strong>: <a href="javascript:;">Annual Reports</a></p>
-              </div> <!-- /.feed-subject -->
-
-              <div class="feed-content">
-                <div style="width: 375px" class="thumbnail">
-                  <img alt="Gallery Image" style="width: 100%;" src="./img/mockup.png">
-                </div> <!-- /.thumbnail -->
-              </div> <!-- /.feed-content -->
-
-              <div class="feed-actions">
-                <a class="pull-left" href="javascript:;"><i class="fa fa-thumbs-up"></i> 123</a> 
-                <a class="pull-left" href="javascript:;"><i class="fa fa-comment-o"></i> 29</a>
-
-                <a class="pull-right" href="javascript:;"><i class="fa fa-clock-o"></i> 2 days ago</a>
-              </div> <!-- /.feed-actions -->
-
-            </div> <!-- /.feed-item -->
-
-
-
-            <div class="feed-item feed-item-file">
-
-              <div class="feed-icon">
-                <i class="fa fa-cloud-upload"></i>
-              </div> <!-- /.feed-icon -->
-
-              <div class="feed-subject">
-                <p><a href="javascript:;">Nikita Williams</a> posted the <strong>4 files</strong>: <a href="javascript:;">Annual Reports</a></p>
-              </div> <!-- /.feed-subject -->
-
-              <div class="feed-content">
-                <ul class="icons-list">
-                  <li>
-                    <i class="icon-li fa fa-file-text-o"></i>
-                    <a href="javascript:;">Annual Report 2007</a> - annual_report_2007.pdf
-                  </li>
-
-                  <li>
-                    <i class="icon-li fa fa-file-text-o"></i>
-                    <a href="javascript:;">Annual Report 2008</a> - annual_report_2007.pdf
-                  </li>
-
-                  <li>
-                    <i class="icon-li fa fa-file-text-o"></i>
-                    <a href="javascript:;">Annual Report 2009</a> - annual_report_2007.pdf
-                  </li>
-
-                  <li>
-                    <i class="icon-li fa fa-file-text-o"></i>
-                    <a href="javascript:;">Annual Report 2010</a> - annual_report_2007.pdf
-                  </li>
-                </ul>
-              </div> <!-- /.feed-content -->
-
-              <div class="feed-actions">
-                <a class="pull-left" href="javascript:;"><i class="fa fa-thumbs-up"></i> 123</a> 
-                <a class="pull-left" href="javascript:;"><i class="fa fa-comment-o"></i> 29</a>
-
-                <a class="pull-right" href="javascript:;"><i class="fa fa-clock-o"></i> 2 days ago</a>
-              </div> <!-- /.feed-actions -->
-
-            </div> <!-- /.feed-item -->
-
-
-
-            <div class="feed-item feed-item-bookmark">
-
-              <div class="feed-icon">
-                <i class="fa fa-bookmark"></i>
-              </div> <!-- /.feed-icon -->
-
-              <div class="feed-subject">
-                <p><a href="javascript:;">Nikita Williams</a> bookmarked a page on Delicious: <a href="javascript:;">Jumpstart Themes</a></p>
-              </div> <!-- /.feed-subject -->
-
-              <div class="feed-content">
-              </div> <!-- /.feed-content -->
-
-              <div class="feed-actions">
-                <a class="pull-left" href="javascript:;"><i class="fa fa-thumbs-up"></i> 123</a> 
-                <a class="pull-left" href="javascript:;"><i class="fa fa-comment-o"></i> 29</a>
-
-                <a class="pull-right" href="javascript:;"><i class="fa fa-clock-o"></i> 2 days ago</a>
-              </div> <!-- /.feed-actions -->
-
-            </div> <!-- /.feed-item -->
-
-
-
-            <div class="feed-item feed-item-question">
-
-              <div class="feed-icon">
-                <i class="fa fa-question"></i>
-              </div> <!-- /.feed-icon -->
-
-              <div class="feed-subject">
-                <p><a href="javascript:;">Nikita Williams</a> posted the question: <a href="javascript:;">Who can I call to get a new parking pass for the Rowan Building?</a></p>
-              </div> <!-- /.feed-subject -->
-
-              <div class="feed-content">
-                <ul class="icons-list">
-                  <li>
-                    <i class="icon-li fa fa-quote-left"></i>
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.
-                  </li>
-                </ul>
-              </div> <!-- /.feed-content -->
-
-              <div class="feed-actions">
-                <a class="pull-left" href="javascript:;"><i class="fa fa-thumbs-up"></i> 123</a> 
-                <a class="pull-left" href="javascript:;"><i class="fa fa-comment-o"></i> 29</a>
-
-                <a class="pull-right" href="javascript:;"><i class="fa fa-clock-o"></i> 2 days ago</a>
-              </div> <!-- /.feed-actions -->
-
-            </div> <!-- /.feed-item -->
+	              <div class="feed-icon">
+	                <i class="fa fa-lightbulb-o"></i>
+	              </div> <!-- /.feed-icon -->
+	
+	              <div class="feed-subject">
+	                <p><a href="javascript:;">@user.name</a> commented:</p>
+	              </div> <!-- /.feed-subject -->
+	
+	              <div class="feed-content">
+	                <ul class="icons-list">
+	                  <li>
+	                    <i class="icon-li fa fa-quote-left"></i>
+	                    @activity.content
+	                  </li>
+	                </ul>
+	              </div> <!-- /.feed-content -->
+	
+	              <div class="feed-actions">	
+	                <a class="pull-right" href="javascript:;"><i class="fa fa-clock-o"></i> @activity.date.format(util.Configuratio.DATETIME_PATTERN)</a>
+	              </div> <!-- /.feed-actions -->
+	
+	            </div>
+			}
 
             <br class="visible-xs">            
             <br class="visible-xs">
@@ -277,19 +159,19 @@
 
               <a class="list-group-item" href="javascript:;">
                   <h3 class="pull-right"><i class="fa fa-eye text-primary"></i></h3>
-                  <h4 class="list-group-item-heading">38,847</h4>
+                  <h4 class="list-group-item-heading">@if(null != wodsterStat) {wodsterStat.stat} else {0}</h4>
                   <p class="list-group-item-text">Profile Views</p>                  
                 </a>
 
               <a class="list-group-item" href="javascript:;">
                 <h3 class="pull-right"><i class="fa fa-facebook-square  text-primary"></i></h3>
-                <h4 class="list-group-item-heading">3,482</h4>
+                <h4 class="list-group-item-heading">@if(null != facebookStat) {facebookStat.stat} else {0}</h4>
                 <p class="list-group-item-text">Facebook Likes</p>
               </a>
 
               <a class="list-group-item" href="javascript:;">
                 <h3 class="pull-right"><i class="fa fa-twitter-square  text-primary"></i></h3>
-                <h4 class="list-group-item-heading">5,845</h4>
+                <h4 class="list-group-item-heading">@if(null != twitterStat) {twitterStat.stat} else {0}</h4>
                 <p class="list-group-item-text">Twitter Followers</p>
               </a>
             </div> <!-- /.list-group -->

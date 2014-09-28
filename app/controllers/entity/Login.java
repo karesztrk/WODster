@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.UserDAO;
 import model.user.User;
 import play.data.validation.Constraints.Required;
 import play.data.validation.ValidationError;
@@ -27,7 +28,7 @@ public class Login implements Serializable {
 		List<ValidationError> errors = new ArrayList<ValidationError>();
 		errors.add(new ValidationError("email", ""));
 		errors.add(new ValidationError("password", "Invalid email or password"));
-		User user = User.findByEmail(email);
+		User user = UserDAO.find(email);
 
 		if (null == user) {
 			return errors;

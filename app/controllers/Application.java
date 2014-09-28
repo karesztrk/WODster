@@ -12,6 +12,7 @@ import views.html.login;
 import views.html.register;
 import views.html.loginForm;
 import controllers.entity.Login;
+import dao.UserDAO;
 
 public class Application extends Controller {
 
@@ -55,7 +56,7 @@ public class Application extends Controller {
 		User newUser = form.get();
 
 		// TODO put into an authenticator
-		if (null != User.findByEmail(newUser.email)) {
+		if (null != UserDAO.find(newUser.email)) {
 			form.reject("email", "User already exists");
 			return badRequest(register.render(form));
 		}
@@ -71,7 +72,7 @@ public class Application extends Controller {
 
 		Security.secureUserPassword(newUser);
 
-		form.get().save();
+		UserDAO.save(form.get());
 
 		session().clear();
 		session("email", form.get().email);

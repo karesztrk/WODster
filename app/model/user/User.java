@@ -3,15 +3,16 @@ package model.user;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import play.data.validation.Constraints.Email;
 import play.data.validation.Constraints.Required;
-import play.db.jpa.JPA;
 
 /**
  * Represents the most basic type of the user in the application.
@@ -42,38 +43,9 @@ public class User implements Serializable {
 	/** Full name of the user. */
 	@Required
 	public String name; 
-
-	/**
-	 * Looks up a user by the email.
-	 * 
-	 * @param email
-	 *            an email address
-	 * @return the user or null
-	 */
-	public static User findByEmail(String email) {
-		return JPA.em().find(User.class, email);
-	}
 	
-    /**
-     * Update this user.
-     */
-    public void update() {
-        JPA.em().merge(this);
-    }
-    
-    /**
-     * Insert this new user.
-     */
-    public void save() {
-        JPA.em().persist(this);
-    }
-    
-    /**
-     * Delete this user.
-     */
-    public void delete() {
-        JPA.em().remove(this);
-    }
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
+	public Profile profile;
 
 	public String getType() {
 		return TYPE;
