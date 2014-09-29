@@ -35,4 +35,5 @@ public class Activity implements Serializable {
      
     @org.hibernate.annotations.Type(type="org.hibernate.type.StringClobType")
     public String content;
+	
 }

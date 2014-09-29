@@ -4,12 +4,16 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.NaturalId;
 
 import play.data.validation.Constraints.Email;
 import play.data.validation.Constraints.Required;
@@ -30,9 +34,14 @@ public class User implements Serializable {
 
 	@Transient
 	private static final String TYPE = User.class.getSimpleName();
+	
+	/** Unique identifier. */
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
+	public Long id;
 
 	/** Used email of the user. */
-	@Id
+	@NaturalId
 	@Email
 	public String email;
 

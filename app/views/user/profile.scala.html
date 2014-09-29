@@ -1,4 +1,4 @@
-@(user: model.user.User, activities : List[model.blog.Activity])
+@(user: model.user.User, acts : List[model.blog.Activity])
 
 @import helper._
 @import play.i18n.Messages
@@ -35,20 +35,7 @@
             </a> 
 
             <a class="list-group-item" href="javascript:;">
-              <i class="fa fa-book text-primary"></i> &nbsp;&nbsp;Projects
-
-              <i class="fa fa-chevron-right list-group-chevron"></i>
-              <span class="badge">3</span>
-            </a> 
-
-            <a class="list-group-item" href="javascript:;">
               <i class="fa fa-envelope text-primary"></i> &nbsp;&nbsp;Messages
-
-              <i class="fa fa-chevron-right list-group-chevron"></i>
-            </a> 
-
-            <a class="list-group-item" href="javascript:;">
-              <i class="fa fa-group text-primary"></i> &nbsp;&nbsp;Friends
 
               <i class="fa fa-chevron-right list-group-chevron"></i>
             </a> 
@@ -73,9 +60,13 @@
           <hr>
 
           <p>
-            <a class="btn btn-primary" href="javascript:;">Follow Nikita</a>
+            <a href="@routes.UserController.settings()">
+            	<button class="btn btn-primary">Edit</button>
+            </a>
             &nbsp;&nbsp;
-            <a class="btn btn-secondary" href="javascript:;">Send Message</a>
+            <a href="javascript:;">
+            	<button class="btn btn-secondary" >Send Message</button>
+            </a>
           </p>
 
           <hr>
@@ -97,54 +88,26 @@
 
           <h4 class="content-title"><u>Activity Feed</u></h4>
 
-            <div class="share-widget clearfix">
-
-              <textarea tabindex="1" placeholder="Share what you've been up to..." rows="3" class="form-control share-widget-textarea"></textarea>
-
-              <div class="share-widget-actions">
-                <div class="share-widget-types pull-left">
-                  <a title="" class="fa fa-picture-o ui-tooltip" href="javascript:;" data-original-title="Post an Image"><i></i></a>
-                  <a title="" class="fa fa-video-camera ui-tooltip" href="javascript:;" data-original-title="Upload a Video"><i></i></a>
-                  <a title="" class="fa fa-lightbulb-o ui-tooltip" href="javascript:;" data-original-title="Post an Idea"><i></i></a>
-                  <a title="" class="fa fa-question-circle ui-tooltip" href="javascript:;" data-original-title="Ask a Question"><i></i></a>
-                </div>	
-
-              <div class="pull-right">
-                <a tabindex="2" class="btn btn-primary btn-sm">Post</a>
-              </div>
-
-              </div> <!-- /.share-widget-actions -->
-
-            </div> <!-- /.share-widget -->
-
+			@form(routes.UserController.share(), 'id -> "activityForm") {
+	            <div class="share-widget clearfix">
+	
+	              <textarea tabindex="1" name="content" placeholder="Share what you've been up to..." rows="3" class="form-control share-widget-textarea"></textarea>
+	
+	              <div class="share-widget-actions">
+	
+		              <div class="pull-right">
+		                <button type="submit" tabindex="2" class="btn btn-primary btn-sm">Post</button>
+		              </div>
+	
+	              </div> 
+					
+	            </div>
+			}	
             <br><br>
 
-            @for(activity <- activities) {
-				 <div class="feed-item feed-item-idea">
-
-	              <div class="feed-icon">
-	                <i class="fa fa-lightbulb-o"></i>
-	              </div> <!-- /.feed-icon -->
-	
-	              <div class="feed-subject">
-	                <p><a href="javascript:;">@user.name</a> commented:</p>
-	              </div> <!-- /.feed-subject -->
-	
-	              <div class="feed-content">
-	                <ul class="icons-list">
-	                  <li>
-	                    <i class="icon-li fa fa-quote-left"></i>
-	                    @activity.content
-	                  </li>
-	                </ul>
-	              </div> <!-- /.feed-content -->
-	
-	              <div class="feed-actions">	
-	                <a class="pull-right" href="javascript:;"><i class="fa fa-clock-o"></i> @activity.date.format(util.Configuratio.DATETIME_PATTERN)</a>
-	              </div> <!-- /.feed-actions -->
-	
-	            </div>
-			}
+			<div class="feed">
+            	@activities(acts)
+           	</div>
 
             <br class="visible-xs">            
             <br class="visible-xs">
@@ -215,4 +178,37 @@
           </div> <!-- /.col -->
 
         </div>
+        
+        <script type="text/javascript">
+	
+			
+			$(document).ready(function()
+			{
+				$("#activityForm").submit(function(e)
+					{
+						var form = $(this);
+						var formData = form.serializeArray();
+						var formURL = form.attr("action");
+						$.ajax(
+						{
+							url : formURL,
+							type: "POST",
+							data : formData,
+							success: function(data, textStatus, jqXHR)
+							{
+								form.trigger("reset");
+								$(".feed").html(data);
+							},
+							error: function(jqXHR, textStatus, errorThrown)
+							{
+								// TODO
+								alert('Error ' + textStatus + ' ' + errorThrown);
+							}
+						});
+						
+						// stop the form from submitting the normal way and refreshing the page
+						e.preventDefault();
+					});
+			});
+		</script>
 }

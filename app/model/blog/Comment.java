@@ -16,4 +16,5 @@ public class Comment extends Activity {
     @ManyToOne
     @Required
     public Post post;
+
 }

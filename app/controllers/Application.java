@@ -40,6 +40,7 @@ public class Application extends Controller {
 		} else {
 			session().clear();
 			session("email", form.get().email);
+			session("id", form.get().id.toString());
 			session("userType", form.get().userType);
 			flash("welcome", "Welcome to WODster");
 			return ok(index.render());
@@ -76,6 +77,7 @@ public class Application extends Controller {
 
 		session().clear();
 		session("email", form.get().email);
+		session("id", form.get().id.toString());
 		session("userType", form.get().getType());
 		flash("welcome", "");
 		return redirect(routes.Application.index());

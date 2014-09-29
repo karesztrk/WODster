@@ -21,7 +21,9 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /javascriptRoutes    		controllers.Application.javascriptRoutes()
 
 # Profile
-GET		/profile					controllers.UserController.profile()
+GET		/profile/settings			controllers.UserController.settings()
+GET		/profile/:id				controllers.UserController.profile(id:Long)
+POST	/profile/share	   	   		controllers.UserController.share()
 
 # Workouts list (look at the default values for pagination parameters)
 GET     /workouts                  	controllers.WODController.list(p:Int ?= 0, s ?= "date", o ?= "desc", f ?= "")
@@ -35,7 +37,7 @@ GET     /workouts/new              	controllers.WODController.create()
 POST    /workouts                  	controllers.WODController.save()
 
 # Edit existing workout
-GET     /workouts/edit/:id        	controllers.WODController.edit(id:Long)
+GET     /workouts/:id/edit        	controllers.WODController.edit(id:Long)
 POST    /workouts/:id              	controllers.WODController.update(id:Long)
 
 # View existing workout

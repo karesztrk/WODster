@@ -14,6 +14,8 @@ public class Login implements Serializable {
 
 	/** Serial version. */
 	private static final long serialVersionUID = 7766112327831099783L;
+	
+	public Long id;
 
 	@Required
 	public String email;
@@ -38,6 +40,7 @@ public class Login implements Serializable {
 			return errors;
 		}
 
+		id = user.id;
 		userType = user.getType();
 
 		return null;

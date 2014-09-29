@@ -18,11 +18,19 @@ public class Identity implements Serializable {
 	
 	public static User getAuthenticatedUser() {
 		
-		String userEmail = Controller.session().get("email");
+		String userEmail = getAuthenticatedUserEmail();
 		if(null == userEmail || userEmail.isEmpty()) {
 			return null;
 		}
 		
 		return UserDAO.find(userEmail);
+	}
+	
+	public static Long getAuthenticatedUserId() {
+		return Long.parseLong(Controller.session().get("id"));
+	}
+	
+	public static String getAuthenticatedUserEmail() {
+		return Controller.session().get("email");
 	}
 }

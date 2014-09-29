@@ -15,7 +15,7 @@ public class ActivityDAO extends AbstractDAO {
 
 	@SuppressWarnings("unchecked")
 	public static List<Activity> find(User user) {
-		return (List<Activity>) JPA.em().createQuery("select act from Activity act where act.author = :user")
+		return (List<Activity>) JPA.em().createQuery("select act from Activity act where act.author = :user order by date desc")
 				.setParameter("user", user)
 				.getResultList();
 	}
