@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Past;
@@ -42,8 +41,8 @@ public class Profile implements Serializable {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	public Long id;
 	
-	@OneToOne
-	public User user;
+//	@OneToOne
+//	public User user;
 
 	/** Height of the user. */
 	@Min(1)
@@ -78,6 +77,8 @@ public class Profile implements Serializable {
 	/** Some details about the user. */
 	@org.hibernate.annotations.Type(type="org.hibernate.type.StringClobType")
 	public String about;
+	
+	public String image;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@MapKey(name = "type")

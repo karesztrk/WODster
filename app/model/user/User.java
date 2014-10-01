@@ -2,6 +2,7 @@ package model.user;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -53,7 +54,7 @@ public class User implements Serializable {
 	@Required
 	public String name; 
 	
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	public Profile profile;
 
 	public String getType() {

@@ -1,4 +1,4 @@
-@(user: model.user.User, profileForm: Form[model.user.Profile])
+@(userForm: Form[model.user.User], profileForm: Form[model.user.Profile])
 
 @import helper._
 @import play.i18n.Messages
@@ -49,7 +49,7 @@
 
               <br><br>
 
-              <form class="form-horizontal" action="./page-settings.html">
+			  @form(routes.UserController.save(), 'class -> "form-horizontal form parsley-form", Symbol("data-validate") -> "parsley", 'enctype -> "multipart/form-data") {
 
                 <div class="form-group">
 
@@ -58,48 +58,26 @@
                   <div class="col-md-7">
                     <div data-provides="fileupload" class="fileupload fileupload-new">
                       <div style="width: 180px; height: 180px;" class="fileupload-new thumbnail">
-                        <img alt="Profile Image" src="http://placehold.it/180x180">
+                      	@if(util.asset.AssetUtils.isFileExist(profileForm("image").value)) {
+                        	<img alt="Post image" src="@routes.Assets.at(profileForm("image").value)" class="img-responsive">
+                        } else {
+                        	<img alt="Profile Image" src="http://placehold.it/180x180">
+                        }
                       </div>
 
                       <div style="max-width: 200px; max-height: 200px; line-height: 20px;" class="fileupload-preview fileupload-exists thumbnail"></div>
 
-                      <div>
-                        <span class="btn btn-default btn-file">
-                          <span class="fileupload-new">Select image</span>
-                          <span class="fileupload-exists">Change</span>
-                          <input type="file">
-                        </span>
+                      @inputFile(profileForm("image"), '_label -> null, 'type -> "file")
 
-                        <a data-dismiss="fileupload" class="btn btn-default fileupload-exists" href="#">Remove</a>
-                      </div> <!-- /div -->
+                    </div> 
 
-                    </div> <!-- /.fileupload -->
+                  </div>
 
-                  </div> <!-- /.col -->
+                </div>
 
-                </div> <!-- /.form-group -->
-
-                <div class="form-group">
-
-                  <label class="col-md-3">Name</label>
-
-                  <div class="col-md-7">
-                    <input type="text" disabled="" class="form-control" value="@user.name" name="name">
-                  </div> <!-- /.col -->
-
-                </div> <!-- /.form-group -->
-
-                <div class="form-group">
-
-                  <label class="col-md-3">Email Address</label>
-
-                  <div class="col-md-7">
-                    <input type="text" disabled="" class="form-control" value="@user.email" name="email">
-                  </div> <!-- /.col -->
-
-                </div> <!-- /.form-group -->
-
-                @inputText(profileForm("website"), '_label -> "Website", 'type -> "text", 'class -> "form-control", '_labelClass -> "col-md-3", '_inline -> true, '_inputWrapperClass -> "col-md-7")
+				@inputText(userForm("name"), '_label -> "Name", 'type -> "text", 'class -> "form-control parsley-validated", Symbol("data-required") -> "true", '_labelClass -> "col-md-3", '_inline -> true, '_inputWrapperClass -> "col-md-7", '_showHelp -> false)
+				@inputText(userForm("email"), '_label -> "Email Address", 'type -> "text", 'class -> "form-control", '_labelClass -> "col-md-3", '_inline -> true, '_inputWrapperClass -> "col-md-7", '_showHelp -> false, 'disabled -> "")
+                @inputText(profileForm("website"), '_label -> "Website", 'type -> "text", 'class -> "form-control parsley-validated", Symbol("data-type") -> "url", '_labelClass -> "col-md-3", '_inline -> true, '_inputWrapperClass -> "col-md-7")
 				@textarea(profileForm("about"), '_label -> "About You", 'class -> "form-control", '_labelClass -> "col-md-3",'_inline -> true, '_inputWrapperClass -> "col-md-7")
 
                 <div class="form-group">
@@ -110,7 +88,7 @@
                   </div> <!-- /.col -->
                 </div> <!-- /.form-group -->
 
-              </form>
+              }
 
 
             </div> <!-- /.tab-pane -->

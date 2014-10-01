@@ -23,7 +23,11 @@
         <div class="col-md-3 col-sm-5">
 
           <div class="profile-avatar">
-            <img alt="Profile Image" class="profile-avatar-img thumbnail" src="http://placehold.it/253x253">
+          	@if(profileExists && util.asset.AssetUtils.isFileExist(user.profile.image)) {
+          		<img alt="Profile Image" class="profile-avatar-img thumbnail" src="@routes.Assets.at(user.profile.image)">
+          	} else {
+          		<img alt="Profile Image" class="profile-avatar-img thumbnail" src="http://placehold.it/253x253">
+          	}
           </div> <!-- /.profile-avatar -->
 
           <div class="list-group">  
@@ -73,13 +77,13 @@
           
           <ul class="icons-list">
             <li><i class="icon-li fa fa-envelope"></i> @user.email</li>
-            <li><i class="icon-li fa fa-globe"></i> @if(profileExists) {user.profile.website}</li>
-            <li><i class="icon-li fa fa-map-marker"></i> @if(profileExists) {user.profile.city user.profile.country}</li>
+            <li><i class="icon-li fa fa-globe"></i> @if(profileExists) {@user.profile.website}</li>
+            <li><i class="icon-li fa fa-map-marker"></i> @if(profileExists) {@user.profile.city @user.profile.country}</li>
           </ul>    
 
           <br>
 
-          <p>@if(profileExists) {user.profile.about}</p>
+          <p>@if(profileExists) {@user.profile.about}</p>
 
           <hr>
 
