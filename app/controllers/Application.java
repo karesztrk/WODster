@@ -37,14 +37,13 @@ public class Application extends Controller {
 		Form<Login> form = Form.form(Login.class).bindFromRequest();
 		if (form.hasErrors()) {
 			return badRequest(loginForm.render(form));
-		} else {
-			session().clear();
-			session("email", form.get().email);
-			session("id", form.get().id.toString());
-			session("userType", form.get().userType);
-			flash("welcome", "Welcome to WODster");
-			return ok(index.render());
-		}
+		} 
+		
+		session().clear();
+		session("email", form.get().email);
+		session("id", form.get().id.toString());
+		session("userType", form.get().userType);
+		return ok(index.render());
 	}
 	
 	@Transactional
@@ -73,7 +72,7 @@ public class Application extends Controller {
 
 		Security.secureUserPassword(newUser);
 
-		UserDAO.save(form.get());
+		UserDAO.save(newUser);
 
 		session().clear();
 		session("email", form.get().email);
@@ -146,7 +145,8 @@ public class Application extends Controller {
 		return ok(Routes.javascriptRouter("jsRoutes", 
 				
 				routes.javascript.Application.index(),
-				routes.javascript.Application.authenticate()
+				routes.javascript.Application.authenticate(),
+				routes.javascript.UserController.changePassword()
 		));
 	}
 }

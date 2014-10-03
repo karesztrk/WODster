@@ -10,16 +10,19 @@ import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
-import play.mvc.Result;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
+import play.mvc.Result;
 import util.asset.AssetUtils;
 import util.exception.EmptyParameterException;
 import util.permission.Identity;
+import util.security.Security;
 import views.html.index;
 import views.html.user.activities;
+import views.html.user.passwordChange;
 import views.html.user.profile;
 import views.html.user.settings;
+import controllers.entity.PasswordChange;
 import dao.ActivityDAO;
 import dao.UserDAO;
 
@@ -52,13 +55,15 @@ public class UserController extends Controller {
 	}
 	
 	public static Result settings(User user) { 
+		return settings(user, null);
+	}
+	
+	public static Result settings(User user, Form<PasswordChange> passwordChangeForm) { 
 		Form<User> userForm = Form.form(User.class).fill(user);
-		Form<Profile> profileForm = Form.form(Profile.class);
-		if(null != user.profile) {
-			profileForm = profileForm.fill(user.profile);
-		}
+		Form<Profile> profileForm = null == user.profile ? Form.form(Profile.class) : Form.form(Profile.class).fill(user.profile);
 
-		return ok(settings.render(userForm, profileForm));
+		Form<PasswordChange> passwordForm = null == passwordChangeForm ? Form.form(PasswordChange.class) : passwordChangeForm;
+		return ok(settings.render(userForm, profileForm, passwordForm));
 	}
 	
 	@Transactional
@@ -120,8 +125,23 @@ public class UserController extends Controller {
 			
 			return ok(activities.render(acts));
 		} catch (EmptyParameterException e) {
-			e.printStackTrace();
+			play.Logger.error("Sharing failed", e);
 			return badRequest("Required paramter not found when executing 'attend' request: " + e.getParameterName());
 		}
+	}
+	
+	@Transactional
+	public static Result changePassword() {
+		Form<PasswordChange> form = Form.form(PasswordChange.class).bindFromRequest();
+
+		if (form.hasErrors()) {
+			form.data().clear();
+			return badRequest(passwordChange.render(form));
+		} 
+
+		UserDAO.updatePassword(form.get().user, Security.getSecurePassword(form.get().newPassword));
+		
+		form.data().clear();
+		return ok(passwordChange.render(form));
 	}
 }

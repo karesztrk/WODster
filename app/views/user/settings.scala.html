@@ -1,4 +1,4 @@
-@(userForm: Form[model.user.User], profileForm: Form[model.user.Profile])
+@(userForm: Form[model.user.User], profileForm: Form[model.user.Profile], passwordChangeForm: Form[controllers.entity.PasswordChange])
 
 @import helper._
 @import play.i18n.Messages
@@ -98,65 +98,52 @@
             <div id="password-tab" class="tab-pane fade">
 
               <h3 class="content-title"><u>Change Password</u></h3>
+              
+              <div class="status"></div>
 
               <p>You are free to change your password anytime. We advise you to use both upper, lower case letters with numbers as well. To maximize your security regularly change your password.</p>
 
               <br><br>
 
-              <form class="form-horizontal" action="./page-settings.html">
 
-                <div class="form-group">
-
-                  <label class="col-md-3">Old Password</label>
-
-                  <div class="col-md-7">
-                    <input type="password" class="form-control" name="old-password">
-                  </div> <!-- /.col -->
-
-                </div> <!-- /.form-group -->
-
-
-                <hr>
-
-
-                <div class="form-group">
-
-                  <label class="col-md-3">New Password</label>
-
-                  <div class="col-md-7">
-                    <input type="password" class="form-control" name="new-password-1">
-                  </div> <!-- /.col -->
-
-                </div> <!-- /.form-group -->
-
-
-                <div class="form-group">
-
-                  <label class="col-md-3">New Password Confirm</label>
-
-                  <div class="col-md-7">
-                    <input type="password" class="form-control" name="new-password-2">
-                  </div> <!-- /.col -->
-
-                </div> <!-- /.form-group -->
-
-
-                <div class="form-group">
-
-                  <div class="col-md-7 col-md-push-3">
-                    <button class="btn btn-primary" type="submit">Save Changes</button>
-                    &nbsp;
-                    <button class="btn btn-default" type="reset">Cancel</button>
-                  </div> <!-- /.col -->
-
-                </div> <!-- /.form-group -->
-
-              </form>
+				@passwordChange(passwordChangeForm)
 
             </div> <!-- /.tab-pane -->
 
         </div> <!-- /.col -->
 
       </div>
+      
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			$("#passwordChangeForm").submit(function(e)
+			{
+				var form = $(this);
+				
+				// stop the form from submitting the normal way and refreshing the page
+				e.preventDefault();
+				if(form.parsley().isValid()) {
+					
+					var formData = form.serializeArray();
+					jsRoutes.controllers.UserController.changePassword().ajax({
+						data: formData,
+				        success: function(response) {
+				        	form.html(response);
+				        	var successMessage = '<div class="alert alert-success"><a aria-hidden="true" href="#" data-dismiss="alert" class="close">&times;</a>Password Changed</div>';
+				        	$('#password-tab .status').html(successMessage);
+				        	$("#passwordChangeForm").parsley().destroy();
+				        },
+				        error: function(response) {
+				            form.html(response.responseText);
+				            $("#passwordChangeForm").parsley().destroy();
+				        } 
+				    });
+				}
+				
+				
+			});
+		});
+	</script> 
 	
 }

@@ -25,6 +25,7 @@ GET		/profile/settings			controllers.UserController.settings()
 POST	/profile/settings			controllers.UserController.save()
 GET		/profile/:id				controllers.UserController.profile(id:Long)
 POST	/profile/share	   	   		controllers.UserController.share()
+POST	/profile/password			controllers.UserController.changePassword()
 
 # Workouts list (look at the default values for pagination parameters)
 GET     /workouts                  	controllers.WODController.list(p:Int ?= 0, s ?= "date", o ?= "desc", f ?= "")

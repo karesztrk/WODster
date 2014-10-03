@@ -50,7 +50,12 @@ public class SimpleForm extends RequestBody implements Map<String, String> {
 	}
 
 	public String get(Object key) {
-		return values.get(key)[0];
+		String[] value = values.get(key);
+		if(null == value) {
+			return null;
+		}
+		
+		return value[0];
 	}
 	
 	public String getAsRequired(Object key) throws EmptyParameterException {
