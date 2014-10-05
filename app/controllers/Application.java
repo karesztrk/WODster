@@ -6,11 +6,13 @@ import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
+import util.permission.Identity;
 import util.security.Security;
-import views.html.index;
+import views.html.landing;
 import views.html.login;
-import views.html.register;
 import views.html.loginForm;
+import views.html.register;
+import views.html.dashboard.home;
 import controllers.entity.Login;
 import dao.UserDAO;
 
@@ -20,7 +22,12 @@ public class Application extends Controller {
 	 * Handle default path requests, redirect to computers list
 	 */
 	public static Result index() {
-		return ok(index.render());
+		
+		if(Identity.isAuthenticated()) {
+			return ok(home.render());
+		} 
+		
+		return ok(landing.render());
 	}
 	
 	public static Result login() {
@@ -29,7 +36,7 @@ public class Application extends Controller {
 
 	public static Result logout() {
 		session().clear();
-		return index();
+		return login();
 	}
 	
 	@Transactional
@@ -43,7 +50,7 @@ public class Application extends Controller {
 		session("email", form.get().email);
 		session("id", form.get().id.toString());
 		session("userType", form.get().userType);
-		return ok(index.render());
+		return ok(home.render());
 	}
 	
 	@Transactional

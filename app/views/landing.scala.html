@@ -1,0 +1,65 @@
+@()
+
+@import helper._
+@import play.i18n.Messages
+
+@contentExtra = {
+    
+	<div class="masthead">
+      
+      <div class="container">
+
+        <div class="carousel masthead-carousel slide" id="masthead-carousel">
+          <div class="carousel-inner">
+
+            <div class="item active">
+
+              <div class="row">
+
+                <div class="col-md-6 masthead-text animated fadeInDownBig">
+                  <h1 class="masthead-title">Don't feel that your training progress stopped</h1>
+
+                  <p class="masthead-">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisi ut aliquip ex ea commodo consequat.
+                  </p>
+
+                  <br/>
+
+                  <div class="masthead-actions">
+                    <a class="btn btn-transparent btn-jumbo" href="#">
+                    Learn More
+                    </a>
+
+                    <a class="btn btn-primary btn-jumbo" href="@routes.Application.register()">
+                    Create an Account
+                    </a>
+                  </div> <!-- /.masthead-actions -->
+                </div> <!-- /.masthead-text -->
+
+                <div class="col-md-6 masthead-img animated fadeInUpBig">
+                  <img class="img-responsive" alt="slide2" src="@routes.Assets.at("images/mobile.png")"/>     
+                </div> <!-- /.masthead-img -->
+
+              </div> <!-- /.row -->
+
+            </div> <!-- /.item -->
+
+          </div>  <!-- /.carousel-inner -->
+          <!-- Carousel nav -->
+
+          <div class="carousel-controls">
+            <a data-slide="prev" href="#masthead-carousel" class="carousel-control left">&lt;</a>
+            <a data-slide="next" href="#masthead-carousel" class="carousel-control right">&gt;</a>
+          </div>
+            
+        </div> <!-- /.masthead-carousel -->
+
+        </div>
+
+    </div>
+
+}
+
+@main("landing", contentExtra) {
+
+}

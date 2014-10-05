@@ -30,7 +30,8 @@ public class DataGenerator extends Controller {
 		
 		UserDAO.save(user);
 		
-		return redirect(routes.Application.index());
+		session().clear();
+		return redirect(routes.Application.login());
 	}
 	
 	@Transactional
@@ -45,7 +46,8 @@ public class DataGenerator extends Controller {
 		
 		BoxDAO.save(box);
 		
-		return redirect(routes.Application.index());
+		session().clear();
+		return redirect(routes.Application.login());
 	}
 	
 	@Transactional
@@ -104,7 +106,8 @@ public class DataGenerator extends Controller {
 		
 		PostDAO.save(w);
 		
-		return redirect(routes.Application.index());
+		session().clear();
+		return redirect(routes.Application.login());
 	}
 	
 	@Transactional
@@ -119,7 +122,8 @@ public class DataGenerator extends Controller {
 		
 		WorkoutDAO.save(new Workout("Mary", "AMRAP in 20 minutes<br><br><ul><li>5 HSPU</li><li>10 Pistols (5 each leg alternating</li><li>15 Pull ups</li></ul>"));
 		
-		return redirect(routes.Application.index()); 
+		session().clear();
+		return redirect(routes.Application.login()); 
 	}
 	
 	@Transactional
@@ -136,6 +140,7 @@ public class DataGenerator extends Controller {
 
 		PersonalRecordDAO.save(mary);
 		
-		return redirect(routes.Application.index());
+		session().clear();
+		return redirect(routes.Application.login());
 	}
 }
