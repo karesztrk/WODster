@@ -7,16 +7,64 @@
 
 @main("") { 
 
-	@form(routes.Application.register, 'class -> "centered_form") {
-	
-		<h2 class="form-signin-heading">Register</h2>
-	
-		@inputText(registerForm("email"), '_label -> null, 'type -> "email", 'placeholder -> "Email address", 'class -> "form-control")
-		@inputPassword(registerForm("password"), '_label -> null, 'placeholder -> "Password", 'class -> "form-control")
-		@inputPassword(registerForm("confirm"), '_label -> null, 'placeholder -> "Password again", 'class -> "form-control")
-		@inputText(registerForm("name"), '_label -> null, 'placeholder -> "Your name", 'class -> "form-control")
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+<div class="account-wrapper">
+
+    <div class="account-body">
+
+	  <h3>Get started now</h3>
+
+      <h5>Make your first step toward your goal</h5>
+
+      	@form(routes.Application.register, 'class -> "form account-form parsley-form", Symbol("data-validate") -> "parsley") {
 		
-	}
+			@inputText(registerForm("email"), 
+				'_label -> null, 
+				'placeholder -> "Your Email", 
+				'class -> "form-control parsley-validated", 
+				Symbol("data-required") -> "true",
+				Symbol("data-type") -> "email",
+				'tabindex -> 1, 
+				'_showHelp -> false)
+			@inputText(registerForm("name"), 
+				'_label -> null, 
+				'placeholder -> "Your Name", 
+				'class -> "form-control parsley-validated", 
+				Symbol("data-required") -> "true",
+				'tabindex -> 2, 
+				'_showHelp -> false)
+			@inputPassword(registerForm("password"), 
+				'_label -> null, 
+				'placeholder -> "Password", 
+				'class -> "form-control parsley-validated", 
+				Symbol("data-required") -> "true", 
+				'tabindex -> 3, 
+				'_showHelp -> false)
+			@inputPassword(registerForm("confirm"), 
+				'_label -> null, 
+				'placeholder -> "Password again", 
+				'class -> "form-control parsley-validated", 
+				Symbol("data-required") -> "true", 
+				Symbol("data-equalto") -> "#password",
+				'tabindex -> 4, 
+				'_showHelp -> false)
+			
+			<div class="form-group">
+				<button class="btn btn-secondary btn-block btn-lg" type="submit" tabindex="5">Create My Account &nbsp;</button>
+			</div>
+			
+		}
+
+    </div>
+
+    <div class="account-footer">
+      <p>
+      Already have an account? &nbsp;
+      <a class="" href="./account-login.html">Login to your Account!</a>
+      </p>
+    </div>
+
+  </div>
+
+	
 
 }

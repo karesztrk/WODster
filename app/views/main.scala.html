@@ -1,4 +1,4 @@
-@(menu: String = "", contentExtra: Html = Html(""))(content: Html)
+@(menu: String = "", styleExtra: Html = Html(""), contentExtra: Html = Html(""))(content: Html)
 
 @import play.i18n.Messages
 @import util.permission.Identity
@@ -21,8 +21,8 @@
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/mvpready-flat.css")" >
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap-datetimepicker.css")" >
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap-fileupload.css")" >
-        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/mvpready-landing.css")" >
-        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/animate.css")" >
+        
+        @styleExtra
         
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     </head>

@@ -3,6 +3,11 @@
 @import helper._
 @import play.i18n.Messages
 
+@styleExtra = {
+	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/mvpready-landing.css")" >
+    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/animate.css")" >
+}
+
 @contentExtra = {
     
 	<div class="masthead">
@@ -60,6 +65,6 @@
 
 }
 
-@main("landing", contentExtra) {
+@main("landing", styleExtra, contentExtra) {
 
 }
