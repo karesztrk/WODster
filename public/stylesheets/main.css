@@ -85,7 +85,7 @@ img.img-centered {
     width: 100%;
 }
 
-.post-attended:before {
+.attendance:before {
     border-bottom: 6px solid #395065;
     border-left: 14px solid transparent;
     border-right: 14px solid transparent;
@@ -97,7 +97,7 @@ img.img-centered {
     width: 0;
 }
 
-.post-attended  {
+.attendance  {
     background-color: #777;
     color: #fff;
     display: inline-block;
@@ -109,9 +109,14 @@ img.img-centered {
     text-align: center;
 }
 
-.post-attended {
+.unattended {
     background-color: #425d75;
     color: #d74b4b;
+}
+
+.attended {
+    background-color: #425d75;
+    color: #46a546;
 }
 
 .post-header {
@@ -141,4 +146,8 @@ img.img-centered {
 
 .post-content {
 	padding: 0.5em 0 0;
+}
+
+.feed-item-comment .feed-icon {
+  background-color: #6685a4;
 }

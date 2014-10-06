@@ -75,10 +75,64 @@
 
                 </div>
 
-				@inputText(userForm("name"), '_label -> "Name", 'type -> "text", 'class -> "form-control parsley-validated", Symbol("data-required") -> "true", '_labelClass -> "col-md-3", '_inline -> true, '_inputWrapperClass -> "col-md-7", '_showHelp -> false)
-				@inputText(userForm("email"), '_label -> "Email Address", 'type -> "text", 'class -> "form-control", '_labelClass -> "col-md-3", '_inline -> true, '_inputWrapperClass -> "col-md-7", '_showHelp -> false, 'disabled -> "")
-                @inputText(profileForm("website"), '_label -> "Website", 'type -> "text", 'class -> "form-control parsley-validated", Symbol("data-type") -> "url", '_labelClass -> "col-md-3", '_inline -> true, '_inputWrapperClass -> "col-md-7")
-				@textarea(profileForm("about"), '_label -> "About You", 'class -> "form-control", '_labelClass -> "col-md-3",'_inline -> true, '_inputWrapperClass -> "col-md-7")
+				@inputText(userForm("name"), 
+					'_label -> "Name", 
+					'class -> "form-control parsley-validated", 
+					Symbol("data-required") -> "true", 
+					'_labelClass -> "col-md-3", 
+					'_inline -> true, 
+					'_inputWrapperClass -> "col-md-7", 
+					'_showHelp -> false)
+				@inputText(userForm("email"), 
+					'_label -> "Email Address", 
+					'class -> "form-control", 
+					'_labelClass -> "col-md-3", 
+					'_inline -> true, 
+					'_inputWrapperClass -> "col-md-7", 
+					'_showHelp -> false, 
+					'disabled -> "")
+                @inputText(profileForm("website"), 
+                	'_label -> "Website", 
+                	'class -> "form-control parsley-validated", 
+                	Symbol("data-type") -> "url", 
+                	'_labelClass -> "col-md-3", 
+                	'_inline -> true, 
+                	'_inputWrapperClass -> "col-md-7")
+                
+                <hr/>	
+                	
+                @select(profileForm("gender"),
+                	options(model.user.Gender.UNKNOWN.getValue() -> " ", model.user.Gender.MALE.getValue() -> "Male", model.user.Gender.FEMALE.getValue() -> "Female"),
+               	 	'_label -> "Gender", 
+               	 	'class -> "form-control",
+               	 	'_labelClass -> "col-md-3", 
+                	'_inline -> true, 
+                	'_inputWrapperClass -> "col-md-7")
+                @component.datePicker(profileForm("birth"), 
+                	'_label -> "Birth date", 
+                	'class -> "form-control", 
+                	'_labelClass -> "col-md-3", 
+                	'_inline -> true, 
+                	'_inputWrapperClass -> "col-md-7")
+               	@select(profileForm("country"),
+                	options("" -> " ", "HU" -> "Hungary"),
+               	 	'_label -> "Country", 
+               	 	'class -> "form-control",
+               	 	'_labelClass -> "col-md-3", 
+                	'_inline -> true, 
+                	'_inputWrapperClass -> "col-md-7")
+               	@inputText(profileForm("city"), 
+                	'_label -> "City", 
+                	'class -> "form-control", 
+                	'_labelClass -> "col-md-3", 
+                	'_inline -> true, 
+                	'_inputWrapperClass -> "col-md-7")
+				@textarea(profileForm("about"), 
+					'_label -> "About You", 
+					'class -> "form-control", 
+					'_labelClass -> "col-md-3",
+					'_inline -> true, 
+					'_inputWrapperClass -> "col-md-7")
 
                 <div class="form-group">
                   <div class="col-md-7 col-md-push-3">

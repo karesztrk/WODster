@@ -15,7 +15,6 @@ import javax.persistence.JoinColumns;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Past;
 
 import model.user.social.SocialNetwork;
@@ -43,16 +42,6 @@ public class Profile implements Serializable {
 	
 //	@OneToOne
 //	public User user;
-
-	/** Height of the user. */
-	@Min(1)
-	@play.data.validation.Constraints.Min(1)
-	public Double height;
-
-	/** Weight of the user. */
-	@Min(1)
-	@play.data.validation.Constraints.Min(1)
-	public Double weight;
 
 	/** Gender of the user. */
 	public Gender gender;

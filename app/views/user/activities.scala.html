@@ -3,51 +3,82 @@
 @import helper._
 
 @for(activity <- activities) {
-	<div class="feed-item">
+	
 	
 		@activity match { 
 			case comment: model.blog.Comment => {
-				<div class="feed-icon">
-					<i class="fa fa-comment-o"></i>
-				</div>
-				
-				<div class="feed-subject">
-					<p><a href="javascript:;">@activity.author.name</a> commented on: <a href="javascript:;">@comment.post.title</a></p>
+				<div class="feed-item feed-item-comment">
+					<div class="feed-icon">
+						<i class="fa fa-comment-o"></i>
+					</div>
+					
+					<div class="feed-subject">
+						<p><a href="javascript:;">@activity.author.name</a> commented on: <a href="javascript:;">@comment.post.title</a></p>
+					</div>
+					
+					<div class="feed-content">
+					  <ul class="icons-list">
+					    <li>
+					      <i class="icon-li fa fa-quote-left"></i>
+					      @activity.content
+					    </li>
+					  </ul>
+					</div> <!-- /.feed-content -->
+					
+					<div class="feed-actions">	
+						<a class="pull-right" href="javascript:;"><i class="fa fa-clock-o"></i> @activity.date.format(util.Configuration.DATETIME_PATTERN)</a>
+					</div>
 				</div>
 			}
 			case act: model.blog.Activity => {
-				<div class="feed-icon">
-					<i class="fa fa-lightbulb-o"></i>
-				</div>
-				
-				<div class="feed-subject">
-					<p><a href="javascript:;">@activity.author.name</a> shared:</p>
+				<div class="feed-item feed-item-idea">
+					<div class="feed-icon">
+						<i class="fa fa-lightbulb-o"></i>
+					</div>
+					
+					<div class="feed-subject">
+						<p><a href="javascript:;">@activity.author.name</a> shared:</p>
+					</div>
+					
+					<div class="feed-content">
+					  <ul class="icons-list">
+					    <li>
+					      <i class="icon-li fa fa-quote-left"></i>
+					      @activity.content
+					    </li>
+					  </ul>
+					</div> <!-- /.feed-content -->
+					
+					<div class="feed-actions">	
+						<a class="pull-right" href="javascript:;"><i class="fa fa-clock-o"></i> @activity.date.format(util.Configuration.DATETIME_PATTERN)</a>
+					</div>
 				</div>
 			}
 			case _ => {
-				<div class="feed-icon">
-					<i class="fa fa-info"></i>
-				</div>
-			
-				<div class="feed-subject">
-					<p><a href="javascript:;">@activity.author.name</a></p>
+				<div class="feed-item feed-item-idea">
+					<div class="feed-icon">
+						<i class="fa fa-info"></i>
+					</div>
+				
+					<div class="feed-subject">
+						<p><a href="javascript:;">@activity.author.name</a></p>
+					</div>
+					
+					<div class="feed-content">
+					  <ul class="icons-list">
+					    <li>
+					      <i class="icon-li fa fa-quote-left"></i>
+					      @activity.content
+					    </li>
+					  </ul>
+					</div> <!-- /.feed-content -->
+					
+					<div class="feed-actions">	
+						<a class="pull-right" href="javascript:;"><i class="fa fa-clock-o"></i> @activity.date.format(util.Configuration.DATETIME_PATTERN)</a>
+					</div>
 				</div>
 			}
 
 		}
-		
-		<div class="feed-content">
-		  <ul class="icons-list">
-		    <li>
-		      <i class="icon-li fa fa-quote-left"></i>
-		      @activity.content
-		    </li>
-		  </ul>
-		</div> <!-- /.feed-content -->
-		
-		<div class="feed-actions">	
-			<a class="pull-right" href="javascript:;"><i class="fa fa-clock-o"></i> @activity.date.format(util.Configuration.DATETIME_PATTERN)</a>
-		</div>
-		
-	</div>
+
 }       

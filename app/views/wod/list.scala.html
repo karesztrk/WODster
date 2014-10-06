@@ -17,9 +17,15 @@
     		@for(post <- currentPage.getList) {
 				<div class="post-entry">
 					
-					<div title="" class="post-attended ui-tooltip" data-original-title="This workout is done!">
-	                	<i class="fa fa-check"></i>
-	                </div>
+					@if(WODController.isAttendee(post)) {
+						<div title="" class="attendance attended ui-tooltip" data-original-title="This workout is done!">
+		                		<i class="fa fa-check"></i>	                	
+		                </div>
+	                } else {
+	  					<div title="" class="attendance unattended ui-tooltip" data-original-title="You have not done this yet!">
+	              			<i class="fa fa-check"></i>	                	
+		                </div>
+	                }	
 					
 					<div class="post-header">
                     	<h4 class="post-title"><u>@post.title</u></h4>
@@ -132,6 +138,7 @@
 		
 		$(document).ready(function()
 		{
+			
 			$(".btn.btn-primary.btn-attend").click(function()
 				{
 					var btn = $(this);

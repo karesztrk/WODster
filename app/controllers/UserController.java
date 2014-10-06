@@ -87,8 +87,14 @@ public class UserController extends Controller {
 			user.profile = profileForm.get();
 		} else {
 			Profile newProfile = profileForm.get();
-			user.profile.about = newProfile.about;
+			user.profile.birth = newProfile.birth;
+			user.profile.gender = newProfile.gender;
+			user.profile.country = newProfile.country;
+			user.profile.city = newProfile.city;
 			user.profile.website = newProfile.website;
+			user.profile.about = newProfile.about;
+			
+			
 		}
 
 		FilePart image = body.getFile("image");
