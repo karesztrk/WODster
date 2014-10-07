@@ -15,6 +15,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import model.journal.PersonalRecord;
 import model.training.Workout;
 import model.user.User;
@@ -32,10 +34,12 @@ public class Attendance implements Serializable {
 	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.TABLE)
+	@JsonIgnore
 	public Long id;
 
 	@OneToOne
 	@Required
+	@JsonIgnore
 	public User user;
 	
 	@Required
@@ -52,6 +56,7 @@ public class Attendance implements Serializable {
 	
     @OneToOne
 	@Required
+	@JsonIgnore
 	public Workout workout;
     
     public PersonalRecord toPersonalRecord() {

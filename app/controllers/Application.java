@@ -153,7 +153,9 @@ public class Application extends Controller {
 				
 				routes.javascript.Application.index(),
 				routes.javascript.Application.authenticate(),
-				routes.javascript.UserController.changePassword()
+				routes.javascript.UserController.changePassword(),
+				routes.javascript.PersonalRecordController.fetch()
+			
 		));
 	}
 }

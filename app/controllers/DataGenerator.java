@@ -23,12 +23,16 @@ public class DataGenerator extends Controller {
 	@Transactional
 	public static Result saveUsers() {
 		
-		User user = new User();
-		user.email = "torok.karoly.krisztian@gmail.com";
-		user.password = Security.getSecurePassword("12345");
-		user.name = "Karoly Torok";
+		User user = UserDAO.find("torok.karoly.krisztian@gmail.com");
 		
-		UserDAO.save(user);
+		if(null == user) {
+			user = new User();
+			user.email = "torok.karoly.krisztian@gmail.com";
+			user.password = Security.getSecurePassword("12345");
+			user.name = "Karoly Torok";
+			
+			UserDAO.save(user);
+		}
 		
 		session().clear();
 		return redirect(routes.Application.login());

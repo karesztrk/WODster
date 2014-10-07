@@ -58,7 +58,8 @@ GET		/init/records				controllers.DataGenerator.saveRecords()
 GET     /box                  	   	controllers.BoxController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 # List the records
-GET		/journal/records			controllers.PersonalRecordController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET		/journal/records			controllers.PersonalRecordController.list()
+GET		/journal/records/fetch		controllers.PersonalRecordController.fetch()
 
 # Delete a record
 POST    /journal/records/:id/delete	controllers.PersonalRecordController.delete(id:Long)

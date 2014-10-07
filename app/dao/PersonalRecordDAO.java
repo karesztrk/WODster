@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.journal.PersonalRecord;
 import model.training.result.Attendance;
+import model.user.User;
 import play.db.jpa.JPA;
 
 public class PersonalRecordDAO extends AbstractDAO {
@@ -45,5 +46,12 @@ public class PersonalRecordDAO extends AbstractDAO {
 		JPA.em().createQuery("delete from PersonalRecord p where p.id = :id")
 			.setParameter("id", id)
 			.executeUpdate();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<PersonalRecord> list(User user) {
+		return JPA.em().createQuery("select record from PersonalRecord record where record.user = :user")
+				.setParameter("user", user)
+				.getResultList();
 	}
 }
