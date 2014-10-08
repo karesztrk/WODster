@@ -23,6 +23,8 @@
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap-fileupload.css")" >
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/marka.min.css")" >
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/dataTables.bootstrap.css")" >
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/select2.css")" >
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/select2-bootstrap.css")" >
         
         @styleExtra
         
@@ -43,13 +45,14 @@
 	<script src="@routes.Assets.at("javascripts/marka.min.js")" type="text/javascript" ></script>
 	<script src="@routes.Assets.at("javascripts/jquery.dataTables.js")" type="text/javascript" ></script>
 	<script src="@routes.Assets.at("javascripts/dataTables.bootstrap.js")" type="text/javascript" ></script>
+	<script src="@routes.Assets.at("javascripts/select2.min.js")" type="text/javascript" ></script>
 	
 	<div class="wrapper">
 		<header class="navbar navbar-inverse" role="banner">
 			<div class="container">
 				<div class="navbar-header">
 					<a class="navbar-brand" href="@routes.Application.index()">
-						<img alt="WODster" src="./img/logo.png">
+						<img alt="WODster" >
 					</a>
 					<button type="button" class="navbar-toggle" data-toggle="collapse"
 						data-target=".navbar-collapse">
@@ -263,13 +266,13 @@
 								<ul role="menu" class="dropdown-menu">
 									<li>
 										<a href="@routes.WODController.create()">
-											<i class="fa fa-dashboard"></i> 
+											<i class="fa fa-plus"></i> 
 											&nbsp;&nbsp;Add a new WOD
 										</a>
 									</li>
 									<li>
 										<a href="@routes.WODController.list()">
-											<i class="fa fa-dashboard"></i> 
+											<i class="fa fa-list"></i> 
 											&nbsp;&nbsp;Show WODs
 										</a>
 									</li>
@@ -288,8 +291,14 @@
 								
 								<ul role="menu" class="dropdown-menu">
 									<li>
+										<a href="@routes.PersonalRecordController.create()">
+											<i class="fa fa-plus"></i> 
+											&nbsp;&nbsp;Add a new PR
+										</a>
+									</li>
+									<li>
 										<a href="@routes.PersonalRecordController.list()">
-											<i class="fa fa-dashboard"></i> 
+											<i class="fa fa-list"></i> 
 											&nbsp;&nbsp;Personal records
 										</a>
 									</li>

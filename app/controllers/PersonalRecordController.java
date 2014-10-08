@@ -48,6 +48,9 @@ public class PersonalRecordController extends Controller {
 	}
 	
 	public static Result save() {
-		return ok();
+		
+		
+		
+		return ok(list.render());
 	}
 }

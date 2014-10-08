@@ -28,7 +28,8 @@ POST	/profile/share	   	   		controllers.UserController.share()
 POST	/profile/password			controllers.UserController.changePassword()
 
 # Workouts list (look at the default values for pagination parameters)
-GET     /workouts                  	controllers.WODController.list(p:Int ?= 0, s ?= "date", o ?= "desc", f ?= "")
+GET     /workouts                  	controllers.WODController.list(p:Int ?= 0, s ?= "createdAt", o ?= "desc", f ?= "")
+GET		/workouts/fetch				controllers.WODController.fetch()
 
 # Blog action
 POST	/workouts/attend	   	   	controllers.WODController.attend()

@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import model.journal.PersonalRecord;
 import model.training.Workout;
@@ -19,6 +20,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import play.Logger;
 import play.data.Form;
 import play.db.jpa.Transactional;
+import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -46,7 +48,7 @@ public class WODController extends BlogController {
 		}
 		
 		Workout post = form.get();
-		post.date = new Date();
+		post.createdAt = new Date();
 
 		User user = Identity.getAuthenticatedUser();
 		
@@ -220,5 +222,15 @@ public class WODController extends BlogController {
 			return badRequest("Required parameter contain invalid value");
 		}
 
+	}
+	
+	@Transactional(readOnly = true)
+	public static Result fetch() {
+		
+		User user = Identity.getAuthenticatedUser();
+		
+		List<Workout> workouts = WorkoutDAO.list(user);
+
+		return ok(Json.toJson(workouts));
 	}
 }

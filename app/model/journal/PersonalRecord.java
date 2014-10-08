@@ -17,4 +17,5 @@ public class PersonalRecord extends Attendance {
 	@Formula(" (select p.title from post p where p.id = workout_id) ") 
 	public String name;
 
+	
 }

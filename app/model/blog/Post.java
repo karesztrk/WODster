@@ -17,6 +17,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import model.user.User;
 import play.data.validation.Constraints.Required;
@@ -34,20 +39,26 @@ public class Post implements Serializable {
 	public Long id;
 
 	@Required
+	@NotEmpty
 	public String title;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	public Date date;
+	@Required
+	@NotNull
+	public Date createdAt = new Date();
 	
 	@ManyToOne
+	@JsonIgnore
 	public User user;
 	
 	public String image;
 	
 	@org.hibernate.annotations.Type(type="org.hibernate.type.StringClobType")
+	@JsonIgnore
     public String content;
 	
 	@OneToMany(mappedBy="post", cascade=CascadeType.ALL)
+	@JsonIgnore
 	public List<Comment> comments;
 
 	public void addComment(User author, String content) {

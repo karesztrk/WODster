@@ -38,7 +38,9 @@ public class Workout extends Post {
 	}
 
 	public Workout(String name) {
+		super();
 		super.title = name;
+		super.content = "";
 	}
 	
 	public Workout(String name, String description) {

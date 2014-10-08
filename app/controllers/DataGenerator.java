@@ -60,7 +60,7 @@ public class DataGenerator extends Controller {
 		saveUsers();
 		
 		Post post = new Post();
-		post.date = new Date();
+		post.createdAt = new Date();
 		post.content = "<p>A. <br/> Every minute, on the minute, for 15 minutes: <br/> Clean <br/> <ul><li>Minutes 1-3 – 55-65%</li> <li>Minutes 4-6 – 65-75%</li> <li>Minutes 7-9 – 75-80%</li> <li>Minutes 10-12 – 80-85%</li> <li>Minutes 13-15 – 85-90%</li></ul> </p>";
 		post.image = "";
 		post.title = "Hello world";
@@ -69,7 +69,7 @@ public class DataGenerator extends Controller {
 		PostDAO.save(post);
 		
 		post = new Post();
-		post.date = new Date();
+		post.createdAt = new Date();
 		post.content = "<p class=\"well\">" + "Hello-bello 2" + "</p>";
 		post.image = "";
 		post.title = "Hello world2";
@@ -78,7 +78,7 @@ public class DataGenerator extends Controller {
 		PostDAO.save(post);
 		
 		Workout w = new Workout();
-		w.date = new Date();
+		w.createdAt = new Date();
 		w.content = "AMRAP in 20 minutes<br><br><ul><li>5 HSPU</li><li>10 Pistols (5 each leg alternating</li><li>15 Pull ups</li></ul>";
 		w.image = "";
 		w.title = "Mary";
@@ -89,7 +89,7 @@ public class DataGenerator extends Controller {
 		PostDAO.save(w);
 		
 		w = new Workout();
-		w.date = new Date();
+		w.createdAt = new Date();
 		w.image = "";
 		w.title = "Fran";
 		w.content = "21-15-9 reps, for time <br/> Thruster 95 lbs Pull-ups";
@@ -100,7 +100,7 @@ public class DataGenerator extends Controller {
 		PostDAO.save(w);
 		
 		w = new Workout();
-		w.date = new Date();
+		w.createdAt = new Date();
 		w.image = "";
 		w.title = "Angie";
 		w.content = "Perform for time: 100 Pull-ups 100 Push-ups 100 Sit-ups 100 Squats ";
@@ -123,8 +123,6 @@ public class DataGenerator extends Controller {
 		WorkoutDAO.save(new Workout("Air squat"));
 		WorkoutDAO.save(new Workout("Pistol"));
 		WorkoutDAO.save(new Workout("Deadlift")); 
-		
-		WorkoutDAO.save(new Workout("Mary", "AMRAP in 20 minutes<br><br><ul><li>5 HSPU</li><li>10 Pistols (5 each leg alternating</li><li>15 Pull ups</li></ul>"));
 		
 		session().clear();
 		return redirect(routes.Application.login()); 
