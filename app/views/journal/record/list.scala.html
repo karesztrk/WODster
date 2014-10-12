@@ -22,9 +22,10 @@
           	<table id="recordsTable" class="table table-striped table-bordered dataTable" aria-describedby="table-1_info">
 	            <thead>
 	              <tr role="row">
-	              	<th style="width: 325px;" class="sorting_asc" role="columnheader" tabindex="0" aria-controls="recordsTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name">Name</th>
-	              	<th style="width: 211px;" class="sorting" role="columnheader" tabindex="0" aria-controls="recordsTable" rowspan="1" colspan="1" aria-label="Date">Date</th>
-	              	<th style="width: 188px;" class="sorting" role="columnheader" tabindex="0" aria-controls="recordsTable" rowspan="1" colspan="1" aria-label="Result">Result</th>
+	              	<th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="recordsTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name">Name</th>
+	              	<th class="sorting" role="columnheader" tabindex="0" aria-controls="recordsTable" rowspan="1" colspan="1" aria-label="Date">Date</th>
+	              	<th class="sorting" role="columnheader" tabindex="0" aria-controls="recordsTable" rowspan="1" colspan="1" aria-label="Result">Result</th>
+              	  	<th role="columnheader" tabindex="0" aria-controls="recordsTable" rowspan="1" colspan="1"></th>
               	  </tr>
 	            </thead>
 	            
@@ -37,17 +38,30 @@
 	
 	<script type="text/javascript">
 	$(function() {
-		  var table_1 = $('#recordsTable').dataTable ({
-		    "sAjaxSource": jsRoutes.controllers.PersonalRecordController.fetch().url,
-		    "aoColumns": [
-		      { "mData": "name" },
-		      { "mData": "date" },
-		      { "mData": "result" }
-		    ],
-		    "fnInitComplete": function(oSettings, json) {
-		      $(this).parents ('.dataTables_wrapper').find ('.dataTables_filter input').prop ('placeholder', 'Table Search...').addClass ('form-control input-sm')
-		    }
-		  })
+		
+		var table_1 = $('#recordsTable').dataTable ({
+			 "sAjaxSource": jsRoutes.controllers.PersonalRecordController.fetch().url,
+			 "aoColumns": [
+			   { "mData": "name" },
+			   { "mData": "date" },
+			   { "mData": "result" }
+			 ],
+			 "aoColumnDefs": [ 
+			   {	
+					"aTargets": [ 3 ],
+					"bSortable": false,
+					"bSearchable":false,
+					"mData": "id",
+					"mRender": function ( data, type, full ) {
+						var editLink = jsRoutes.controllers.PersonalRecordController.edit(data).url;
+						return '<a href="'+editLink+'">Edit</a>&nbsp;<a href="'+data+'">Delete</a>';
+					}
+			   }
+			 ],
+			 "fnInitComplete": function(oSettings, json) {
+			   $(this).parents ('.dataTables_wrapper').find ('.dataTables_filter input').prop ('placeholder', 'Table Search...').addClass ('form-control input-sm')
+			 }
+		});
 		})
 	</script>
 }

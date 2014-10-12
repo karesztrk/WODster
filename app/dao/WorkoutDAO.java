@@ -60,9 +60,10 @@ public class WorkoutDAO extends AbstractDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static List<Workout> list(User user) {
-		return JPA.em().createQuery("select w from Workout w where (w.personal = true and w.user = :user) or w.hero = true or w.girl = true")
+	public static List<Workout> list(User user, String nameFilter) {
+		return JPA.em().createQuery("select w from Workout w where (w.hero = true or w.girl = true or (w.personal = true and w.user = :user)) and lower(w.title) like :title")
 				.setParameter("user", user)
+				.setParameter("title", "%" + nameFilter.toLowerCase() + "%")
 				.getResultList();
 	}
 }

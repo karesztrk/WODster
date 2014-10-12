@@ -225,11 +225,11 @@ public class WODController extends BlogController {
 	}
 	
 	@Transactional(readOnly = true)
-	public static Result fetch() {
+	public static Result fetch(String nameFilter) {
 		
 		User user = Identity.getAuthenticatedUser();
 		
-		List<Workout> workouts = WorkoutDAO.list(user);
+		List<Workout> workouts = WorkoutDAO.list(user, nameFilter);
 
 		return ok(Json.toJson(workouts));
 	}

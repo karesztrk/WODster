@@ -29,7 +29,7 @@ POST	/profile/password			controllers.UserController.changePassword()
 
 # Workouts list (look at the default values for pagination parameters)
 GET     /workouts                  	controllers.WODController.list(p:Int ?= 0, s ?= "createdAt", o ?= "desc", f ?= "")
-GET		/workouts/fetch				controllers.WODController.fetch()
+GET		/workouts/fetch				controllers.WODController.fetch(q ?= "")
 
 # Blog action
 POST	/workouts/attend	   	   	controllers.WODController.attend()
@@ -68,3 +68,9 @@ POST    /journal/records/:id/delete	controllers.PersonalRecordController.delete(
 # Add record
 GET     /journal/records/new        controllers.PersonalRecordController.create()
 POST    /journal/records            controllers.PersonalRecordController.save()
+
+# Edit a record
+GET		/journal/records/:id		controllers.PersonalRecordController.edit(id:Long)
+
+# Update a record
+POST	/journal/records/update		controllers.PersonalRecordController.update()

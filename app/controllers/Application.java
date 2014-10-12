@@ -155,6 +155,9 @@ public class Application extends Controller {
 				routes.javascript.Application.authenticate(),
 				routes.javascript.UserController.changePassword(),
 				routes.javascript.PersonalRecordController.fetch(),
+				routes.javascript.PersonalRecordController.update(),
+				routes.javascript.PersonalRecordController.delete(),
+				routes.javascript.PersonalRecordController.edit(),
 				routes.javascript.WODController.fetch()
 			
 		));

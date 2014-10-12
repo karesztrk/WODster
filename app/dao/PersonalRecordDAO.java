@@ -54,4 +54,8 @@ public class PersonalRecordDAO extends AbstractDAO {
 				.setParameter("user", user)
 				.getResultList();
 	}
+	
+	public static PersonalRecord find(Long id) {
+		return findById(PersonalRecord.class, id);
+	}
 }

@@ -11,7 +11,7 @@
     		<div class="portlet">
 			    <h2 class="portlet-title"><u>Add a new PR</u></h2>
 			    <div class="portlet-body">
-				    @form(routes.PersonalRecordController.save()) {
+				    @form(routes.PersonalRecordController.save(), 'class -> "parsley-form", Symbol("data-validate") -> "parsley") {
 					
 						@inputText(prForm("name"), 
 							'_label -> "Workout", 
@@ -26,6 +26,26 @@
 							'class -> "form-control", 
 							'_showHelp -> false, 
 							Symbol("data-placeholder") -> "Select an existing workout")
+							
+						@inputText(prForm("result"), 
+							'_label -> null, 
+							'class -> "form-control", 
+							'_showHelp -> false, 
+							'placeholder -> "Add your result",
+							Symbol("data-required") -> "true",
+							Symbol("data-type") -> "digits")
+							
+						@component.datePicker(prForm("date"), 
+							'_label -> null,
+							'placeholder -> "Date of achievement",
+							'class -> "form-control",
+							'_showHelp -> false)
+							
+						@textarea(prForm("note"), 
+							'_label -> null, 
+							'placeholder -> "Add a note...", 
+							'class -> "form-control",
+							'_showHelp -> false)
 						
 						<div class="actions"> 
 							<input type="submit" value="Save" class="btn btn-primary">
@@ -43,6 +63,12 @@
 			$("#workout_select").select2({
 			    ajax: {
 			        dataType: "json",
+			        data: function (term, page) {
+			        	return {
+				        	q: term, // search term
+				        	page_limit: 10,
+				        	};
+			        	},
 			        url: jsRoutes.controllers.WODController.fetch().url,
 			        results: function (data) {
 			            return {results: data};

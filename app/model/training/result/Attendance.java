@@ -15,14 +15,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import model.journal.PersonalRecord;
 import model.training.Workout;
 import model.user.User;
 import play.data.format.Formats.DateTime;
-import play.data.validation.Constraints.Required;
 import util.Configuration;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "attendance")
@@ -34,28 +33,23 @@ public class Attendance implements Serializable {
 	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.TABLE)
-	@JsonIgnore
 	public Long id;
 
 	@OneToOne
-	@Required
 	@JsonIgnore
 	public User user;
 	
-	@Required
 	@NotNull
 	public long result;
 	
     @org.hibernate.annotations.Type(type="org.hibernate.type.StringClobType")
     public String note;
     
-    @Required
     @DateTime(pattern = Configuration.DATE_PATTERN)
     @Temporal(TemporalType.DATE)
     public Date date;
 	
     @OneToOne
-	@Required
 	@JsonIgnore
 	public Workout workout;
     
