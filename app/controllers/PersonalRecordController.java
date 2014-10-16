@@ -2,21 +2,24 @@ package controllers;
 
 import java.util.List;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.common.base.Strings;
-
 import model.journal.PersonalRecord;
 import model.training.Workout;
 import model.user.User;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.libs.Json;
+import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
+import util.exception.EmptyParameterException;
 import util.permission.Identity;
 import views.html.journal.record.create;
 import views.html.journal.record.edit;
 import views.html.journal.record.list;
+
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.base.Strings;
+
 import dao.PersonalRecordDAO;
 import dao.WorkoutDAO;
 
@@ -96,9 +99,18 @@ public class PersonalRecordController extends Controller {
 	}
 	
 	@Transactional
-	public static Result delete(Long id) {
+	@BodyParser.Of(util.http.type.parser.SimpleFormParser.class)
+	public static Result delete() {
 		
-		PersonalRecordDAO.delete(id);
+		util.http.request.SimpleForm values = request().body().as(util.http.request.SimpleForm.class);
+		
+		try {
+			String id = values.getAsRequired("id");
+			PersonalRecordDAO.delete(Long.valueOf(id));
+		} catch (EmptyParameterException e) {
+			return badRequest("Required data not found");
+		}
+		
 		return ok(list.render()); 
 	}
 }

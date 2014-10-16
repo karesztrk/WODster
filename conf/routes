@@ -63,7 +63,7 @@ GET		/journal/records			controllers.PersonalRecordController.list()
 GET		/journal/records/fetch		controllers.PersonalRecordController.fetch()
 
 # Delete a record
-POST    /journal/records/:id/delete	controllers.PersonalRecordController.delete(id:Long)
+POST    /journal/records/delete		controllers.PersonalRecordController.delete()
 
 # Add record
 GET     /journal/records/new        controllers.PersonalRecordController.create()

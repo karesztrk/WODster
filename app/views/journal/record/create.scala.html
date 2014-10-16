@@ -28,7 +28,7 @@
 							Symbol("data-placeholder") -> "Select an existing workout")
 							
 						@inputText(prForm("result"), 
-							'_label -> null, 
+							'_label -> "Result", 
 							'class -> "form-control", 
 							'_showHelp -> false, 
 							'placeholder -> "Add your result",
@@ -36,13 +36,13 @@
 							Symbol("data-type") -> "digits")
 							
 						@component.datePicker(prForm("date"), 
-							'_label -> null,
+							'_label -> "Date",
 							'placeholder -> "Date of achievement",
 							'class -> "form-control",
 							'_showHelp -> false)
 							
 						@textarea(prForm("note"), 
-							'_label -> null, 
+							'_label -> "Note", 
 							'placeholder -> "Add a note...", 
 							'class -> "form-control",
 							'_showHelp -> false)

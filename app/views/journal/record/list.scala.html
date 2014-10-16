@@ -35,6 +35,34 @@
 
     </div> <!-- /.portlet-body -->
 
+	<div class="modal modal-styled fade" id="deleteModal" style="display: none;" aria-hidden="true">
+
+        <div class="modal-dialog">
+
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
+              <h3 class="modal-title">Confirmation</h3>
+            </div> <!-- /.modal-header -->
+
+			@form(routes.PersonalRecordController.delete()) {
+	            <div class="modal-body">
+	              <p>Are you sure you want to delete this record?</p>
+	              <input type="hidden" name="id" id="recordId" value="" />
+	            </div> <!-- /.modal-body -->
+	            
+	            <div class="modal-footer">
+	              <button data-dismiss="modal" class="btn btn-default" type="button">No</button>
+	              <button class="btn btn-primary" type="submit">Yes</button>
+	            </div> <!-- /.modal-footer -->
+            }
+
+          </div> <!-- /.modal-content -->
+
+        </div><!-- /.modal-dialog -->
+
+      </div>
 	
 	<script type="text/javascript">
 	$(function() {
@@ -54,14 +82,24 @@
 					"mData": "id",
 					"mRender": function ( data, type, full ) {
 						var editLink = jsRoutes.controllers.PersonalRecordController.edit(data).url;
-						return '<a href="'+editLink+'">Edit</a>&nbsp;<a href="'+data+'">Delete</a>';
+						var onclick = '$("#recordId").val($(this).attr("data-id"))';
+						return '<a href="'+editLink+'">Edit</a>&nbsp;<a href="#deleteModal" class="deleteLink" data-toggle="modal" data-id="'+data+'">Delete</a>';
 					}
 			   }
 			 ],
 			 "fnInitComplete": function(oSettings, json) {
 			   $(this).parents ('.dataTables_wrapper').find ('.dataTables_filter input').prop ('placeholder', 'Table Search...').addClass ('form-control input-sm')
-			 }
+			 },
+			 "fnInitComplete": function(oSettings, json) {
+
+				 $(".deleteLink").click(function() {
+				 	var btn = $(this);
+					var id = btn.attr('data-id');
+					$("#recordId").val(id);
+				 });
+	         }
 		});
+
 		})
 	</script>
 }
