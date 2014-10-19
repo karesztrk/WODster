@@ -40,7 +40,7 @@ GET     /workouts/new              	controllers.WODController.create()
 POST    /workouts                  	controllers.WODController.save()
 
 # Edit existing workout
-GET     /workouts/:id/edit        	controllers.WODController.edit(id:Long)
+GET     /workouts/edit/:id        	controllers.WODController.edit(id:Long)
 POST    /workouts/:id              	controllers.WODController.update(id:Long)
 
 # View existing workout

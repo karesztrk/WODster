@@ -149,5 +149,9 @@ img.img-centered {
 }
 
 .feed-item-comment .feed-icon {
-  background-color: #6685a4;
+	background-color: #6685a4;
+}
+
+.icons-list > li > .icon-li {
+	top: auto !important;
 }

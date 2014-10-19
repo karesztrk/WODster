@@ -15,54 +15,51 @@
     	<div class="col-sm-7 col-md-8 layout-main">
     		
     		@for(post <- currentPage.getList) {
-				<div class="post-entry">
+				<div class="feed-item feed-item-idea">
 					
-					@if(WODController.isAttendee(post)) {
-						<div title="" class="attendance attended ui-tooltip" data-original-title="This workout is done!">
-		                		<i class="fa fa-check"></i>	                	
-		                </div>
-	                } else {
-	  					<div title="" class="attendance unattended ui-tooltip" data-original-title="You have not done this yet!">
-	              			<i class="fa fa-check"></i>	                	
-		                </div>
-	                }	
+					<div class="feed-icon">
+						<i class="fa fa-lightbulb-o"></i>
+					</div>
 					
-					<div class="post-header">
-                    	<h4 class="post-title"><u>@post.title</u></h4>
-            		</div>
-                
-	                <div class="post-date">
-	                  <!-- Date/Time -->
-							<span class="glyphicon glyphicon-time"></span> Posted on @post.createdAt.format(util.Configuration.DATETIME_PATTERN)
+					<div class="feed-subject">
+						<p><a href="/workouts/@post.id">@post.title</a></p>
 	                </div>
-					
-					
-					<div class="post-content">
-						
-						<!-- Preview Image -->
-						@if(util.asset.AssetUtils.isFileExist(post.image)) {
-							<img alt="Post image" src="@routes.Assets.at(post.image)" class="img-responsive img-centered">
-							
-							<hr>
-						} 
-						
-						<!-- Post Content -->
-						<div >@Html(post.content)</div>
-						
-						<hr>
-						
-						@if(authenticated) {
+	                
+					<div class="feed-content">
+						<ul class="icons-list">
+							<li>
+								
+								<!-- Preview Image -->
+								@if(util.asset.AssetUtils.isFileExist(post.image)) {
+									<div style="width: 375px" class="thumbnail">
+										<img alt="Post image" src="@routes.Assets.at(post.image)" class="img-responsive img-centered">
+									</div>
+								} 
+								
+								<!-- Post Content -->
+								<i class="icon-li fa fa-quote-left"></i>
+								<div >@Html(post.content)</div>
+
+                    		</li>
+						</ul>
+					</div>
+                
+                	<div class="feed-actions">
+                		@if(authenticated) {
 						
 							@if(WODController.isAttendee(post)) {
-								<button disabled="disabled" type="button" data-value="@post.id" class="btn btn-success btn-attended">Done&nbsp;<i class="glyphicon glyphicon-ok"></i></button>
+								<a class="pull-left" href="javascript:;" data-id="@post.id"><i class="fa fa-check-square-o"></i></a> 
 							} else {
-								<button type="button" data-wod-id="@post.id" data-wod-type="@post.resultType" class="btn btn-primary btn-attend" data-toggle="modal" data-target="#attendModal">Done</button>
+								<a class="pull-left attend" href="#attendModal" data-id="@post.id" data-type="@post.resultType" data-toggle="modal" ><i class="fa fa-square-o"></i></a> 
 							}
 						}
+						<a class="pull-left" href="javascript:;"><i class="fa fa-thumbs-up"></i> 0</a> 
+						<a class="pull-left" href="javascript:;"><i class="fa fa-comment-o"></i> 0</a>
 						
-						<a href="/workouts/@post.id" class="btn btn-secondary">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-
+						<a class="pull-right" href="javascript:;"><i class="fa fa-clock-o"></i> @post.createdAt.format(util.Configuration.DATETIME_PATTERN)</a>
 					</div>
+			
+					
 				</div>
 		    }
     	
@@ -139,11 +136,11 @@
 		$(document).ready(function()
 		{
 			
-			$(".btn.btn-primary.btn-attend").click(function()
+			$(".attend").click(function()
 				{
 					var btn = $(this);
-					var id = btn.attr('data-wod-id');
-					var type = btn.attr('data-wod-type');
+					var id = btn.attr('data-id');
+					var type = btn.attr('data-type');
 					$("#wodId").val(id);
 					
 					if('TIME' == type) {
@@ -181,13 +178,11 @@
 							data : formData,
 							success: function(data, textStatus, jqXHR)
 							{
-								var btn = $("button[data-wod-id=" + formData[0].value + "]");
-								if(!btn.hasClass('btn-success')) {
-									btn.addClass('btn-success').attr('disabled', 'disabled')
-										.append('&nbsp;')
-									    .append($('<i></i>')
-								        .addClass('glyphicon glyphicon-ok')
-								    )
+								var btn = $("a[data-id=" + formData[0].value + "]");
+								var icon = btn.children("i");
+								if(!btn.hasClass('fa-check-square-o')) {
+									btn.attr("href", "#");
+									icon.removeClass('fa-square-o').addClass('fa-check-square-o');
 								}
 								$('#attendModal').modal('hide');
 								form.trigger("reset");
