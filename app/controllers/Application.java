@@ -31,7 +31,8 @@ public class Application extends Controller {
 	}
 	
 	public static Result login() {
-		return ok(login.render(Form.form(Login.class)));
+
+        return ok(login.render(Form.form(Login.class)));
 	}
 
 	public static Result logout() {
@@ -86,79 +87,27 @@ public class Application extends Controller {
 		session("id", form.get().id.toString());
 		session("userType", form.get().getType());
 		flash("welcome", "");
-		return redirect(routes.Application.index());
+		return redirect(controllers.routes.Application.index());
 
 	}
 	
 	public static Result signUp() {
-		return ok(register.render(Form.form(User.class)));
-	}
 
-	/*
-	@Transactional(readOnly = true)
-	public static Result list(int page, String sortBy, String order,
-			String filter) {
-		return ok(list.render(WorkoutDAO.page(page, 10, sortBy, order, filter),
-				sortBy, order, filter));
+        return ok(register.render(Form.form(User.class)));
 	}
-
-	public static Result edit(Long id) {
-		Form<Workout> WorkoutForm = Form.form(Workout.class).fill(
-				WorkoutDAO.findById(id));
-		return ok(editForm.render(id, WorkoutForm));
-	}
-
-	public static Result update(Long id) {
-		Form<Workout> WorkoutForm = Form.form(Workout.class).bindFromRequest();
-		if (WorkoutForm.hasErrors()) {
-			return badRequest(editForm.render(id, WorkoutForm));
-		}
-		
-		WorkoutDAO.update(WorkoutForm.get());
-		flash("success", "Workout " + WorkoutForm.get().name
-				+ " has been updated");
-		return ok(index.render());
-	}
-
-	public static Result create() {
-		Form<Workout> WorkoutForm = Form.form(Workout.class);
-		return ok(createForm.render(WorkoutForm));
-	}
-
-	@Transactional
-	public static Result save() {
-		Logger.info("Saving...");
-		Form<Workout> WorkoutForm = Form.form(Workout.class).bindFromRequest();
-		if (WorkoutForm.hasErrors()) {
-			return badRequest(createForm.render(WorkoutForm));
-		}
-		
-		WorkoutDAO.save(WorkoutForm.get());
-		flash("success", "Workout " + WorkoutForm.get().name
-				+ " has been created");
-		return ok(index.render());
-	}
-
-	@Transactional
-	public static Result delete(Long id) {
-		
-		WorkoutDAO.delete(id);
-		flash("success", "Workout has been deleted");
-		return ok(index.render());
-	}*/
 	
 	public static Result javascriptRoutes() {
-		response().setContentType("text/javascript"); 
-		return ok(Routes.javascriptRouter("jsRoutes", 
-				
-				routes.javascript.Application.index(),
-				routes.javascript.Application.authenticate(),
-				routes.javascript.UserController.changePassword(),
-				routes.javascript.PersonalRecordController.fetch(),
-				routes.javascript.PersonalRecordController.update(),
-				routes.javascript.PersonalRecordController.edit(),
-				routes.javascript.WODController.fetch()
-			
+		response().setContentType("text/javascript");
+		return ok(Routes.javascriptRouter("jsRoutes",
+
+				controllers.routes.javascript.Application.index(),
+                controllers.routes.javascript.Application.authenticate(),
+                controllers.routes.javascript.UserController.changePassword(),
+                controllers.routes.javascript.PersonalRecordController.fetch(),
+                controllers.routes.javascript.PersonalRecordController.update(),
+                controllers.routes.javascript.PersonalRecordController.edit(),
+                controllers.routes.javascript.WODController.fetch()
+
 		));
 	}
 }

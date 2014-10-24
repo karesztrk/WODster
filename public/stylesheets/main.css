@@ -155,3 +155,120 @@ img.img-centered {
 .icons-list > li > .icon-li {
 	top: auto !important;
 }
+
+.feed-settings {
+    position: absolute;
+    top: 23px;
+    right: 15px;
+}
+
+.feed-item .feed-settings a[data-toggle="dropdown"] {
+    color: #999;
+    font-size: 13px;
+}
+
+.feed-item .feed-settings a[data-toggle="dropdown"]:hover {
+    color: #d74b4b;
+    text-decoration: none;
+}
+
+.comment-item {
+    position: relative;
+    padding: 20px 0 20px 5px;
+}
+
+.comment-item .comment-avatar {
+    background-color: #6685a4;
+    border: 3px solid #fff;
+    border-radius: 6px;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.35);
+    color: #fff;
+    font-size: 16px;
+    height: 54px;
+    left: -70px;
+    line-height: 34px;
+    position: absolute;
+    text-align: center;
+    top: 15px;
+    width: 54px;
+}
+
+.comment-item .comment-wrapper {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    position: relative;
+}
+
+.comment-item .comment-header {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #eee;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    color: #999;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.comment-item > .comment-wrapper:after, .comment-item > .comment-wrapper:before {
+    border-color: transparent;
+    border-style: solid solid outset;
+    content: " ";
+    display: block;
+    height: 0;
+    left: -16px;
+    pointer-events: none;
+    position: absolute;
+    right: 100%;
+    top: 11px;
+    width: 0;
+}
+
+.comment-item > .comment-wrapper:after, .comment-item > .comment-wrapper:before {
+    border-color: transparent;
+    border-style: solid solid outset;
+    content: " ";
+    display: block;
+    height: 0;
+    left: -16px;
+    pointer-events: none;
+    position: absolute;
+    right: 100%;
+    top: 11px;
+    width: 0;
+}
+
+.comment-item > .comment-wrapper:after, .comment-item > .comment-wrapper:after {
+    border-right-color: #f7f7f7;
+    border-width: 7px;
+    margin-left: 2px;
+    margin-top: 1px;
+}
+
+.comment-item > .comment-wrapper:before {
+    border-right-color: #ddd;
+    border-width: 8px;
+}
+
+.comment-item .comment-content {
+    overflow: visible;
+    padding: 15px;
+    width: 100%;
+}
+
+.comment-actions {
+    background-color: #fff;
+    border-top: 2px solid #ddd;
+    padding-top: 15px;
+}
+
+
+
+
+
+
+
+
+

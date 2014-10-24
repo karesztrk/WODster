@@ -19,6 +19,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Formula;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -60,6 +61,9 @@ public class Post implements Serializable {
 	@OneToMany(mappedBy="post", cascade=CascadeType.ALL)
 	@JsonIgnore
 	public List<Comment> comments;
+
+    @Formula(" (select count(*) from comment c where c.post_id = id) ")
+    public Integer commentCount;
 
 	public void addComment(User author, String content) {
 		

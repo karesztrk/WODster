@@ -5,18 +5,34 @@
 @if(!post.comments.isEmpty()) {
 	            
 	@for(comment <- post.comments) {
-		<div class="media">
-			<a href="#" class="pull-left">
-				<img alt="" src="http://placehold.it/64x64" class="media-object">
-			</a>
-			<div class="media-body">
-				<h4 class="media-heading">Start Bootstrap
-					<small>@comment.date.format("yyyy.MM.dd 'at' HH:mm:ss")</small>
-				</h4>
-				@comment.content
-			</div>
-		</div>
+
+        <div class="comment-item">
+
+            <div class="comment-avatar">
+                <img width="48" height="48" src="http://placehold.it/48x48" class="timeline-comment-avatar" alt="avatar">
+            </div>
+
+            <div class="comment-wrapper">
+                <div class="comment-header ">
+
+                    <a class="author" href="#">@comment.author.name</a> on @comment.date.format(util.Configuration.DATETIME_PATTERN)
+
+                </div>
+
+                <div class="comment-content">
+
+                    <div class="edit-comment-hide">
+                        <div class="comment-body markdown-body markdown-format js-comment-body">
+                            <p>@comment.content</p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
 	}
-	
-	<hr/>
+
 }          

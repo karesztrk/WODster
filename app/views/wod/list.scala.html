@@ -22,8 +22,25 @@
 					</div>
 					
 					<div class="feed-subject">
-						<p><a href="/workouts/@post.id">@post.title</a></p>
+						<p><a href="@routes.WODController.view(post.id)">@post.title</a></p>
 	                </div>
+
+                    <div class="feed-settings">
+                        <div class="dropdown">
+                            <a href="settings-dropdown" data-toggle="dropdown">
+                                <i class="fa fa-caret-down"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="settings-dropdown">
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="@routes.WODController.view(post.id)">View</a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="@routes.WODController.edit(post.id)">Edit</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
 	                
 					<div class="feed-content">
 						<ul class="icons-list">
@@ -54,7 +71,7 @@
 							}
 						}
 						<a class="pull-left" href="javascript:;"><i class="fa fa-thumbs-up"></i> 0</a> 
-						<a class="pull-left" href="javascript:;"><i class="fa fa-comment-o"></i> 0</a>
+						<a class="pull-left" href="javascript:;"><i class="fa fa-comment-o"></i> @post.commentCount</a>
 						
 						<a class="pull-right" href="javascript:;"><i class="fa fa-clock-o"></i> @post.createdAt.format(util.Configuration.DATETIME_PATTERN)</a>
 					</div>
@@ -72,9 +89,48 @@
     			
     			@if(authenticated) {
 					<a href="@routes.WODController.create()" class="btn btn-primary btn-jumbo btn-block ">New WOD</a>
+
+                    <a class="btn btn-secondary btn-lg btn-block " href="javascript:;">New Template</a>
 				}
     			
     		</div>
+
+            <h4>Recent Activity</h4>
+            <div class="well">
+
+                <ul class="icons-list text-md">
+                    <li>
+                        <i class="icon-li fa fa-comments-o text-success"></i>
+                        <strong>New Comment!</strong>
+                        <br>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </li>
+                    <li>
+                        <i class="icon-li fa fa-check-square text-secondary"></i>
+                        <strong>New Action!</strong>
+                        <br>
+                        Vestibulum iaculis felis eu eros pellentesque placerat.
+                    </li>
+                    <li>
+                        <i class="icon-li fa fa-truck text-tertiary"></i>
+                        <strong>New Product!</strong>
+                        <br>
+                        Curabitur cursus nisl et mauris imperdiet porttitor.
+                    </li>
+                    <li>
+                        <i class="icon-li fa fa-comments-o text-primary"></i>
+                        <strong>New Comment!</strong>
+                        <br>
+                        Vestibulum iaculis felis eu eros pellentesque placerat.
+                    </li>
+                    <li>
+                        <i class="icon-li fa fa-comments-o text-primary"></i>
+                        <strong>New Comment!</strong>
+                        <br>
+                        Curabitur cursus nisl et mauris imperdiet porttitor.
+                    </li>
+                </ul>
+            </div>
     	</div>
     
     </div>

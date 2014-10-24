@@ -27,10 +27,10 @@ public class Identity implements Serializable {
 	}
 	
 	public static Long getAuthenticatedUserId() {
-		return Long.parseLong(Controller.session().get("id"));
+        return Long.parseLong(Controller.session().get("id"));
 	}
 	
 	public static String getAuthenticatedUserEmail() {
-		return Controller.session().get("email");
+        return Controller.session().get("email");
 	}
 }

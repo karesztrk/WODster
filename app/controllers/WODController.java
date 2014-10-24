@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import model.blog.Comment;
 import model.journal.PersonalRecord;
 import model.training.Workout;
 import model.training.Workout.ResultMeasurementType;
@@ -104,13 +105,13 @@ public class WODController extends BlogController {
 	@Transactional
 	public static Result view(Long id) {
 		Workout post = WorkoutDAO.find(id);
-		return ok(view.render(post));
+		return ok(view.render(post, Form.form(Comment.class)));
 	}
 	
 	@Transactional
 	public static Result edit(Long id) {
 		Form<Workout> form = Form.form(Workout.class).fill(WorkoutDAO.find(id));
-		Logger.info(form.toString());
+
 		return ok(edit.render(id, form));
 	}
 	
