@@ -4,7 +4,25 @@
 
 @implicitFieldConstructor = @{ FieldConstructor(component.bootstrapInput.render) }
 
-@main("journal") { 
+@styleExtra = {
+
+}
+
+@scriptExtra = {
+    <script type="text/javascript">
+	    $(function () {
+	        $('#date').datetimepicker({
+	        	format: 'YYYY-MM-DD',
+	        	use24hours: true,
+	        	pickTime: false,
+	        	language: '@session.get("locale")'
+	        });
+	    });
+	 //  http://eonasdan.github.io/bootstrap-datetimepicker/
+	</script>
+}
+
+@main("journal", styleExtra, scriptExtra) {
     
     <div class="row">
     	<div class="col-md-6 col-md-push-3 col-sm-8 col-sm-push-2 ">
@@ -35,7 +53,8 @@
 							Symbol("data-required") -> "true",
 							Symbol("data-type") -> "digits")
 							
-						@component.datePicker(prForm("date"), 
+						@component.datePicker(prForm("date"),
+                            'id -> "date",
 							'_label -> "Date",
 							'placeholder -> "Date of achievement",
 							'class -> "form-control",

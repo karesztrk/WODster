@@ -53,7 +53,7 @@ public class PersonalRecordController extends Controller {
 		PersonalRecord pr = PersonalRecordDAO.find(id);
 		
 		Form<PersonalRecord> form = Form.form(PersonalRecord.class).fill(pr);
-		return ok(edit.render(form));
+		return ok(edit.render(id, form));
 	}
 	
 	@Transactional
@@ -89,11 +89,17 @@ public class PersonalRecordController extends Controller {
 	}
 	
 	@Transactional
-	public static Result update() {
-		
+	public static Result update(Long id) {
+
+        PersonalRecord pr = PersonalRecordDAO.find(id);
 		Form<PersonalRecord> form = Form.form(PersonalRecord.class).bindFromRequest();
-		
-		PersonalRecordDAO.update(form.get());
+        PersonalRecord formData = form.get();
+
+        pr.date = formData.date;
+        pr.note = formData.note;
+        pr.result = formData.result;
+        pr.user = Identity.getAuthenticatedUser();
+		PersonalRecordDAO.update(pr);
 		
 		return ok(list.render()); 
 	}

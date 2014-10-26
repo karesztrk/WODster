@@ -5,12 +5,38 @@
 @import controllers.WODController
 @implicitFieldConstructor = @{ FieldConstructor(component.bootstrapInput.render) }
 @authenticated = @{Identity.isAuthenticated()}
-@import model.training.Workout.ResultMeasurementType
+@import model.training.ResultMeasurementType
 
-@main("wod") {
+@styleExtra = {
+
+}
+
+@scriptExtra = {
+    <script type="text/javascript">
+	    $(function () {
+	        $('#timeResult').datetimepicker({
+	        	format: 'HH:mm:ss',
+	        	pickDate: false,
+	        	useSeconds: true,
+	        	use24hours: true,
+	        	defaultDate: new Date(1979, 0, 1, 0, 0, 0, 0),
+	        });
+
+	        $('#date').datetimepicker({
+	        	format: 'YYYY-MM-DD',
+	        	use24hours: true,
+	        	pickTime: false,
+	        	language: '@session.get("locale")'
+	        });
+	    });
+	 //  http://eonasdan.github.io/bootstrap-datetimepicker/
+	</script>
+}
+
+@main("wod", styleExtra, scriptExtra) {
     
     <div class="layout layout-stack-sm layout-main-left">
-    
+
     	<!-- Main -->
     	<div class="col-sm-7 col-md-8 layout-main">
     		
@@ -90,7 +116,7 @@
     			@if(authenticated) {
 					<a href="@routes.WODController.create()" class="btn btn-primary btn-jumbo btn-block ">New WOD</a>
 
-                    <a class="btn btn-secondary btn-lg btn-block " href="javascript:;">New Template</a>
+                    <a class="btn btn-secondary btn-lg btn-block " href="javascript:;" disabled="disabled">New Template</a>
 				}
     			
     		</div>
@@ -163,10 +189,29 @@
 					<div class="modal-body">
 						<input type="hidden" name="wodId" id="wodId" value="" />
 						
-						@component.datePicker(attendForm("date"), '_label -> "Workout date:", 'class -> "form-control", '_showHelp -> false)
-						@component.timePicker(attendForm("timeResult"), '_label -> "Your result:", 'class -> "form-control", 'placeholder -> "Pick your result time...", '_showHelp -> false, 'style -> "display: none;")
-						@inputText(attendForm("result"), '_label -> "Your result:", 'class -> "form-control parsley-validated", Symbol("data-type") -> "digits", 'placeholder -> "Add your result...", '_showHelp -> false, 'style -> "display: none;") 
-						@textarea(attendForm("note"), '_label -> null, 'placeholder -> "Add a note...", 'class -> "form-control")
+						@component.datePicker(attendForm("date"),
+                            'id -> "date",
+                            '_label -> "Workout date:",
+                            'class -> "form-control",
+                            '_showHelp -> false)
+						@component.timePicker(attendForm("timeResult"),
+                            'id -> "timeResult",
+                            '_label -> "Your result:",
+                            'class -> "form-control",
+                            'placeholder -> "Pick your result time...",
+                            '_showHelp -> false,
+                            'style -> "display: none;")
+						@inputText(attendForm("result"),
+                            '_label -> "Your result:",
+                            'class -> "form-control parsley-validated",
+                            Symbol("data-type") -> "digits",
+                            'placeholder -> "Add your result...",
+                            '_showHelp -> false,
+                            'style -> "display: none;")
+						@textarea(attendForm("note"),
+                            '_label -> null,
+                            'placeholder -> "Add a note...",
+                            'class -> "form-control")
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

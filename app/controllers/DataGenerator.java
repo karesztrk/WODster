@@ -6,7 +6,7 @@ import model.blog.Post;
 import model.box.Box;
 import model.journal.PersonalRecord;
 import model.training.Workout;
-import model.training.Workout.ResultMeasurementType;
+import model.training.ResultMeasurementType;
 import model.user.User;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
@@ -35,7 +35,7 @@ public class DataGenerator extends Controller {
 		}
 		
 		session().clear();
-		return redirect(routes.Application.login());
+		return redirect(controllers.routes.Application.login());
 	}
 	
 	@Transactional
@@ -51,7 +51,7 @@ public class DataGenerator extends Controller {
 		BoxDAO.save(box);
 		
 		session().clear();
-		return redirect(routes.Application.login());
+		return redirect(controllers.routes.Application.login());
 	}
 	
 	@Transactional
@@ -111,7 +111,7 @@ public class DataGenerator extends Controller {
 		PostDAO.save(w);
 		
 		session().clear();
-		return redirect(routes.Application.login());
+		return redirect(controllers.routes.Application.login());
 	}
 	
 	@Transactional
@@ -125,7 +125,7 @@ public class DataGenerator extends Controller {
 		WorkoutDAO.save(new Workout("Deadlift")); 
 		
 		session().clear();
-		return redirect(routes.Application.login()); 
+		return redirect(controllers.routes.Application.login());
 	}
 	
 	@Transactional
@@ -143,6 +143,6 @@ public class DataGenerator extends Controller {
 		PersonalRecordDAO.save(mary);
 		
 		session().clear();
-		return redirect(routes.Application.login());
+		return redirect(controllers.routes.Application.login());
 	}
 }

@@ -73,4 +73,4 @@ POST    /journal/records            controllers.PersonalRecordController.save()
 GET		/journal/records/:id		controllers.PersonalRecordController.edit(id:Long)
 
 # Update a record
-POST	/journal/records/update		controllers.PersonalRecordController.update()
+POST	/journal/records/:id		controllers.PersonalRecordController.update(id:Long)

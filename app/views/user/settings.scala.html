@@ -6,7 +6,39 @@
 @implicitFieldConstructor = @{ FieldConstructor(component.bootstrapInput.render) } 
 @profileExists = @{null != user.profile}
 
-@main("") { 
+@***********************************
+* Helper for locales               *
+***********************************@
+@locales() = @{
+    var currentLocale = new Locale(session.getOrElse("locale", ""))
+
+    util.lang.LocaleHelper.getSupportedLocaleCodes()
+        .map(code => (
+            code,
+            new Locale(code).getDisplayLanguage(currentLocale)))
+    .toList
+}
+
+@styleExtra = {
+
+}
+
+@scriptExtra = {
+    <script type="text/javascript">
+	    $(function () {
+	        $('#birth').datetimepicker({
+	        	format: 'YYYY-MM-DD',
+	        	use24hours: true,
+	        	pickTime: false,
+	        	language: '@session.get("locale")'
+	        });
+	    });
+
+	 //  http://eonasdan.github.io/bootstrap-datetimepicker/
+	</script>
+}
+
+@main("", styleExtra, scriptExtra) {
 
 	<div class="layout layout-main-right layout-stack-sm">
 
@@ -59,7 +91,7 @@
                     <div data-provides="fileupload" class="fileupload fileupload-new">
                       <div style="width: 180px; height: 180px;" class="fileupload-new thumbnail">
                       	@if(util.asset.AssetUtils.isFileExist(profileForm("image").value)) {
-                        	<img alt="Post image" src="@routes.Assets.at(profileForm("image").value)" class="img-responsive">
+                        	<img alt="Post image" src="@routes.Assets.at(profileForm("image").value)" class="img-responsive" />
                         } else {
                         	<img alt="Profile Image" src="http://placehold.it/180x180">
                         }
@@ -108,7 +140,8 @@
                	 	'_labelClass -> "col-md-3", 
                 	'_inline -> true, 
                 	'_inputWrapperClass -> "col-md-7")
-                @component.datePicker(profileForm("birth"), 
+                @component.datePicker(profileForm("birth"),
+                    'id -> "birth",
                 	'_label -> "Birth date", 
                 	'class -> "form-control", 
                 	'_labelClass -> "col-md-3", 
@@ -121,6 +154,13 @@
                	 	'_labelClass -> "col-md-3", 
                 	'_inline -> true, 
                 	'_inputWrapperClass -> "col-md-7")
+                @select(profileForm("locale"),
+                    locales,
+                    '_label -> "Language",
+                    'class -> "form-control",
+                    '_labelClass -> "col-md-3",
+                    '_inline -> true,
+                    '_inputWrapperClass -> "col-md-7")
                	@inputText(profileForm("city"), 
                 	'_label -> "City", 
                 	'class -> "form-control", 
@@ -166,7 +206,7 @@
 
         </div> <!-- /.col -->
 
-      </div>
+    </div>
       
 	<script type="text/javascript">
 		$(document).ready(function()
@@ -198,6 +238,8 @@
 				
 			});
 		});
-	</script> 
+	</script>
+
+    </div>
 	
 }

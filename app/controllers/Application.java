@@ -5,6 +5,7 @@ import play.Routes;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import util.permission.Identity;
 import util.security.Security;
@@ -15,6 +16,8 @@ import views.html.register;
 import views.html.dashboard.home;
 import controllers.entity.Login;
 import dao.UserDAO;
+
+import java.util.Locale;
 
 public class Application extends Controller {
 
@@ -51,6 +54,7 @@ public class Application extends Controller {
 		session("email", form.get().email);
 		session("id", form.get().id.toString());
 		session("userType", form.get().userType);
+        session("locale", form.get().locale);
 		return ok(home.render());
 	}
 	
@@ -86,8 +90,9 @@ public class Application extends Controller {
 		session("email", form.get().email);
 		session("id", form.get().id.toString());
 		session("userType", form.get().getType());
+        session("locale", Locale.getDefault().toString());
 		flash("welcome", "");
-		return redirect(controllers.routes.Application.index());
+        return redirect(controllers.routes.Application.index());
 
 	}
 	

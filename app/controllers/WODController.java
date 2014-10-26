@@ -11,7 +11,7 @@ import java.util.List;
 import model.blog.Comment;
 import model.journal.PersonalRecord;
 import model.training.Workout;
-import model.training.Workout.ResultMeasurementType;
+import model.training.ResultMeasurementType;
 import model.training.result.Attendance;
 import model.user.User;
 

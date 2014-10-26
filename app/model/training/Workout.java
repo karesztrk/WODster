@@ -19,18 +19,9 @@ public class Workout extends Post {
 	public boolean personal;
 	
 	public boolean girl;
-	
-	public enum ResultMeasurementType implements IndexedEnum {
-		UNKNOWN,
-		TIME,
-		REPETITION,
-		WEIGHT;
 
-		public String getValue() {
-			return name();
-		}
-	}
-	
+    public Category category;
+
 	public ResultMeasurementType resultType;
 	
 	public Workout() {
