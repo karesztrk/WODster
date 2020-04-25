@@ -3,6 +3,8 @@ title: "About me"
 slug: about
 cover: ./cover.jpg
 date: 2020-04-25
+published: true
+unlisted: true
 tags:
     - story
     - journey
