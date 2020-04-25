@@ -1,5 +1,0 @@
-# Messages
-
-workouts.list.title={0,choice,0#No workouts|1#One workout|1<{0,number,integer} workouts} found
-boxes.list.title={0,choice,0#No boxes|1#One box|1<{0,number,integer} boxes} found
-posts.list.title={0,choice,0#No posts|1#One post|1<{0,number,integer} posts} found
