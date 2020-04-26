@@ -52,10 +52,6 @@ const FooterWrapper = styled.footer`
     color: ${colors.textLightest};
   }
 
-  .footer-heart {
-    color: ${colors.heartFooter};
-  }
-
   .footer-item-text {
     padding: 0.1rem 0;
     color: ${colors.textLightest};
