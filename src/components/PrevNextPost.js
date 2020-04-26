@@ -85,7 +85,7 @@ const PrevNextPost = props => {
             title,
             slug,
           } = article.node.frontmatter;
-          const heroImg = (cover && cover.publicURL) || fluid.src
+          const heroImg = (cover && cover.publicURL) || fluid.src;
 
           return (
             <Preview key={`prev-next-${i}`}>

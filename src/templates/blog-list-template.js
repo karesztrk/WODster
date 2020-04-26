@@ -12,7 +12,6 @@ class BlogList extends React.Component {
   render() {
     const { data: { site: { siteMetadata }, posts: { edges }}, pageContext } = this.props;
     const { title, description } = siteMetadata;
-    const posts = edges;
 
     return (
       <Layout location={this.props.location}>
@@ -20,7 +19,7 @@ class BlogList extends React.Component {
         <Hero title={title} subTitle={description} />
 
         <Wrapper>
-          <PostsList posts={posts} />
+          <PostsList posts={edges} />
         </Wrapper>
 
         <Pagination
