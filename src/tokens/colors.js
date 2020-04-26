@@ -15,7 +15,7 @@ const colors = {
   yellow: '#ffdc4e',
   lightYellow: '#f9e892',
   lightBlue: '#697980',
-}
+};
 
 export default {
   ...colors,
@@ -27,16 +27,12 @@ export default {
   text: colors.grey500,
   background: '#f4f8fb',
   backgroundArticle: colors.white,
-  heartFooter: 'red',
   links: colors.yellow,
   backgroundSelection: colors.yellow,
   highlight_code_oneline: '#fff9d9',
   highlight_code_bg: colors.yellow,
   highlight_code_marker: colors.yellow,
   highlight_code_linebg: '#022a4b',
-  socialMediaCardFilter: '#437abf', // #8f43bf
+  socialMediaCardFilter: '#437abf',
   postMetadata: colors.lightBlue,
-  // testing
-  // primary: `#6556B3`,
-  // primaryAlpha: `#6556B3cc`,
 }

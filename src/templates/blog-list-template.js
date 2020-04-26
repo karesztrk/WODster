@@ -44,7 +44,11 @@ export const pageQuery = graphql`
     }
     posts: allPost (
       sort: { fields: date, order: DESC }
-      filter: {slug: {ne: null}}
+      filter: {
+        slug: { ne: null }
+        published: { ne: false }
+        unlisted: { ne: true }
+      }
       limit: $limit
       skip: $skip
     ) {

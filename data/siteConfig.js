@@ -5,7 +5,7 @@ module.exports = {
   authorAvatar: 'avatar.jpg', // file in content/images
   defaultLang: 'en', // show flag if lang is not default. Leave empty to enable flags in post lists
   authorDescription: `
-  Workout addict, Software engineer. On his day to day job, he is working as a Software Engineer. He is also doing fitness on a daily basis.
+  Workout addict , Software engineer. On his day to day job, he is working as a Software Engineer 👨‍💻. He is also doing fitness on a daily basis 🏃‍🏋️🏊‍.
   You need help with coding or do you want to know more? <a href="https://upbeat-brattain-c51372.netlify.app/" target="_blank">Visit my website!</a>
   `,
   //siteUrl: '',

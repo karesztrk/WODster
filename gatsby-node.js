@@ -175,8 +175,9 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId, createContentDig
 
   if (node.internal.type === `MarkdownRemark`) {
     const { frontmatter } = node;
-    const { date, title, slug } = frontmatter;
+    const { date, title, slug, unlisted, published } = frontmatter;
     const value = createFilePath({ node, getNode });
+
     if (value) {
       const postNode = {
         id: createNodeId(`${node.id} >>> MD`),
@@ -190,6 +191,8 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId, createContentDig
         date,
         slug,
         title,
+        unlisted,
+        published,
       };
       createNode(postNode);
       createParentChildLink({ parent: node, child: postNode })
@@ -218,6 +221,8 @@ exports.onCreateNode = ({ node, actions, getNode, createNodeId, createContentDig
         date,
         slug: value,
         title: value,
+        unlisted: false,
+        published: true,
       };
       createNode(postNode);
       createParentChildLink({ parent: node, child: postNode })
