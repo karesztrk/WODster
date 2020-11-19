@@ -23,7 +23,6 @@
     "format": "prettier --write 'src/**/*.js' 'data/siteConfig.js' 'gatsby-*.js' 'scripts/*.js'",
     "generatePostPreviewImages": "./scripts/generatePostPreviewImages.js",
     "lh": "lighthousebot",
-    "semantic-release": "semantic-release",
     "start": "gatsby develop",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },
@@ -64,7 +63,6 @@
     "lighthousebot": "https://github.com/GoogleChromeLabs/lighthousebot",
     "prettier": "^1.19.1",
     "puppeteer": "^1.17.0",
-    "semantic-release": "^15.13.18",
     "yaml": "^1.6.0"
   },
   "peerDependencies": {
