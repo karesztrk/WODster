@@ -62,7 +62,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const allTags = Array.from(
-    new Set<string>(fetchPostContent().flatMap((content) => content.tags)),
+    new Set<string>(
+      fetchPostContent()
+        .flatMap((content) => content.tags)
+        .filter((t) => t)
+        .map((t) => t.toLowerCase()),
+    ),
   );
   const paths = allTags.flatMap((tag) => {
     const pages = Math.ceil(countPosts(tag) / config.posts_per_page);
