@@ -10,7 +10,7 @@ import {
   listPostContent,
   PostContent,
 } from '../../../lib/posts';
-import { TagContent } from '../../../lib/tags';
+import { listTags, TagContent } from '../../../lib/tags';
 
 type Props = {
   posts: PostContent[];
@@ -64,23 +64,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const allTags = Array.from(
-    new Set<string>(
-      fetchPostContent()
-        .flatMap((content) => content.tags)
-        .filter((t) => t)
-        .map((t) => t.toLowerCase()),
-    ),
-  );
-  const paths = allTags.flatMap((tag) => {
-    const pages = Math.ceil(countPosts(tag) / config.posts_per_page);
+  const paths = listTags().flatMap((tag) => {
+    const pages = Math.ceil(countPosts(tag.slug) / config.posts_per_page);
     return Array.from(Array(pages).keys()).map((page) =>
       page === 0
         ? {
-            params: { slug: [tag] },
+            params: { slug: [tag.slug] },
           }
         : {
-            params: { slug: [tag, (page + 1).toString()] },
+            params: { slug: [tag.slug, (page + 1).toString()] },
           },
     );
   });

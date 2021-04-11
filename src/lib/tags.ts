@@ -10,7 +10,12 @@ export function listTags(limit?: number): TagContent[] {
   const allTags =
     postContent && Array.isArray(postContent) && postContent.flatMap
       ? Array.from(
-          new Set<string>(postContent.flatMap((content) => content.tags)),
+          new Set<string>(
+            postContent
+              .flatMap((content) => content.tags)
+              .filter((t) => t)
+              .map((t) => t.toLowerCase()),
+          ),
         )
       : [];
   const tags = allTags.map((tag) => ({
