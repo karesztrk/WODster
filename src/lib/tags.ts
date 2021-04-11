@@ -30,8 +30,9 @@ export function getTag(slug: string) {
 }
 
 export function listTags(limit?: number): TagContent[] {
+  const postContent = fetchPostContent();
   const allTags = Array.from(
-    new Set<string>(fetchPostContent().flatMap((content) => content.tags)),
+    new Set<string>(postContent.flatMap((content) => content.tags)),
   );
   const tags = allTags.map((tag) => ({
     name: tag,

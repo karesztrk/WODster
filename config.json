@@ -1,7 +1,7 @@
 {
   "base_url": "https://wodster.netlify.app",
   "site_title": "WODster training blog",
-  "site_description": "Next.js blog template for Netlify",
+  "site_description": "WODster training blog",
   "site_keywords": [
     {
       "keyword": "Next.js"
