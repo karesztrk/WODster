@@ -22,13 +22,16 @@ type Props = {
   };
 };
 export default function Index({ posts, tag, pagination, page }: Props) {
-  const url = `/posts/tags/${tag.name}` + (page ? `/${page}` : '');
-  const title = tag.name;
+  const url = tag && `/posts/tags/${tag.name}` + (page ? `/${page}` : '');
   return (
     <Layout>
-      <BasicMeta url={url} title={title} />
-      <OpenGraphMeta url={url} title={title} />
-      <TagPostList posts={posts} tag={tag} pagination={pagination} />
+      {tag && (
+        <>
+          <BasicMeta url={url} title={tag.name} />
+          <OpenGraphMeta url={url} title={tag.name} />
+          <TagPostList posts={posts} tag={tag} pagination={pagination} />
+        </>
+      )}
     </Layout>
   );
 }
@@ -64,6 +67,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const tags = listTags();
+  if (!tags || !Array.isArray(tags) || !tags.flatMap) {
+    return {
+      paths: [],
+      fallback: false,
+    };
+  }
   const paths = listTags().flatMap((tag) => {
     const pages = Math.ceil(countPosts(tag.slug) / config.posts_per_page);
     return Array.from(Array(pages).keys()).map((page) =>
