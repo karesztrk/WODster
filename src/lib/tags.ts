@@ -9,9 +9,13 @@ const tagMap: { [key: string]: TagContent } = generateTagMap();
 
 function generateTagMap(): { [key: string]: TagContent } {
   let result: { [key: string]: TagContent } = {};
-  listTags().forEach((tag) => {
-    result[tag.slug] = tag;
-  });
+  const tags = listTags();
+  if (tags) {
+    tags.forEach((tag) => {
+      result[tag.slug] = tag;
+    });
+  }
+
   return result;
 }
 
