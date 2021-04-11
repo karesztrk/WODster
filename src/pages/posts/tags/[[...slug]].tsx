@@ -10,7 +10,7 @@ import {
   listPostContent,
   PostContent,
 } from '../../../lib/posts';
-import { getTag, TagContent } from '../../../lib/tags';
+import { TagContent } from '../../../lib/tags';
 
 type Props = {
   posts: PostContent[];
@@ -41,7 +41,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     config.posts_per_page,
     slug,
   );
-  const tag = getTag(slug);
+  const tag = {
+    slug,
+    name: slug,
+  };
   const pagination = {
     current: page ? parseInt(page as string) : 1,
     pages: Math.ceil(countPosts(slug) / config.posts_per_page),
