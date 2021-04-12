@@ -68,13 +68,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const tags = listTags();
-  if (!tags || !Array.isArray(tags) || !tags.flatMap) {
-    return {
-      paths: [],
-      fallback: false,
-    };
-  }
-  const paths = listTags().flatMap((tag) => {
+  const pathsArray = tags.map((tag) => {
     const pages = Math.ceil(countPosts(tag.slug) / config.posts_per_page);
     return Array.from(Array(pages).keys()).map((page) =>
       page === 0
@@ -86,6 +80,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
           },
     );
   });
+  // flatMap() polyfill
+  const paths = [].concat(...pathsArray);
+  console.log(paths);
   return {
     paths: paths,
     fallback: false,

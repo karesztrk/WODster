@@ -7,26 +7,25 @@ export type TagContent = {
 
 export function listTags(limit?: number): TagContent[] {
   const postContent = fetchPostContent();
-  console.log('Received tags: ');
-  console.log(postContent.map((content) => content.tags));
-  const allTags =
-    postContent && Array.isArray(postContent) && postContent.map
-      ? Array.from(
-          new Set<string>(
-            postContent
-              .map((content) => content.tags)
-              .flat()
-              .filter((t) => t)
-              .map((t) => t.toLowerCase()),
-          ),
-        )
-      : [];
-  const tags = allTags.map((tag) => ({
+  if (!postContent || !Array.isArray(postContent)) {
+    return [];
+  }
+
+  const tagSet = new Set<string>(
+    // flatMap() polyfill
+    [].concat(
+      ...postContent.map((content) =>
+        content.tags.filter((t) => t).map((t) => t.toLowerCase()),
+      ),
+    ),
+  );
+  const tags = Array.from(tagSet).map((tag) => ({
     name: tag,
     slug: tag,
   }));
-  if (!limit) {
-    return tags;
+
+  if (limit) {
+    return tags.slice(0, limit);
   }
-  return tags.slice(0, limit);
+  return tags;
 }
