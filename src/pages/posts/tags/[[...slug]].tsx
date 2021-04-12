@@ -82,7 +82,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   });
   // flatMap() polyfill
   const paths = [].concat(...pathsArray);
-  console.log(paths);
   return {
     paths: paths,
     fallback: false,

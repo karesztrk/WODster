@@ -18,7 +18,6 @@
         render: function () {
           var entry = this.props.entry;
           var date = entry.getIn(["data", "date"]);
-          console.log(entry.getIn(["data", "date"]).toString())
           return h(
             "div",
             { className: "content" },

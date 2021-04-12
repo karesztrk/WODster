@@ -1,13 +1,13 @@
-import Layout from "../components/Layout";
-import BasicMeta from "../components/meta/BasicMeta";
-import OpenGraphMeta from "../components/meta/OpenGraphMeta";
-import { SocialList } from "../components/SocialList";
+import Layout from '../components/Layout';
+import BasicMeta from '../components/meta/BasicMeta';
+import OpenGraphMeta from '../components/meta/OpenGraphMeta';
+import { SocialList } from '../components/SocialList';
 
 export default function Index() {
   return (
     <Layout>
-      <BasicMeta url={"/"} />
-      <OpenGraphMeta url={"/"} />
+      <BasicMeta url={'/'} />
+      <OpenGraphMeta url={'/'} />
       <div className="container">
         <div>
           <h1>
