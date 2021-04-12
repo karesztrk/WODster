@@ -2,4 +2,5 @@
 
 # WODster
 
-Personal training blog built by React, Next.js
+Personal training blog built by React, Next.js using
+[template from @wutali](https://github.com/wutali/nextjs-netlify-blog-template)

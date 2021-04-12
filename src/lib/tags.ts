@@ -7,12 +7,15 @@ export type TagContent = {
 
 export function listTags(limit?: number): TagContent[] {
   const postContent = fetchPostContent();
+  console.log('Received tags: ');
+  console.log(postContent.map((content) => content.tags));
   const allTags =
-    postContent && Array.isArray(postContent) && postContent.flatMap
+    postContent && Array.isArray(postContent) && postContent.map
       ? Array.from(
           new Set<string>(
             postContent
-              .flatMap((content) => content.tags)
+              .map((content) => content.tags)
+              .flat()
               .filter((t) => t)
               .map((t) => t.toLowerCase()),
           ),
