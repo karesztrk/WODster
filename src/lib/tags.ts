@@ -3,7 +3,7 @@ import { fetchPostContent } from './posts';
 export type TagContent = {
   readonly slug: string;
   readonly name: string;
-  readonly occurence: number;
+  readonly occurence?: number;
 };
 
 let tagCache: TagContent[];

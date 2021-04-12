@@ -70,12 +70,7 @@ export default function PostLayout({
           <ul className={'tag-list'}>
             {tags.map((it, i) => (
               <li key={i}>
-                <TagButton
-                  tag={{
-                    name: it,
-                    slug: it,
-                  }}
-                />
+                <TagButton tag={it} />
               </li>
             ))}
           </ul>
