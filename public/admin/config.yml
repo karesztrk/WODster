@@ -5,6 +5,39 @@ media_folder: public/images
 public_folder: /images
 
 collections:
+  - name: 'posts'
+    label: 'Posts'
+    folder: 'content/posts/'
+    extension: 'mdx'
+    format: 'frontmatter'
+    create: true
+    slug: '{{slug}}'
+    identifier_field: slug
+    summary: '{{title}}'
+    fields:
+      - label: 'Slug'
+        name: 'slug'
+        widget: 'string'
+      - label: 'Title'
+        name: 'title'
+        widget: 'string'
+      - label: 'Publish Date'
+        name: 'date'
+        widget: 'date'
+      - label: Author
+        name: 'author'
+        widget: relation
+        collection: 'meta'
+        file: 'authors'
+        searchFields:
+          - 'authors.*.name'
+        displayFields:
+          - 'authors.*.name'
+        valueField: 'authors.*.slug'
+      - label: 'Body'
+        name: 'body'
+        widget: 'markdown'
+      - { label: 'Tags', name: 'tags', widget: 'list' }
   - name: 'config'
     label: 'Config'
     delete: false
@@ -65,40 +98,3 @@ collections:
               - label: 'Introduction'
                 name: 'introduction'
                 widget: 'text'
-
-  - name: 'posts'
-    label: 'Posts'
-    folder: 'content/posts/'
-    extension: 'mdx'
-    format: 'frontmatter'
-    create: true
-    slug: '{{slug}}'
-    identifier_field: slug
-    summary: '{{title}}'
-    fields:
-      - label: 'Slug'
-        name: 'slug'
-        widget: 'string'
-      - label: 'Title'
-        name: 'title'
-        widget: 'string'
-      - label: 'Publish Date'
-        name: 'date'
-        widget: 'datetime'
-        format: 'YYYY-MM-DD'
-        dateFormat: 'YYYY-MM-DD'
-        timeFormat: false
-      - label: Author
-        name: 'author'
-        widget: relation
-        collection: 'meta'
-        file: 'authors'
-        searchFields:
-          - 'authors.*.name'
-        displayFields:
-          - 'authors.*.name'
-        valueField: 'authors.*.slug'
-      - label: 'Body'
-        name: 'body'
-        widget: 'markdown'
-      - { label: 'Tags', name: 'tags', widget: 'list' }
