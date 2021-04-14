@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import Burger from "./Burger";
-import { useState } from "react";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import Burger from './Burger';
+import { useState } from 'react';
 
 export default function Navigation() {
   const router = useRouter();
@@ -9,18 +9,18 @@ export default function Navigation() {
   return (
     <>
       <Burger active={active} onClick={() => setActive(!active)} />
-      <div className={"container " + (active ? "active" : "")}>
+      <div className={'container ' + (active ? 'active' : '')}>
         <ul>
           <li>
             <Link href="/">
-              <a className={router.pathname === "/" ? "active" : null}>about</a>
+              <a className={router.pathname === '/' ? 'active' : null}>about</a>
             </Link>
           </li>
           <li>
             <Link href="/posts">
               <a
                 className={
-                  router.pathname.startsWith("/posts") ? "active" : null
+                  router.pathname.startsWith('/posts') ? 'active' : null
                 }
               >
                 blog
@@ -43,7 +43,7 @@ export default function Navigation() {
               padding: 0;
               position: fixed;
               top: 0;
-              background-color: #fff;
+              background-color: hsl(var(--primary-color) var(--l-100));
               display: flex;
               flex-direction: column;
               justify-content: center;
@@ -64,7 +64,7 @@ export default function Navigation() {
               margin-bottom: 0;
             }
             .active {
-              color: #222;
+              color: hsl(var(--primary-color) var(--l-0));
             }
 
             @media (min-width: 769px) {

@@ -42,7 +42,7 @@ export default function Index() {
         .handle {
           display: inline-block;
           margin-top: 0.275em;
-          color: #9b9b9b;
+          color: hsl(var(--primary-color) var(--l-30));
           letter-spacing: 0.05em;
         }
 

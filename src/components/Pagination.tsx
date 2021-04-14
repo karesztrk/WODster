@@ -1,5 +1,5 @@
-import { generatePagination } from "../lib/pagination";
-import Link from "next/link";
+import { generatePagination } from '../lib/pagination';
+import Link from 'next/link';
 
 type Props = {
   current: number;
@@ -16,10 +16,10 @@ export default function Pagination({ current, pages, link }: Props) {
       {pagination.map((it, i) => (
         <li key={i}>
           {it.excerpt ? (
-            "..."
+            '...'
           ) : (
             <Link href={link.href(it.page)} as={link.as(it.page)}>
-              <a className={it.page === current ? "active" : null}>{it.page}</a>
+              <a className={it.page === current ? 'active' : null}>{it.page}</a>
             </Link>
           )}
         </li>
@@ -33,11 +33,11 @@ export default function Pagination({ current, pages, link }: Props) {
         li {
           display: inline-block;
           margin-right: 1em;
-          color: #9b9b9b;
+          color: hsl(var(--primary-color) var(--l-30));
           font-size: 1.25rem;
         }
         a.active {
-          color: #222;
+          color: hsl(var(--primary-color) var(--l-0));
           font-weight: bold;
         }
       `}</style>

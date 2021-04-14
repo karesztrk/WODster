@@ -18,7 +18,7 @@
         render: function () {
           var entry = this.props.entry;
           var date = entry.getIn(["data", "date"]) ;
-          if (!date) {
+          if (!date || !date.toDateString) {
             date = new Date();
           }
           return h(

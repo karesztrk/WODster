@@ -1,4 +1,4 @@
-import { AuthorContent } from "../lib/authors";
+import { AuthorContent } from '../lib/authors';
 
 type Props = {
   author: AuthorContent;
@@ -10,7 +10,7 @@ export default function Author({ author }: Props) {
       <style jsx>
         {`
           span {
-            color: #9b9b9b;
+            color: hsl(var(--primary-color) var(--l-30));
           }
         `}
       </style>
