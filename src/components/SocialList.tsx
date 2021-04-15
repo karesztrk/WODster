@@ -1,5 +1,6 @@
 import React from 'react';
 import GitHub from '../assets/github-alt.svg';
+import Email from '../assets/email.svg';
 import config from '../lib/config';
 
 export function SocialList({}) {
@@ -12,6 +13,9 @@ export function SocialList({}) {
         rel="noopener"
       >
         <GitHub width={24} height={24} />
+      </a>
+      <a title="Email" href={`mailto:${config.email}`}>
+        <Email width={24} height={24} />
       </a>
       <style jsx>{`
         a {
