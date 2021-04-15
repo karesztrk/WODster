@@ -51,11 +51,11 @@ export default function TagPostList({ posts, tag, pagination }: Props) {
             padding: 0;
             font-weight: 100;
             font-size: 1.75rem;
-            color: hsl(var(--primary-color) var(--l-30));
+            color: hsl(var(--primary-hs) var(--l-30));
           }
           h1 span {
             font-weight: bold;
-            color: hsl(var(--primary-color) var(--l-0));
+            color: hsl(var(--primary-hs) var(--l-0));
           }
           ul {
             margin: 0;

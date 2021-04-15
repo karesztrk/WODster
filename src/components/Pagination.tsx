@@ -33,11 +33,11 @@ export default function Pagination({ current, pages, link }: Props) {
         li {
           display: inline-block;
           margin-right: 1em;
-          color: hsl(var(--primary-color) var(--l-30));
+          color: hsl(var(--primary-hs) var(--l-30));
           font-size: 1.25rem;
         }
         a.active {
-          color: hsl(var(--primary-color) var(--l-0));
+          color: hsl(var(--primary-hs) var(--l-0));
           font-weight: bold;
         }
       `}</style>

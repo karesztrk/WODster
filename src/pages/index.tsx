@@ -37,12 +37,12 @@ export default function Index() {
           line-height: 1.25;
         }
         .fancy {
-          color: #15847d;
+          color: hsl(176, 73%, 30%);
         }
         .handle {
           display: inline-block;
           margin-top: 0.275em;
-          color: hsl(var(--primary-color) var(--l-30));
+          color: hsl(var(--primary-hs) var(--l-30));
           letter-spacing: 0.05em;
         }
 

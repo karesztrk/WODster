@@ -43,7 +43,7 @@ export default function Navigation() {
               padding: 0;
               position: fixed;
               top: 0;
-              background-color: hsl(var(--primary-color) var(--l-100));
+              background-color: hsl(var(--background-color));
               display: flex;
               flex-direction: column;
               justify-content: center;
@@ -64,7 +64,7 @@ export default function Navigation() {
               margin-bottom: 0;
             }
             .active {
-              color: hsl(var(--primary-color) var(--l-0));
+              color: hsl(var(--primary-hs) var(--l-0));
             }
 
             @media (min-width: 769px) {

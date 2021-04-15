@@ -1,11 +1,11 @@
 .content {
   font-family: 'Barlow', sans-serif;
-  color: hsl(var(--primary-color) var(--l-0));
+  color: hsl(var(--primary-hs) var(--l-0));
   font-weight: 200;
 }
 
 .content time {
-  color: hsl(var(--primary-color) var(--l-30));
+  color: hsl(var(--primary-hs) var(--l-30));
 }
 
 .content p {
@@ -35,7 +35,7 @@
   margin-left: -1em;
   font-weight: 300;
   font-size: 1.5rem;
-  color: hsl(var(--primary-color) var(--l-30));
+  color: hsl(var(--primary-hs) var(--l-30));
   display: none;
   content: '#';
 }
@@ -87,7 +87,7 @@
 }
 
 .content table thead {
-  background: hsl(var(--primary-color) var(--l-90));
+  background: hsl(var(--primary-hs) var(--l-90));
 }
 
 .content table th {
@@ -97,7 +97,7 @@
 .content table th,
 .content table td {
   padding: 0.5em 1em;
-  border: 1px double hsl(var(--primary-color) var(--l-90));
+  border: 1px double hsl(var(--primary-hs) var(--l-90));
 }
 
 .content ol,
