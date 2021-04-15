@@ -8,7 +8,19 @@
       "sizes": "192x192"
     }
   ],
-  "start_url": "/?utm_source=homescreen",
+  "dir": "ltr",
+  "lang": "en",
+  "orientation": "portrait",
+  "display": "standalone",
+  "start_url": "/",
   "background_color": "#000000",
-  "theme_color": "#000000"
+  "theme_color": "#000000",
+  "shortcuts": [
+    {
+      "name": "Posts",
+      "short_name": "posts",
+      "url": "/posts",
+      "description": "Training blog posts"
+    }
+  ]
 }

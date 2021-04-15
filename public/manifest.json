@@ -1,0 +1,33 @@
+{
+  "short_name": "wodster",
+  "name": "WODster",
+  "description": "Personal online training blog",
+  "icons": [
+    {
+      "src": "icon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "dir": "ltr",
+  "lang": "en",
+  "start_url": "/",
+  "orientation": "portrait",
+  "display": "standalone",
+  "theme_color": "#3B3437",
+  "background_color": "#3B3437",
+  "shortcuts": [
+    {
+      "name": "Bread Calculator",
+      "short_name": "Calculator",
+      "url": "/calculator",
+      "description": "Calculate your dough hydration and the amount of ingredients."
+    },
+    {
+      "name": "Recipebook",
+      "short_name": "Recipies",
+      "url": "/recipes",
+      "description": "Find and bake a recipe of your taste."
+    }
+  ]
+}
