@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@mapbox/rehype-prism": "^0.6.0",
+    "@netlify/plugin-nextjs": "^3.9.0",
     "@svgr/webpack": "^5.5.0",
     "@types/js-yaml": "^4.0.0",
     "date-fns": "^2.20.1",
